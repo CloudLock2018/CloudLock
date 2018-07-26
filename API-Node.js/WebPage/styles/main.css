@@ -1,0 +1,29 @@
+body{
+	background-color: #e8e8e8;
+}
+
+img{
+	height: 200px;
+	width: 400px;
+	display: inline-block;
+	margin-right: 8em;
+}
+
+#ingreso{
+	display: flex;
+}
+
+#ingreso p{
+	margin-left: 10em;
+}
+
+#ingreso input{
+	height: 1em;
+	margin-left: 18em;
+	margin-top: .5em; 
+}
+
+#entrar{
+	display: block;
+	margin: auto;
+}
