@@ -2,7 +2,7 @@ body{
 	background-color: #e8e8e8;
 }
 
-img{
+#logo{
 	height: 200px;
 	width: 400px;
 	display: inline-block;
@@ -43,6 +43,25 @@ img{
 }
 
 #olvidar{
+	text-align: center;
+}
+
+#error{
+	margin-left: 30em;
+	margin-bottom: 1em;
+	visibility: hidden;
+}
+
+#error img{
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+	margin-right: 2em;
+}
+
+#error p{
+	color: rgb(255, 0, 0);
+	display: inline-block;
 	text-align: center;
 }
 

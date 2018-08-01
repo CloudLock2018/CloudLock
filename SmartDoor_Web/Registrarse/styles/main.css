@@ -1,0 +1,86 @@
+body{
+	background-color: #e8e8e8;
+}
+
+#logo{
+	height: 200px;
+	width: 400px;
+	display: inline-block;
+	margin-right: 8em;
+}
+
+#titulo{
+	text-align: center;
+	display: inline-block;
+	margin-left: 4.5em;
+}
+
+#email{
+	display: flex;
+}
+
+#email p{
+	margin-left: 10em;
+}
+
+#email input{
+	height: 1em;
+	margin-left: 28.7em;
+	margin-top: .5em; 
+}
+
+#ingreso{
+	display: flex;
+}
+
+#ingreso p{
+	margin-left: 10em;
+}
+
+#ingreso input{
+	height: 1em;
+	margin-left: 22.5em;
+	margin-top: .5em; 
+}
+
+#contraseña{
+	display: flex;
+}
+
+#contraseña p{
+	margin-left: 10em;
+}
+
+#contraseña input{
+	height: 1em;
+	margin-left: 26.5em;
+	margin-top: .5em;
+}
+
+#olvidar{
+	text-align: center;
+}
+
+#error{
+	margin-left: 30em;
+	margin-bottom: 1em;
+	visibility: hidden;
+}
+
+#error img{
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+	margin-right: 2em;
+}
+
+#error p{
+	color: rgb(255, 0, 0);
+	display: inline-block;
+	text-align: center;
+}
+
+#entrar{
+	display: block;
+	margin: auto;
+}

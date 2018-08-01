@@ -1,0 +1,48 @@
+body{
+	background-color: #e8e8e8;
+}
+
+nav.mainNav{
+	background: rgb(126, 126, 126);
+	height: 3em;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+nav.mainNav img{
+	display: block;
+	width: auto;
+	height: 2em;
+}
+
+nav.mainNav div{
+	margin: 0 2em;
+}
+
+nav.mainNav div span{
+	font-size: .85em;
+}
+
+#titulo{
+	text-align: center;
+}
+
+#usuarios{
+	display: inline-block;
+}
+
+.user{
+	display: inline-block;
+	margin-left: 22em;
+}
+
+.pass{
+	display: inline-block;
+	margin-left: 11em;
+}
+
+#agregar{
+	display:block;
+	margin:0 auto;
+}
