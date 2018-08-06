@@ -81,12 +81,6 @@ app.post('/receive', function(req, res){
 	    		};
 	    		res.send(reply);
     		}
-    		else{
-    			reply = {
-      				msg: 'ERROR, Documento no encontrado'
-      			};      			
-				res.send(reply);
-    		}
     	});
 	})
 	.catch(err => {
