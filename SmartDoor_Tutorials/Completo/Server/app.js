@@ -64,6 +64,7 @@ app.post('/', function(req, res){
 })
 
 //--------------------------------------------Devolver Info---------------------------------------------------------------
+var noDoc;
 //------------------------------------------Cliente - Servidor------------------------------------------------------------
 app.post('/receive', function(req, res){
 	var Buscar = req.body.nombre;
@@ -71,15 +72,27 @@ app.post('/receive', function(req, res){
 	var getDocs = db.collection("Users").get()
 	.then(snapshot => {
     	snapshot.forEach(doc => {
-    		if (doc.id === Buscar){    			
-	       		nombre = doc.data().Name,
-	       		contra = doc.data().Contraseña
-	       		console.log(nombre, contra);       		
-	    		reply = {
-	    			Nombre: nombre,
-	    			Contraseña: contra
-	    		};
-	    		res.send(reply);
+    		cantDocs = snapshot.size;
+    		for (var i = 0; i <= cantDocs; i++){
+    			if (doc.id === Buscar){    			
+		       		nombre = doc.data().Name,
+		       		contra = doc.data().Contraseña
+		       		console.log(nombre, contra);       		
+		    		reply = {
+		    			Nombre: nombre,
+		    			Contraseña: contra
+		    		};
+		    		res.send(reply);
+	    		}	    		
+	    		else{
+	    			noDoc++;
+	    		}
+    		}    		
+    		if(noDoc >= cantDocs){
+    			reply = {
+      				msg: 'ERROR, Documento no encontrado'
+      			};      			
+				res.send(reply);
     		}
     	});
 	})

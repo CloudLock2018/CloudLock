@@ -38,7 +38,11 @@ function ReceiveServer(){
 }
 
 function dataReceived(result){
-	console.log(result);
+	if (result.msg === 'ERROR, Documento no encontrado'){
+		alert("ERROR, Documento no encontrado");
+	}else{
+		console.log(result);	
+	}
 }
 
 function receiveError(err){
