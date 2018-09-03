@@ -24,3 +24,42 @@ admin.initializeApp({
 });
 // Initialize Cloud Firestore through Firebase
 var db = admin.firestore();
+
+var nombreR;
+var contraR;
+var replyR;
+
+//Receive info from client (Register)
+app.post('/register', function(req, res){
+	//Get info
+	nombreR = req.body.nombre;
+	contraR = req.body.contra;
+	//Creates a document inside the collection USERS
+	var usuario = db.collection("Users").doc(nombreR);
+	usuario.get()
+		//Check if the doc already exists and send an error if happens
+		.then(doc => {
+    		if (doc.exists) {
+      			reply = {
+      				msg: 'Error'
+      			};      			
+				res.send(reply);
+			//if the doc doesn't exist, then it will create the document in the database and send info to the client
+    		}else{
+      			usuario.set({
+				    Nombre_de_Usuario: nombreR,
+				    Contraseña: contraR
+				})
+				.then(function(docRef) {
+			    	reply = {
+			    		msg: 'Gracias ' + nombreR + ', contraseña: ' + contraR
+			    	};
+					res.send(reply);
+				})
+				//Send error if it happens one
+				.catch(function(error) {
+			    	console.error("Error adding document: ", error);
+				})
+			}
+		})
+})
