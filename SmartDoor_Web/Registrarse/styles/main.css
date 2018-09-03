@@ -64,7 +64,7 @@ body{
 #error{
 	margin-left: 30em;
 	margin-bottom: 1em;
-	visibility: hidden;
+	display: none;
 }
 
 #error img{
