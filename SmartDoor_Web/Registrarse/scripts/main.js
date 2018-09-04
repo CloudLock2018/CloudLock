@@ -8,6 +8,7 @@ var pass2TB = $('#repcontra');
 //Function when the button is clicked
 $('#entrar').click(function(){
 	$('#error').css("display", "none");
+	$('#correcto').css("display", "none");
 	var sEmail = emailTB.val();
 	if (passTB.val() != pass2TB.val()){
 		$('#error').show();
@@ -51,12 +52,10 @@ $('#entrar').click(function(){
 	        		$('#error').show();
 					$('#errText').text("Nombre de Usuario ya utilizado");
 	        	}
-	        	else if(data.msg === 'Error, mail'){
-	        		$('#error').show();
-					$('#errText').text("Email ya utilizado");
-	        	}
 	        	else{
-	        		console.log(data);
+	        		$('#correcto').show();
+					$('#corText').text("Registro realizado correctamente");
+					//$('.container').load('../IniciarSesion/index.html');
 	        	}
         	}
     	});
@@ -67,6 +66,7 @@ $('#entrar').click(function(){
     }
 });
 
+//Set the basics of an email
 function validateEmail(sEmail) {
     var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (filter.test(sEmail)) {

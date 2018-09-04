@@ -48,12 +48,6 @@ app.post('/register', function(req, res){
       			};      			
 				res.send(reply);
     		}
-    		/*else if (doc.Email.exists){
-    			reply = {
-      				msg: 'Error, mail'
-      			};      			
-				res.send(reply);
-    		}*/
     		//if the doc doesn't exist, then it will create the document in the database and send info to the client
     		else{
       			usuario.set({

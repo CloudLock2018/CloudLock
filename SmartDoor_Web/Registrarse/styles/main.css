@@ -114,6 +114,24 @@ body{
 	text-align: center;
 }
 
+#correcto{
+	margin: 0 auto;
+	margin-top: 1em;
+	display: none;
+}
+
+#correcto img{
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+
+#correcto p{
+	color: rgb(0, 255, 0);
+	display: inline-block;
+	text-align: center;
+}
+
 #entrar{
 	display: block;
 	margin: auto;
