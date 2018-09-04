@@ -1,3 +1,5 @@
+//Server Location: C:\Users\43871824\Documents\4to TIC\Proyecto Final\CloudLock\SmartDoor_Web\Servidor
+
 //Initialize Express (Server)
 var express = require('express');
 var bodyParser = require('body-parser')
@@ -33,6 +35,7 @@ var replyR;
 app.post('/register', function(req, res){
 	//Get info
 	nombreR = req.body.nombre;
+	emailR = req.body.email;
 	contraR = req.body.contra;
 	//Creates a document inside the collection USERS
 	var usuario = db.collection("Users").doc(nombreR);
@@ -44,10 +47,18 @@ app.post('/register', function(req, res){
       				msg: 'Error'
       			};      			
 				res.send(reply);
-			//if the doc doesn't exist, then it will create the document in the database and send info to the client
-    		}else{
+    		}
+    		/*else if (doc.Email.exists){
+    			reply = {
+      				msg: 'Error, mail'
+      			};      			
+				res.send(reply);
+    		}*/
+    		//if the doc doesn't exist, then it will create the document in the database and send info to the client
+    		else{
       			usuario.set({
 				    Nombre_de_Usuario: nombreR,
+				    Email: emailR,
 				    Contraseña: contraR
 				})
 				.then(function(docRef) {

@@ -57,6 +57,20 @@ body{
 	margin-top: .5em;
 }
 
+#repcon{
+	display: flex;
+}
+
+#repcon p{
+	margin-left: 10em;
+}
+
+#repcon input{
+	height: 1em;
+	margin-left: 22.5em;
+	margin-top: .5em;
+}
+
 #olvidar{
 	text-align: center;
 }
