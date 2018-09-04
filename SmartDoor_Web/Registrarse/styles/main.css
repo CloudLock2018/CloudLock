@@ -6,13 +6,12 @@ body{
 	height: 200px;
 	width: 400px;
 	display: inline-block;
-	margin-right: 8em;
 }
 
 #titulo{
 	text-align: center;
 	display: inline-block;
-	margin-left: 4.5em;
+	margin-left: 2em;
 }
 
 #email{
@@ -20,7 +19,7 @@ body{
 }
 
 #email p{
-	margin-left: 10em;
+	
 }
 
 #email input{
@@ -34,7 +33,7 @@ body{
 }
 
 #ingreso p{
-	margin-left: 10em;
+	
 }
 
 #ingreso input{
@@ -48,7 +47,7 @@ body{
 }
 
 #contraseña p{
-	margin-left: 10em;
+	
 }
 
 #contraseña input{
@@ -62,7 +61,7 @@ body{
 }
 
 #repcon p{
-	margin-left: 10em;
+	
 }
 
 #repcon input{
@@ -78,7 +77,7 @@ body{
 #error{
 	margin-left: 30em;
 	margin-bottom: 1em;
-	display: none;
+	/*display: none;*/
 }
 
 #error img{
