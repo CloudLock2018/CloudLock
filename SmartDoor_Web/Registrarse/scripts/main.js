@@ -7,22 +7,28 @@ var pass2TB = $('#repcontra');
 
 //Function when the button is clicked
 $('#entrar').click(function(){
+	$('#error').css("display", "none");
 	var sEmail = emailTB.val();
 	if (passTB.val() != pass2TB.val()){
-		alert ("Las contraseñas no coinciden");
+		$('#error').show();
+		$('#errText').text("Las contraseñas no coinciden");
 	}
 	//Checks if there is info in the TextBoxes
 	if (nomTB.val().length === 0){
-		alert("Nombre de usuario no ingresado");
+		$('#error').show();
+		$('#errText').text("Nombre de usuario no ingresado");
 	}
 	else if (emailTB.val().length === 0){
-		alert("Email no ingresada");
+		$('#error').show();
+		$('#errText').text("Email no ingresada");
 	}
 	else if (passTB.val().length === 0){
-		alert("Contraseña no ingresada");
+		$('#error').show();
+		$('#errText').text("Contraseña no ingresada");
 	}
 	else if (passTB.val().length === 0){
-		alert("Repetir Contraseña no ingresada");
+		$('#error').show();
+		$('#errText').text("Repetir Contraseña no ingresada");
 	}
 	//Check if the mail could be possible
 	else if (validateEmail(sEmail)) {
@@ -42,10 +48,12 @@ $('#entrar').click(function(){
 	        success: function(data){
 	        	//Checks if the user already exists and alerts
 	        	if (data.msg === 'Error'){
-	        		alert("Nombre de Usuario ya utilizado");
+	        		$('#error').show();
+					$('#errText').text("Nombre de Usuario ya utilizado");
 	        	}
 	        	else if(data.msg === 'Error, mail'){
-	        		alert("Email ya utilizado");
+	        		$('#error').show();
+					$('#errText').text("Email ya utilizado");
 	        	}
 	        	else{
 	        		console.log(data);
@@ -54,7 +62,8 @@ $('#entrar').click(function(){
     	});
 	}
     else {
-        alert('Invalid Email Address');
+    	$('#error').show();
+		$('#errText').text("Email inválido");
     }
 });
 

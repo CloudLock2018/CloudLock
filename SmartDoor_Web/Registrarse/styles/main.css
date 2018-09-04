@@ -2,16 +2,34 @@ body{
 	background-color: #e8e8e8;
 }
 
-#logo{
-	height: 20%;
-	width: 20%;
-	display: inline-block;
+#contain{
+	margin: 0 auto;
+}
+
+#pricol{
+	margin: 0 auto;
+}
+
+#segcol{
+	background-image: url("../images/Icono.png");
+	background-repeat: no-repeat;
+	background-size: 80%;
+	background-position: 30% 40%;
+}
+
+#titu{
+	margin-top: 2em;
+}
+
+#tercol{
+	margin: 0 auto;
 }
 
 #titulo{
 	text-align: center;
 	display: inline-block;
-	margin-left: 2em;
+	margin-left: 2.5em;
+	font-size: 4em;
 }
 
 #email{
@@ -19,13 +37,14 @@ body{
 }
 
 #email p{
-	
+	font-size: 1.5em;
 }
 
 #email input{
-	height: 1em;
-	margin-left: 28.7em;
+	height: 1.2em;
+	margin-left: 11.4em;
 	margin-top: .5em; 
+	font-size: 1.2em;
 }
 
 #ingreso{
@@ -33,13 +52,14 @@ body{
 }
 
 #ingreso p{
-	
+	font-size: 1.5em;
 }
 
 #ingreso input{
-	height: 1em;
-	margin-left: 22.5em;
+	height: 1.2em;
+	margin-left: 4.05em;
 	margin-top: .5em; 
+	font-size: 1.2em;
 }
 
 #contraseña{
@@ -47,13 +67,14 @@ body{
 }
 
 #contraseña p{
-	
+	font-size: 1.5em;
 }
 
 #contraseña input{
-	height: 1em;
-	margin-left: 26.5em;
+	height: 1.2em;
+	margin-left: 8.5em;
 	margin-top: .5em;
+	font-size: 1.2em;
 }
 
 #repcon{
@@ -61,13 +82,14 @@ body{
 }
 
 #repcon p{
-	
+	font-size: 1.5em;
 }
 
 #repcon input{
-	height: 1em;
-	margin-left: 22.5em;
+	height: 1.2em;
+	margin-left: 4.35em;
 	margin-top: .5em;
+	font-size: 1.2em;
 }
 
 #olvidar{
@@ -75,16 +97,15 @@ body{
 }
 
 #error{
-	margin-left: 30em;
-	margin-bottom: 1em;
-	/*display: none;*/
+	margin: 0 auto;
+	margin-top: 1em;
+	display: none;
 }
 
 #error img{
 	height: 30px;
 	width: 30px;
 	display: inline-block;
-	margin-right: 2em;
 }
 
 #error p{
@@ -96,4 +117,13 @@ body{
 #entrar{
 	display: block;
 	margin: auto;
+	border-radius: 4px;
+	font-size: 2em;
+	margin-top: 1em;
+	background-color: rgb(92, 237, 99);
+	border: 2px solid;
+}
+
+.container{
+	margin: 2em;
 }
