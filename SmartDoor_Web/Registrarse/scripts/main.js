@@ -19,6 +19,10 @@ $('#entrar').click(function(){
 		$('#error').show();
 		$('#errText').text("Nombre de usuario no ingresado");
 	}
+	else if (nomTB.val().length > 16){
+		$('#error').show();
+		$('#errText').text("Nombre de usuario muy largo (Máximo: 16 caracteres)");
+	}
 	else if (emailTB.val().length === 0){
 		$('#error').show();
 		$('#errText').text("Email no ingresada");
@@ -27,7 +31,11 @@ $('#entrar').click(function(){
 		$('#error').show();
 		$('#errText').text("Contraseña no ingresada");
 	}
-	else if (passTB.val().length === 0){
+	else if (passTB.val().length > 20){
+		$('#error').show();
+		$('#errText').text("Contraseña muy larga (Máximo: 20 caracteres)");
+	}
+	else if (pass2TB.val().length === 0){
 		$('#error').show();
 		$('#errText').text("Repetir Contraseña no ingresada");
 	}
