@@ -52,6 +52,10 @@ $('#entrar').click(function(){
 	        		$('#error').show();
 					$('#errText').text("Nombre de Usuario ya utilizado");
 	        	}
+	        	else if (data.msg === 'Error, mail'){
+	        		$('#error').show();
+					$('#errText').text("Email ya utilizado");
+	        	}
 	        	else{
 	        		$('#correcto').show();
 					$('#corText').text("Registro realizado correctamente");

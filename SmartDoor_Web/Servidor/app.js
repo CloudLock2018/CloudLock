@@ -30,9 +30,11 @@ var db = admin.firestore();
 var nombreR;
 var contraR;
 var replyR;
+var repetido;
 
 //Receive info from client (Register)
 app.post('/register', function(req, res){
+	repetido = false;
 	//Get info
 	nombreR = req.body.nombre;
 	emailR = req.body.email;
@@ -48,23 +50,36 @@ app.post('/register', function(req, res){
       			};      			
 				res.send(reply);
     		}
-    		//if the doc doesn't exist, then it will create the document in the database and send info to the client
     		else{
-      			usuario.set({
-				    Nombre_de_Usuario: nombreR,
-				    Email: emailR,
-				    Contraseña: contraR
-				})
-				.then(function(docRef) {
-			    	reply = {
-			    		msg: 'Gracias ' + nombreR + ', contraseña: ' + contraR
-			    	};
-					res.send(reply);
-				})
-				//Send error if it happens one
-				.catch(function(error) {
-			    	console.error("Error adding document: ", error);
-				})
+    			//Checks if the email was already used
+    			db.collection("Users").where('Email', '==', emailR).get()
+    				.then(snapshot => {
+     					snapshot.forEach(doc => {
+     						repetido = true;
+     						reply = {
+     							msg: 'Error, mail'
+     						};
+     						res.send(reply);
+     					});
+     					//if the email has never been used before, then it will create a new doc in the DB
+     					if (repetido === false){
+		     				usuario.set({
+								Nombre_de_Usuario: nombreR,
+								Email: emailR,
+								Contraseña: contraR
+							})
+								.then(function(docRef) {
+						    		reply = {
+						    			msg: 'Gracias ' + nombreR + ', contraseña: ' + contraR
+						    		};
+									res.send(reply);
+								})
+								//Send error if it happens one
+								.catch(function(error) {
+						    		console.error("Error adding document: ", error);
+								})
+		     			}
+     				})
 			}
 		})
-})
+});
