@@ -67,7 +67,7 @@ $('#entrar').click(function(){
 	        	else{
 	        		$('#correcto').show();
 					$('#corText').text("Registro realizado correctamente");
-					//$('.container').load('../IniciarSesion/index.html');
+					window.location.href = "../IniciarSesion/index.html";
 	        	}
         	}
     	});
