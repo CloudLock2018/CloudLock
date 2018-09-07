@@ -23,6 +23,10 @@ $('#entrar').click(function(){
 		$('#error').show();
 		$('#errText').text("Nombre de usuario muy largo (Máximo: 16 caracteres)");
 	}
+	else if (nomTB.val().length < 6){
+		$('#error').show();
+		$('#errText').text("Nombre de usuario muy corto (Mínimo: 6 caracteres)");
+	}
 	else if (emailTB.val().length === 0){
 		$('#error').show();
 		$('#errText').text("Email no ingresada");
@@ -34,6 +38,10 @@ $('#entrar').click(function(){
 	else if (passTB.val().length > 20){
 		$('#error').show();
 		$('#errText').text("Contraseña muy larga (Máximo: 20 caracteres)");
+	}
+	else if (passTB.val().length < 6){
+		$('#error').show();
+		$('#errText').text("Contraseña muy corta (Mínimo: 6 caracteres)");
 	}
 	else if (pass2TB.val().length === 0){
 		$('#error').show();
@@ -67,7 +75,9 @@ $('#entrar').click(function(){
 	        	else{
 	        		$('#correcto').show();
 					$('#corText').text("Registro realizado correctamente");
-					window.location.href = "../IniciarSesion/index.html";
+					setTimeout(function(){
+						window.location.href = "../IniciarSesion/index.html";	
+					}, 2000);
 	        	}
         	}
     	});
