@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300, 400, 400i, 700"/>
+	<link rel="shortcut icon" href="./images/IconoCL.png">
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" type="text/css" href="./styles/main.css"/>
-	<title>SmartDoor | Ingresa o regístrate</title>
+	<title>CloudLock | Iniciar sesión</title>
 </head>
-
 <body>
-	<img id="logo" src="./images/Icono.png" alt="Logo">
-	<div id="titulo">
-		<h1>Inicie Sesión</h1>
-		<h3>O <a href=".">regístrese</a>, si aún no tiene cuenta</h3>
-	</div>
-	<div id="ingreso">	
-		<p>Nombre de Usuario o e-mail:</p>
-		<input type="text" name="NU o E">
-	</div>
-	<div id="contraseña">
-		<p>Contraseña:</p>
-		<input type="password" name="contra">
-	</div>
-	<div id="olvidar">
-		<p><a href=".">¿Se ha olvidado la contraseña?</a></p>
-		<p>Aclare el primer casillero</p>
-	</div>
-	<div id="error">
-		<img src="./images/Error.ico" alt="Error" align="center">
-		<p>Nombre de Usuario, e-mail o contraseña incorrecto</p>
-	</div>
-	<button id="entrar">Entrar</button>
-  	<script type="text/javascript" src="./scripts/main.js"></script>
+	<img align="left" id="logo" src="./images/Icono.png" alt="Logo">
+	<h1 id="icon-text">CloudLock</h1>
+	<br>
+	<p id= "descripcion">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut.</p>
+    <div class="contenedor-form">
+        <!-- NO BORRAR --><a></a><!-- NO BORRAR -->        
+        <div class="formulario">
+            <h2><center>Iniciar Sesión</center></h2>
+            <form action="#">
+                <input type="text" placeholder="Usuario o Correo Electrónico" required>
+                <input type="password" id="pass" placeholder="Contraseña" required>
+                <label class="container">
+                <input type="checkbox" name="Mostrar Contraseña" onclick="myFunction()">
+                <span class="checkmark"></span>
+                </label>
+                <span class="show-password"> Mostrar Contraseña</span>
+                <br><br>
+                <input type="submit" value="Entrar">
+            </form>
+        </div>
+        <div class="reset-password">
+            <a href="../CambiarContrase%C3%B1a/index.html">¿Has olvidado la contraseña?</a>
+        </div>
+    </div>
+        <div class="contenedor-registrarse">
+    		<div class="formulario">
+            	<form action="#">
+             	   <p>¿No tienes una cuenta? <a style="text-decoration:none;" href="../Registrarse/index.html">Regístrate</a></p>
+          	  	</form>
+       		</div>
+   		</div>
+<script type="text/javascript" src="./scripts/main.js"></script>
 </body>
 </html>
