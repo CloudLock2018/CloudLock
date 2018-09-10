@@ -143,6 +143,15 @@ body {
     font-size: 16px;
 }
 
+.contenedor-form .reset-password button {
+    background: transparent;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+    font-size: 16px;
+}
+
 .contenedor-form .formulario {
     display: none;
     padding: 30px;

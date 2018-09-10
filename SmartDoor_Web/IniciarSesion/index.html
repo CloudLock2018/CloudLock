@@ -17,7 +17,7 @@
         <div class="formulario">
             <h2><center>Iniciar Sesión</center></h2>
             <form action="#">
-                <input type="text" placeholder="Nombre de Usuario" required>
+                <input type="text" placeholder="Nombre de Usuario" required id="usuario">
                 <input type="password" id="pass" placeholder="Contraseña" required>
                 <label class="container">
                 <input type="checkbox" name="Mostrar Contraseña" onclick="myFunction()">
@@ -25,11 +25,13 @@
                 </label>
                 <span class="show-password"> Mostrar Contraseña</span>
                 <br><br>
-                <input type="submit" value="Entrar">
+                <input type="submit" value="Entrar" id="btn">
             </form>
         </div>
         <div class="reset-password">
-            <a href="../CambiarContrase%C3%B1a/index.html">¿Has olvidado la contraseña?</a>
+            <button>¿Has olvidado la contraseña?</button>
+            <br>
+            <a>Aclare el primer casillero</a>
         </div>
     </div>
         <div class="contenedor-registrarse">
@@ -39,6 +41,7 @@
           	  	</form>
        		</div>
    		</div>
-<script type="text/javascript" src="./scripts/main.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="./scripts/main.js"></script>
 </body>
 </html>

@@ -29,7 +29,6 @@ var db = admin.firestore();
 
 var nombreR;
 var contraR;
-var replyR;
 var repetido;
 
 //Receive info from client (Register)
@@ -80,6 +79,41 @@ app.post('/register', function(req, res){
 								})
 		     			}
      				})
+			}
+		})
+});
+
+
+var nombreL;
+var contraL;
+
+//Receive info from client (Login)
+app.post('/login', function(req, res){
+	//Get info
+	nombreL = req.body.usuario;
+	contraL = req.body.contra;
+	var usuario = db.collection("Users").doc(nombreL);
+	usuario.get()
+		.then(doc =>{
+			if(doc.exists){
+				if(doc.data().Contraseña === contraL){
+					reply = {
+						msg: 'Usuario Encontrado'
+					};
+					res.send(reply);
+				}
+				else{
+					reply = {
+						msg: 'Error, contra'
+					};
+					res.send(reply);
+				}
+			}
+			else{
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.send(reply);
 			}
 		})
 });
