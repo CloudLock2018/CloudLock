@@ -98,3 +98,15 @@ function validateEmail(sEmail) {
 	    return false;
     }
 }
+
+function myFunction() {
+    var x = document.getElementById("contra");
+    var z = document.getElementById("repcontra");
+    if (x.type === "password" && z.type === "password") {
+        x.type = "text";
+        z.type = "text";
+    } else {
+        x.type = "password";
+        z.type = "password";
+    }
+}
