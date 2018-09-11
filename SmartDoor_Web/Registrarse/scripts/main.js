@@ -7,45 +7,56 @@ var pass2TB = $('#repcontra');
 
 //Function when the button is clicked
 $('#entrar').click(function(){
-	$('#error').css("display", "none");
+	$('.error').css("display", "none");
 	$('#correcto').css("display", "none");
+	error.className = "error";
+	error.innerHTML = "";
 	var sEmail = emailTB.val();
 	if (passTB.val() != pass2TB.val()){
 		$('#error').show();
-		$('#errText').text("Las contraseñas no coinciden");
+		error.innerHTML = "Las contraseñas no coinciden";
+    	error.className = "error active";
 	}
 	//Checks if there is info in the TextBoxes
 	if (nomTB.val().length === 0){
-		$('#error').show();
-		$('#errText').text("Nombre de usuario no ingresado");
+		$('.error').show();
+		error.innerHTML = "Nombre de usuario no ingresado";
+    	error.className = "error active";
 	}
 	else if (nomTB.val().length > 16){
 		$('#error').show();
-		$('#errText').text("Nombre de usuario muy largo (Máximo: 16 caracteres)");
+		error.innerHTML = "Nombre de usuario muy largo (Máximo: 16 caracteres)";
+    	error.className = "error active";
 	}
 	else if (nomTB.val().length < 6){
 		$('#error').show();
-		$('#errText').text("Nombre de usuario muy corto (Mínimo: 6 caracteres)");
+		error.innerHTML = "Nombre de usuario muy corto (Mínimo: 6 caracteres)";
+    	error.className = "error active";
 	}
 	else if (emailTB.val().length === 0){
 		$('#error').show();
-		$('#errText').text("Correo electrónico no ingresado");
+		error.innerHTML = "Correo electrónico no ingresado";
+    	error.className = "error active";
 	}
 	else if (passTB.val().length === 0){
 		$('#error').show();
-		$('#errText').text("Contraseña no ingresada");
+		error.innerHTML = "Contraseña no ingresada";
+    	error.className = "error active";
 	}
 	else if (passTB.val().length > 20){
 		$('#error').show();
-		$('#errText').text("Contraseña muy larga (Máximo: 20 caracteres)");
+		error.innerHTML = "Contraseña muy larga (Máximo: 20 caracteres)";
+    	error.className = "error active";
 	}
 	else if (passTB.val().length < 6){
 		$('#error').show();
-		$('#errText').text("Contraseña muy corta (Mínimo: 6 caracteres)");
+		error.innerHTML = "Contraseña muy corta (Mínimo: 6 caracteres)";
+    	error.className = "error active";
 	}
 	else if (pass2TB.val().length === 0){
 		$('#error').show();
-		$('#errText').text("Repetir Contraseña no ingresada");
+		error.innerHTML = "Repetir Contraseña no ingresada";
+    	error.className = "error active";
 	}
 	//Check if the mail could be possible
 	else if (validateEmail(sEmail)) {
@@ -66,16 +77,19 @@ $('#entrar').click(function(){
 	        	//Checks if the user already exists and alerts
 	        	if (data.msg === 'Error'){
 	        		$('#error').show();
-					$('#errText').text("Nombre de Usuario ya utilizado");
+					error.innerHTML = "Nombre de Usuario ya utilizado";
+    				error.className = "error active";
 	        	}
 	        	else if (data.msg === 'Error, mail'){
 	        		$('#error').show();
-					$('#errText').text("Correo electrónico ya utilizado");
+					error.innerHTML = "Correo electrónico ya utilizado";
+    				error.className = "error active";
 	        	}
 	        	else
 	        	{
 	        		$('#correcto').show();
-					$('#corText').text("Registro realizado correctamente");
+					correcto.innerHTML = "Registro realizado correctamente";
+    				correcto.className = "correcto active";
 					setTimeout(function(){
 						window.location.href = "../IniciarSesion/index.html";	
 					}, 2000);
@@ -85,7 +99,8 @@ $('#entrar').click(function(){
 	}
     else {
     	$('#error').show();
-		$('#errText').text("Correo electrónico inválido");
+		error.innerHTML = "Correo electrónico inválido";
+    	error.className = "error active";
     }
 });
 
