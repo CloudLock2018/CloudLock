@@ -232,3 +232,58 @@ body {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+#error{
+  margin-top: 1em;
+  display: none;
+}
+
+#error span{
+  color: rgb(255, 0, 0);
+}
+
+#correcto{
+  margin: 0 auto;
+  margin-top: 1em;
+  display: none;
+}
+
+#correcto span{
+  color: rgb(0, 255, 0);
+}
+
+/* Estos son los estilos para nuestros mensajes de error */
+.error {
+  width  : 100%;
+  padding: 0;
+ 
+  font-size: 80%;
+  color: white;
+  background-color: #900;
+  border-radius: 5px 5px 5px 5px;
+ 
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.error.active {
+  padding: 0.3em;
+}
+
+/* Estos son los estilos para nuestros mensajes de correcto */
+.correcto {
+  width  : 100%;
+  padding: 0;
+ 
+  font-size: 80%;
+  color: white;
+  background-color: #00FE00;
+  border-radius: 5px 5px 5px 5px;
+ 
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.correcto.active {
+  padding: 0.3em;
+}

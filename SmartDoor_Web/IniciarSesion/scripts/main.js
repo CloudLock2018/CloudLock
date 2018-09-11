@@ -11,6 +11,10 @@ var nomTB = $('#usuario');
 var passTB = $('#pass');
 
 $('#btn').click(function(){
+	$('.error').css("display", "none");
+	$('#correcto').css("display", "none");
+	error.className = "error";
+	error.innerHTML = "";
 	var data = {
 		usuario: nomTB.val(),
 		contra: passTB.val()
@@ -23,13 +27,19 @@ $('#btn').click(function(){
 	    data: data, 
 	    success: function(data){
 	    	if(data.msg === 'Error, usuario'){
-	    		alert("ERROR, el usuario no existe");
+	    		$('#error').show();
+				error.innerHTML = "El usuario no existe";
+    			error.className = "error active";
 	    	}
 	    	else if (data.msg === 'Error, contra'){
-	    		alert("ERROR, la contraseña es incorrecta");
+	    		$('#error').show();
+				error.innerHTML = "La contraseña es incorrecta";
+    			error.className = "error active";
 	    	}
 	    	else if (data.msg === 'Usuario Encontrado'){
-	    		alert("Usuario Encontrado");
+	    		$('#correcto').show();
+				correcto.innerHTML = "Usuario Encontrado";
+    			correcto.className = "correcto active";
 	    	}
 	    }
 	});
