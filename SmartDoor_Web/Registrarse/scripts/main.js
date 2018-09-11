@@ -29,7 +29,7 @@ $('#entrar').click(function(){
 	}
 	else if (emailTB.val().length === 0){
 		$('#error').show();
-		$('#errText').text("Email no ingresada");
+		$('#errText').text("Correo electrónico no ingresado");
 	}
 	else if (passTB.val().length === 0){
 		$('#error').show();
@@ -70,9 +70,10 @@ $('#entrar').click(function(){
 	        	}
 	        	else if (data.msg === 'Error, mail'){
 	        		$('#error').show();
-					$('#errText').text("Email ya utilizado");
+					$('#errText').text("Correo electrónico ya utilizado");
 	        	}
-	        	else{
+	        	else
+	        	{
 	        		$('#correcto').show();
 					$('#corText').text("Registro realizado correctamente");
 					setTimeout(function(){
@@ -84,7 +85,7 @@ $('#entrar').click(function(){
 	}
     else {
     	$('#error').show();
-		$('#errText').text("Email inválido");
+		$('#errText').text("Correo electrónico inválido");
     }
 });
 
