@@ -117,3 +117,27 @@ app.post('/login', function(req, res){
 			}
 		})
 });
+
+
+var nombreC;
+
+//Receive info from client (Change Password)
+app.post('/password', function(req, res){
+	nombreC = req.body.usuario;
+	var usuario = db.collection("Users").doc(nombreC);
+	usuario.get()
+		.then(doc => {
+			if(doc.exists){
+				reply = {
+					msg: 'Usuario Encontrado'
+				};
+				res.send(reply);
+			}
+			else{
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.send(reply);
+			}
+		})
+});

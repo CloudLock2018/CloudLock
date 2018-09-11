@@ -19,27 +19,27 @@
             <form action="#">
             	<p>Podemos ayudarte a restablecer tu contraseña usando tu dirección de correo electrónico asociado a tu cuenta.</p>
             	<br>
-                <input type="text" name="NU" id="mail" placeholder="Correo Electrónico" required>
-                <div id="error">
-            <img src="./images/Error.ico" alt="Error" align="center">
-            <span id="errText"></span>
-          </div>
-          <div id="correcto">
-            <img src="./images/Correcto.png">
-            <span id="corText"></span>
-          </div>
-                <input type="button" id="entrar" value="Restablecer contraseña">
+              <input type="text" name="NU" id="usuario" placeholder="Nombre de Usuario" required>
+              <input type="button" id="entrar" value="Restablecer contraseña">
+              <span class="error" aria-live="polite"></span>
+              <span class="correcto" aria-live="polite"></span>
+              <div id="error">
+                <span id="errText"></span>
+              </div>
+              <div id="correcto">
+                <span id="corText"></span>
+              </div>
             </form>
         </div>
     </div>
-        <div class="contenedor-registrarse">
-        	<div class="formulario">
-            	<form action="#">
-             	   <p>¿No tienes una cuenta? <a style="text-decoration:none;" href="../Registrarse/index.html">Regístrate</a></p>
-          	  	</form>
-       		</div>
-   		</div>
+    <div class="contenedor-registrarse">
+     	<div class="formulario">
+       	<form action="#">
+     	   <p>¿No tienes una cuenta? <a style="text-decoration:none;" href="../Registrarse/index.html">Regístrate</a></p>
+      	</form>
+    	</div>
+   	</div>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  	<script type="text/javascript" src="./scripts/main.js"></script>
+  <script type="text/javascript" src="./scripts/main.js"></script>
 </body>
 </html>
