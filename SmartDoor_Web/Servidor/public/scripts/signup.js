@@ -1,4 +1,4 @@
-console.log("Corriendo");
+console.log("Corriendo Registro");
 
 var nomTB = $('#nombre');
 var emailTB = $('#mail');
@@ -69,7 +69,7 @@ $('#entrar').click(function(){
 		}
 		//Sends data to the server
 		$.ajax({
-	        url: 'http://localhost:3000/register',
+	        url: '/register',
 	        type: "POST",
 	        dataType: "json",
 	        data: data,
@@ -91,7 +91,7 @@ $('#entrar').click(function(){
 					correcto.innerHTML = "Registro realizado correctamente";
     				correcto.className = "correcto active";
 					setTimeout(function(){
-						window.location.href = "../IniciarSesion/index.html";	
+						window.location.href = "../index.html";	
 					}, 2000);
 	        	}
         	}

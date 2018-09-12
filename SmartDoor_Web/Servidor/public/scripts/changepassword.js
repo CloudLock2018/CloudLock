@@ -1,3 +1,5 @@
+console.log("Corriendo contraseña");
+
 var nomTB = $('#usuario');
 var passTB = $('#contra');
 var pass2TB = $('#repcontra');
@@ -38,7 +40,7 @@ $('#entrar').click(function(){
 			contra: passTB.val() 
 		};
 		$.ajax({
-			url: 'http://localhost:3000/password',
+			url: '/password',
 			type: "POST",
 		    dataType: "json",
 		    data: data,

@@ -1,3 +1,5 @@
+console.log("Corriendo Inicio de Sesion");
+
 function myFunction() {
     var x = document.getElementById("pass");
     if (x.type === "password") {
@@ -21,7 +23,7 @@ $('#btn').click(function(){
 	}
 	console.log(data);
 	$.ajax({
-		url: 'http://localhost:3000/login',
+		url: '/login',
 		type: "POST",
 	    dataType: "json",
 	    data: data, 
@@ -40,8 +42,11 @@ $('#btn').click(function(){
 	    		$('#correcto').show();
 				correcto.innerHTML = "Usuario Encontrado";
     			correcto.className = "correcto active";
-    			document.cookie = "username=" + nomTB.val();
-    			window.location.href = "../AdministrarCuentas/index.html";
+				var date = new Date();
+				var minutes = 30;
+				date.setTime(date.getTime() + (minutes * 60 * 1000));
+    			document.cookie = "username=" + nomTB.val() + "; expires=" + date.toUTCString() + ";"
+    			window.location.href = "../admin.html";
 	    	}
 	    }
 	});
