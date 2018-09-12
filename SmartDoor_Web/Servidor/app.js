@@ -7,6 +7,7 @@ var app = express();
 
 //Set up Server
 app.listen(3000, function(){console.log('Listen on port 3000')});
+app.use('/static', express.static('public'));
 //Set up BodyParse
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -120,16 +121,21 @@ app.post('/login', function(req, res){
 
 
 var nombreC;
+var contraC;
 
 //Receive info from client (Change Password)
 app.post('/password', function(req, res){
 	nombreC = req.body.usuario;
+	contraC = req.body.contra;
 	var usuario = db.collection("Users").doc(nombreC);
 	usuario.get()
 		.then(doc => {
 			if(doc.exists){
+				usuario.update({
+					Contraseña: contraC
+				});
 				reply = {
-					msg: 'Usuario Encontrado'
+					msg: 'Contraseña Actualizada'
 				};
 				res.send(reply);
 			}
@@ -141,3 +147,7 @@ app.post('/password', function(req, res){
 			}
 		})
 });
+
+app.post('/', function(req, res){
+	console.log("Hola");
+})

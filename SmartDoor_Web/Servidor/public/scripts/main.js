@@ -40,6 +40,8 @@ $('#btn').click(function(){
 	    		$('#correcto').show();
 				correcto.innerHTML = "Usuario Encontrado";
     			correcto.className = "correcto active";
+    			document.cookie = "username=" + nomTB.val();
+    			window.location.href = "../AdministrarCuentas/index.html";
 	    	}
 	    }
 	});
