@@ -1,4 +1,5 @@
-//Server Location: C:\Users\43871824\Documents\4to TIC\Proyecto Final\CloudLock\SmartDoor_Web\Servidor
+//Server Location (Axel): C:\Users\43871824\Documents\4to TIC\Proyecto Final\CloudLock\SmartDoor_Web\Servidor
+//Server Location (Joako): C:\Users\43322826\Documents\GitHub\CloudLock\SmartDoor_Web\Servidor
 
 //Initialize Express (Server)
 var express = require('express');
