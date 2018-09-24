@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300, 400, 400i, 700"/>
+	<link rel="shortcut icon" href="./images/IconoCL.png">
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" type="text/css" href="./styles/admin.css"/>
-	<title>SmartDoor | Ingresa o regístrate</title>
+	<title>CloudLock | Administrador de Cuentas</title>
 </head>
 
 <body>
-	<nav class="mainNav">
-		<img src="./images/IconoCL.png" alt="Logo" width="70" height="40" />
-		<div>	
-			<span id="name"></span>
-		</div>
-	</nav>
-	<h1 id="titulo">Administar Cuentas</h1>
-	<h2 id="usuarios">Usuarios:</h2>
-	<h3 class="user">Usuario</h3>
-	<h3 class="pass">IMEI</h3>
-	<button id="agregar">Agregar Usuario</button>
+    <div class="contenedor">
+    	<img align="left" id="logo" src="./images/Icono.png" alt="Logo">
+    	<span id="icon-text">CloudLock</span>
+    	<button class="button" id="editar">✎</button>
+    	<button class="button" id="eliminar">-</button>
+    	<button class="button" id="agregar">+</button>
+   	</div>
+   	
+   	<div class="contenedorAdmin">
+	    <span class="user">Usuario </span>
+  	    <span id="admin"> (Administrador)</span>
+  	    <span class="IMEI">IMEI</span>
+	</div>
+	
+	<div class="contenedor2" id="1">
+	    <span id="users">Usuario1</span>
+  	    <span class="IMEI">IMEI</span>
+	</div>
+
+	<div class="contenedor2" id="2">
+	    <span id="users">Usuario2</span>
+  	    <span class="IMEI">IMEI</span>
+	</div>
+
+	<div class="contenedor2" id="3">
+	    <span id="users">Usuario3</span>
+  	    <span class="IMEI">IMEI</span>
+	</div>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   	<script type="text/javascript" src="./scripts/admin.js"></script>
 </body>

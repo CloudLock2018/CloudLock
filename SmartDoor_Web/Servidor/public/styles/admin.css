@@ -1,48 +1,115 @@
-body{
-	background-color: #e8e8e8;
+* {
+ 	margin: 0;
+  	padding: 0;
+  	-webkit-box-sizing: border-box;
+  	-moz-box-sizing: border-box;
+  	box-sizing: border-box;
 }
 
-nav.mainNav{
-	background: rgb(126, 126, 126);
-	height: 3em;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+body {
+	background: url(../images/Fondo.jpg);
+	background-position: center; 
+	background-size: cover;
+	background-attachment: fixed;
+  	background-color: rgba(200,100,0,.5);
+  	background-blend-mode: multiply;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
-nav.mainNav img{
-	display: block;
-	width: auto;
-	height: 2em;
+#logo {
+  	width:50px;
 }
 
-nav.mainNav div{
-	margin: 0 2em;
+#icon-text {
+	font-size: 32px;
+	color: #00bcd4;
+	font-weight: bold;
 }
 
-nav.mainNav div span{
-	font-size: .85em;
+.contenedor {
+ 	background-color: white;
+ 	max-width: 1100px;
+ 	width: 100%;
+ 	border-radius: 10px;
+ 	color: #fff;
+ 	padding: 30px;
+ 	margin: 50px auto;
 }
 
-#titulo{
+.contenedorAdmin  {
+ 	background-color: white;
+ 	max-width: 1100px;
+ 	width: 100%;
+ 	border-radius: 10px;
+ 	color: #fff;
+ 	padding: 30px;
+ 	margin: -20px auto;
+ 	margin-bottom: 40px;
 	text-align: center;
 }
 
-#usuarios{
-	display: inline-block;
+.contenedor2  {
+	display: none;
+ 	background-color: white;
+ 	max-width: 1100px;
+ 	width: 100%;
+ 	border-radius: 10px;
+ 	color: #fff;
+ 	padding: 30px;
+ 	margin: -20px auto;
+ 	margin-bottom: 40px;
+	text-align: center;
 }
 
-.user{
-	display: inline-block;
-	margin-left: 22em;
+.contenedorAdmin .user {
+  	color: black;
+	font-weight: bold;
+	float: left;
 }
 
-.pass{
-	display: inline-block;
-	margin-left: 11em;
+.contenedor .button {
+	float: right;
+    background: #FF851B;
+    color: #FFF;
+    border: none;
+    padding: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Source Sans Pro', sans-serif;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 100%;
+    transition: all .5s ease;
+    margin-right: 10px;
+    width: 50px;
+    margin-top: -5px;
 }
 
-#agregar{
-	display:block;
-	margin:0 auto;
+#editar{
+    font-size: 19px;
+}
+
+#eliminar{
+    font-size: 40px;
+    padding: 0px;
+}
+
+#admin{
+	color: gray;
+	font-style: italic;
+	float: left;
+}
+
+#users{
+	color: black;
+	font-weight: bold;
+	float: left;
+}
+
+.IMEI{
+	color: black;
+}
+
+.contenedor .button:hover {
+    background: rgba(0, 117, 217, 0.7);
 }
