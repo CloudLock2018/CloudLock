@@ -1,6 +1,6 @@
 console.log("Corriendo Administrador");
 
-/*var misCookies = document.cookie;
+var misCookies = document.cookie;
 
 function leerCookie(nombre) {
  var lista = document.cookie.split(";");
@@ -20,24 +20,33 @@ function leerCookie(nombre) {
 return valor;
 }
 document.getElementById("name").innerHTML = leerCookie("username");
-*/
+
 var num = 0;
+var agreg = false;
 
 $('#agregar').click(function(){
-    if (num === 0) {
-    document.getElementById("1").style.display = "block";
-    console.log("agregar");
-    num += 1;
-} else if (num === 1) {
-    document.getElementById("2").style.display = "block";
-    console.log("agregar");
-    num += 1;
-} else if (num === 2) {
-    document.getElementById("3").style.display = "block";
-    console.log("agregar");
-    num += 1;
-}
-    
+	if (agreg === false){
+		var agregarNombre = "<div class='contenedor2'><input id='nombre'><input type='button' value='Entrar' id='btn'></div>";
+		$(".contenedor2").show();
+		$("#nombre").show();
+		$("#btn").show();
+		$(agregarNombre).appendTo(".subusuarios");
+		agreg = true;
+	}
+	else
+	{
+		alert("Agregue un nombre");
+	}
+})
+
+$('#btn').click(function(){
+	if ($('#nombre').val().length === 0){
+		alert("Agregue un nombre");
+	}
+	else
+	{
+		agreg = false;
+	}
 })
 
 $('#eliminar').click(function(){
