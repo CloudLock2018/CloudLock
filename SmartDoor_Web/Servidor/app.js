@@ -67,7 +67,8 @@ app.post('/register', function(req, res){
 		     				usuario.set({
 								Nombre_de_Usuario: nombreR,
 								Email: emailR,
-								Contraseña: contraR
+								Contraseña: contraR,
+								IMEI: null
 							})
 								.then(function(docRef) {
 						    		reply = {
