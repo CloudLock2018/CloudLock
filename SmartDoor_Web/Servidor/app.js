@@ -29,6 +29,8 @@ admin.initializeApp({
 // Initialize Cloud Firestore through Firebase
 var db = admin.firestore();
 
+
+//---------------------------------------WEB----------------------------------------------------//
 var nombreR;
 var contraR;
 var repetido;
@@ -150,6 +152,4 @@ app.post('/password', function(req, res){
 		})
 });
 
-app.post('/', function(req, res){
-	console.log("Hola");
-})
+//-------------------------------------ADAFRUIT API---------------------------------------------//
