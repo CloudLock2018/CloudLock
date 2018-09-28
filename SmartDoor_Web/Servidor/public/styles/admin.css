@@ -68,7 +68,8 @@ body {
 }
 
 .contenedor .button,
-.contenedor2 .button {
+.contenedor2 .button,
+.contenedor2 .error {
 	float: right;
     background: #FF851B;
     color: #FFF;
@@ -87,7 +88,8 @@ body {
 }
 
 .contenedor .button:hover,
-.contenedor2 .button:hover {
+.contenedor2 .button:hover,
+.contenedor2 .error:hover {
     background: rgba(0, 117, 217, 0.7);
 }
 

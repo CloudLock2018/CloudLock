@@ -21,46 +21,52 @@ return valor;
 }
 document.getElementById("name").innerHTML = leerCookie("username");
 */
+agre();
+borrar();
 var num = 0;
+var elegido = 0;
 var agreg = false;
 
-$('#agregar').click(function(){
-	if (agreg === false){
-		var agregarNombre = "<div id='" + num + "' class='contenedor2'><input type='text' placeholder='Usuario' id='nombre'><input class='button' type='button' value='✖' id='bton'><input class='button' type='button' value='✔' id='btn'></div>";
-		$(".contenedor2").show();
-		$("#nombre").show();
-		$("#btn").show();
-		$(agregarNombre).appendTo(".subusuarios");
-		agreg = true;
-	}
-	else
-	{
-		alert("Agregue un nombre");
-	}
-})
 
-$('#btn').click(function(){
+function agre(){
+	$('#agregar').click(function(){
+		if (num === 0){
+			$("#0").show();
+			agreg = true;
+		}
+		else {
+			if (agreg === false){
+				console.log(num);
+				var agregarNombre = "<div id='" + num + "' class='contenedor2'><input type='text' placeholder='Usuario' id='" + num + "'><input class='error' type='button' value='✖' id='" + num + "'><input class='button' type='button' value='✔' id='" + num + "'></div>";
+				$(agregarNombre).appendTo(".subusuarios");
+				$('.contenedor2').show();
+				agreg = true;
+				borrar();
+			}
+			else
+			{
+				alert("Agregue un nombre");
+			}
+		}
+	})
+}
+/*$('.button').click(function(){
 	if ($('#nombre').val().length === 0){
 		alert("Agregue un nombre");
 	}
 	else
 	{
-		num += 1
+		num += 1;
 		agreg = false;
 	}
-})
+})*/
 
-$('#eliminar').click(function(){
-    console.log("eliminar");
-})
-
-$('#bton').click(function(){
-	console.log(num);
-	console.log('.contenedor2 #' + num);
-    $('#' + num).hide();
-    agreg = false;
-})
-
-$('#editar').click(function(){
-    console.log("editar");
-})
+function borrar(){
+	$('.error').click(function(){
+		elegido = this.id;
+		console.log(elegido);
+    	$('#' + elegido).closest("div").remove();
+    		num += 1;
+    		agreg = false;
+ 	});  
+}
