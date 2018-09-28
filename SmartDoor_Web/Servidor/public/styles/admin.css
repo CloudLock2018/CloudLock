@@ -55,7 +55,7 @@ body {
  	width: 100%;
  	border-radius: 10px;
  	color: #fff;
- 	padding: 30px;
+ 	padding: 30px 0 70px;
  	margin: -20px auto;
  	margin-bottom: 40px;
 	text-align: center;
@@ -67,7 +67,8 @@ body {
 	float: left;
 }
 
-.contenedor .button {
+.contenedor .button,
+.contenedor2 .button {
 	float: right;
     background: #FF851B;
     color: #FFF;
@@ -83,6 +84,11 @@ body {
     margin-right: 10px;
     width: 50px;
     margin-top: -5px;
+}
+
+.contenedor .button:hover,
+.contenedor2 .button:hover {
+    background: rgba(0, 117, 217, 0.7);
 }
 
 #editar{
@@ -110,6 +116,34 @@ body {
 	color: black;
 }
 
-.contenedor .button:hover {
-    background: rgba(0, 117, 217, 0.7);
+#bton{
+  margin-right: 40px
 }
+
+.nombre, #btn{
+  display: inline-block;
+}
+
+.contenedor2 input[type="text"] {
+    float: left;
+    outline: none;
+    display: block;
+    width: 20%;
+    padding: 8px 15px;
+    margin: 0 0 20px 20px;
+    background: #ffffff;
+    border-color: #e0e0e0;
+    border-width: thin;
+    border-radius: 10px;
+    border-bottom: 4px solid #ff851b;
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    transition: all .5s ease;
+}
+
+.contenedor2 input[type="text"]:focus {
+    border-bottom: 4px solid #0075d9;
+}
+
