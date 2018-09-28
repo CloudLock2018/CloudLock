@@ -26,18 +26,20 @@ borrar();
 var num = 0;
 var elegido = 0;
 var agreg = false;
-
+var clickeado = 0;
 
 function agre(){
 	$('#agregar').click(function(){
-		if (num === 0){
+		if (num === 0 && clickeado === 0){
 			$("#0").show();
 			agreg = true;
+            clickeado += 1;
 		}
 		else {
 			if (agreg === false){
+                num += 1;
 				console.log(num);
-				var agregarNombre = "<div id='" + num + "' class='contenedor2'><input type='text' placeholder='Usuario' id='" + num + "'><input class='error' type='button' value='✖' id='" + num + "'><input class='button' type='button' value='✔' id='" + num + "'></div>";
+				var agregarNombre = "<div id='" + num + "' class='contenedor2'><input class='member' type='text' placeholder='Usuario' id='" + num + "'><input class='error' type='button' value='✖' id='" + num + "'><input class='buttons' type='button' value='✔' id='" + num + "'></div>";
 				$(agregarNombre).appendTo(".subusuarios");
 				$('.contenedor2').show();
 				agreg = true;
@@ -50,16 +52,19 @@ function agre(){
 		}
 	})
 }
-/*$('.button').click(function(){
-	if ($('#nombre').val().length === 0){
-		alert("Agregue un nombre");
-	}
-	else
-	{
-		num += 1;
-		agreg = false;
-	}
-})*/
+
+$('.buttons').click(function(){
+    if ($('.member').val().length > 0 && clickeado > 0)
+    {
+        agreg = false;
+        console.log("si");
+    }
+    else
+    {
+        console.log("no");
+        agreg = true;
+    }
+});
 
 function borrar(){
 	$('.error').click(function(){
@@ -70,3 +75,7 @@ function borrar(){
     		agreg = false;
  	});  
 }
+
+$('#editar').click(function(){
+    console.log("editar");
+})

@@ -68,7 +68,7 @@ body {
 }
 
 .contenedor .button,
-.contenedor2 .button,
+.contenedor2 .buttons,
 .contenedor2 .error {
 	float: right;
     background: #FF851B;
@@ -82,13 +82,17 @@ body {
     cursor: pointer;
     border-radius: 100%;
     transition: all .5s ease;
-    margin-right: 10px;
+    margin-right: 17px;
     width: 50px;
     margin-top: -5px;
 }
 
+.contenedor2 .error {
+    margin-right: 50px;
+}
+
 .contenedor .button:hover,
-.contenedor2 .button:hover,
+.contenedor2 .buttons:hover,
 .contenedor2 .error:hover {
     background: rgba(0, 117, 217, 0.7);
 }
@@ -132,7 +136,7 @@ body {
     display: block;
     width: 20%;
     padding: 8px 15px;
-    margin: 0 0 20px 20px;
+    margin: 0 0 20px 27px;
     background: #ffffff;
     border-color: #e0e0e0;
     border-width: thin;
