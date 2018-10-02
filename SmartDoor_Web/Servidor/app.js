@@ -100,7 +100,9 @@ app.post('/login', function(req, res){
 	var usuario = db.collection("Users").doc(nombreL);
 	usuario.get()
 		.then(doc =>{
+			//Checks if the username exists
 			if(doc.exists){
+				//Checks if the password set is equal to the password written
 				if(doc.data().Contraseña === contraL){
 					reply = {
 						msg: 'Usuario Encontrado'
@@ -135,6 +137,7 @@ app.post('/password', function(req, res){
 	usuario.get()
 		.then(doc => {
 			if(doc.exists){
+				//Updates user's password (insecure)
 				usuario.update({
 					Contraseña: contraC
 				});
@@ -151,5 +154,67 @@ app.post('/password', function(req, res){
 			}
 		})
 });
+
+
+var usuarioA;
+var subusuarioA;
+
+//Receive info from client (Admin - IMEI & subuser already saved)
+app.post('/imei', function(req, res){
+	usuarioA = req.body.usuario;
+	var usuario = db.collection("Users").doc(usuarioA);
+	usuario.get()
+		.then(doc =>{
+			if(doc.exists){
+				//Checks if user's IMEI is null or not
+				if(doc.data().IMEI === null){
+					reply = {
+						msg: 'No imei'
+					};
+					res.send(reply);
+				}
+				else{
+					reply = {
+						msg: 'Hay imei',
+						imei: doc.data().IMEI
+					}
+					res.send(reply);
+				}
+			}
+		})
+});
+
+//Receive info from client (Admin - Save new subuser)
+app.post('/subuser', function(req, res){
+	usuarioA = req.body.usuario;
+	subusuarioA = req.body.subusuario;
+	var usuario = db.collection("Users").doc(usuarioA).collection("Subusers").doc(subusuarioA);
+	usuario.get()
+		//Check if the doc already exists and send an error if happens
+		.then(doc => {
+    		if (doc.exists) {
+      			reply = {
+      				msg: 'Error'
+      			};      			
+				res.send(reply);
+    		}
+    		else{
+    			usuario.set({
+					Nombre_de_Subusuario: subusuarioA,
+					IMEI: null
+				})
+				.then(function(docRef) {
+			   		reply = {
+			   			msg: 'Gracias'
+			   		};
+					res.send(reply);
+				})
+				//Send error if it happens one
+				.catch(function(error) {
+			   		console.error("Error adding document: ", error);
+				})
+    		}
+    	})
+})
 
 //-------------------------------------ADAFRUIT API---------------------------------------------//
