@@ -34,11 +34,13 @@ $.ajax({
     data: data,
     success: function(data){
         if(data.msg === 'No imei'){
+        	$('.INFO').show();
             $('.INFO').text("No existe un IMEI vinculado a su cuenta. Por favor, apoye su celular sobre la placa NFC");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
         }
         else if (data.msg === 'Hay imei'){
+        	$('.INFO').show();
             $('.INFO').text("Se encontro el IMEI vinculado a su cuenta.");
             $('.INFO').css("color", "#49ff00");
             $('.INFO').css("font-weight", "Bold");
@@ -79,7 +81,10 @@ function agre(){
 			}
 			else
 			{
-				alert("Agregue un nombre");
+				$('.INFO').show();
+				$('.INFO').text("Agregue un nombre");
+				$('.INFO').css("color", "red");
+            	$('.INFO').css("font-weight", "Bold");
 			}
 		}
 	})
@@ -88,8 +93,10 @@ function agre(){
 //Saves the new subuser
 function nuevo(){
     $('.buttons').click(function(){
+    	elegido = this.id;
         if ($('.member').val().length > 0 && clickeado > 0)
         {
+        	var subusuario = $('.member').val();
             var data = {
                 usuario: document.getElementById("name").textContent,
                 subusuario: $('.member').val()
@@ -101,12 +108,21 @@ function nuevo(){
                 data: data,
                 success: function(data){
                     if (data.msg === 'Error'){
+                    	$('.INFO').show();
                     	$('.INFO').text("El subusuario ya existe");
+                    	$('.INFO').css("color", "red");
+            			$('.INFO').css("font-weight", "Bold");
                     }
                     else if (data.msg === 'Gracias'){
-                        elegido = this.id;
-    					$('#' + elegido).closest("div").remove();
+                        $('#' + elegido).closest("div").remove();
+    					var agregarSub = "<div id='" + num + "' class='contenedor3'><span class='sub' id='"+ num +"'></span><span class='IMEI' id='"+ num +"'>IMEI</span><input class='eliminar' type='button' value='✖' id='" + num + "'><input class='cambiar' type='button' value='✎' id='" + num + "'></div>";
+    					$(agregarSub).appendTo(".subusuarios");
+    					$('.sub').text(subusuario);
+    					$('.contenedor3').show();
+    					$('.INFO').show();
     					$('.INFO').text("Subusuario agregado");
+    					$('.INFO').css("color", "#49ff00");
+            			$('.INFO').css("font-weight", "Bold");
                     }
                 }
             })

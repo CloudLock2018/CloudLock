@@ -49,7 +49,23 @@ body {
 	text-align: center;
 }
 
-.contenedor2  {
+.subusuarios {
+  background-color: white;
+  max-width: 1100px;
+  width: 100%;
+  border-radius: 10px;
+  color: #fff;
+  margin: -20px auto;
+  text-align: center;
+}
+
+.contenedor3 .sub {
+  margin-left: 30px;
+  margin-top: 8px;
+}
+
+.contenedor2,
+.contenedor3  {
 	display: none;
  	background-color: white;
  	max-width: 1100px;
@@ -62,15 +78,22 @@ body {
 	text-align: center;
 }
 
-.contenedorAdmin .user {
-  	color: black;
+.contenedor3 {
+    padding: 30px 0 50px;
+}
+
+.contenedorAdmin .user,
+.contenedor3 .sub {
+  color: black;
 	font-weight: bold;
 	float: left;
 }
 
 .contenedor .button,
 .contenedor2 .buttons,
-.contenedor2 .error {
+.contenedor2 .error,
+.contenedor3 .eliminar,
+.contenedor3 .cambiar {
 	float: right;
     background: #FF851B;
     color: #FFF;
@@ -88,13 +111,16 @@ body {
     margin-top: -5px;
 }
 
-.contenedor2 .error {
+.contenedor2 .error, 
+.contenedor3 .eliminar{
     margin-right: 50px;
 }
 
 .contenedor .button:hover,
 .contenedor2 .buttons:hover,
-.contenedor2 .error:hover {
+.contenedor2 .error:hover,
+.contenedor3 .eliminar:hover,
+.contenedor3 .cambiar:hover {
     background: rgba(0, 117, 217, 0.7);
 }
 
@@ -126,6 +152,14 @@ body {
 .IMEI,
 .INFO {
 	color: black;
+}
+
+.contenedor3 .IMEI {
+  margin-top: 30px;
+}
+
+.INFO{
+  display: none;
 }
 
 #bton{
