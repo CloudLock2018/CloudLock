@@ -44,32 +44,12 @@ $.ajax({
     }
 })
 
-// Gets the value of num that was saved in the cookie
-/*function cookieNum(numero) {
-    var lista = document.cookie.split(";");
-     for (i in lista) {
-         var busca = lista[i].search(numero);
-         if (busca > -1) 
-            {
-                micookie = lista[i];
-            }
-        else
-            {
-                micookie = 0;
-            }
-     }
- var igual = micookie.indexOf("=");
- var valor = micookie.substring(igual+1);
-return valor;
-}
-*/
-
 agre();
 nuevo();
 borrar();
 editar();
 
-var num = /*cookieNum("ultagreg")*/ 0;
+var num = 0;
 var elegido = 0;
 var agreg = false;
 var clickeado = 0;
@@ -120,16 +100,14 @@ function nuevo(){
                         alert("El subusuario ya existe");
                     }
                     else if (data.msg === 'Gracias'){
-                        $('.contenedor2').remove();
+                        elegido = this.id;
+    					$('#' + elegido).closest("div").remove();
                         alert("Subusuario agregado");
                     }
                 }
             })
             agreg = false;
             num += 1;
-            console.log(num);
-            //Sets cookie for the last subuser was set. This avoids being an id used more than once
-            //document.cookie = "ultagreg=" + num + "; expires=Fri, 31 Dec 9999 23:59:59 GMT;"
         }
         else
         {
