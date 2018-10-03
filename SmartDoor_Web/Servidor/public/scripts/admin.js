@@ -34,10 +34,14 @@ $.ajax({
     data: data,
     success: function(data){
         if(data.msg === 'No imei'){
-            alert("No existe un IMEI vinculado a su cuenta. Por favor, apoye su celular sobre la placa NFC");
+            $('.INFO').text("No existe un IMEI vinculado a su cuenta. Por favor, apoye su celular sobre la placa NFC");
+            $('.INFO').css("color", "red");
+            $('.INFO').css("font-weight", "Bold");
         }
         else if (data.msg === 'Hay imei'){
-            alert("IMEI encontrado");
+            $('.INFO').text("Se encontro el IMEI vinculado a su cuenta.");
+            $('.INFO').css("color", "#49ff00");
+            $('.INFO').css("font-weight", "Bold");
             //Shows IMEI
             $('.IMEI').text("IMEI: " + data.imei);
         }
@@ -97,12 +101,12 @@ function nuevo(){
                 data: data,
                 success: function(data){
                     if (data.msg === 'Error'){
-                        alert("El subusuario ya existe");
+                    	$('.INFO').text("El subusuario ya existe");
                     }
                     else if (data.msg === 'Gracias'){
                         elegido = this.id;
     					$('#' + elegido).closest("div").remove();
-                        alert("Subusuario agregado");
+    					$('.INFO').text("Subusuario agregado");
                     }
                 }
             })
