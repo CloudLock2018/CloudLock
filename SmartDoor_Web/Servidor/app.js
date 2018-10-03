@@ -218,3 +218,29 @@ app.post('/subuser', function(req, res){
 })
 
 //-------------------------------------ADAFRUIT API---------------------------------------------//
+/*var mqtt = require('mqtt');
+var prueba = 'CloudlockTeam/f/prueba';
+
+var client  = mqtt.connect('mqtt://io.adafruit.com', {
+	port: 1883,
+	username: 'CloudlockTeam',
+	password: '17d40238f10342fdb884cf02a62db208'
+});
+
+client.on('connect', function () {
+  client.subscribe(prueba)
+});
+
+client.on('connect', function() {
+	client.publish(prueba, 'Hola')
+});
+
+client.on('error', (error) => {
+	console.log('MQTT Client Errored');
+    console.log(error);
+})
+
+client.on('message', function (topic, message) {
+  // message is Buffer
+  console.log(message.toString());
+})*/
