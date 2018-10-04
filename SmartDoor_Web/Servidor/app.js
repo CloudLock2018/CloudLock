@@ -158,6 +158,9 @@ app.post('/password', function(req, res){
 
 var usuarioA;
 var subusuarioA;
+var subusuarios = null;
+var cant = 1;
+var hay = true;
 
 //Receive info from client (Admin - IMEI & subuser already saved)
 app.post('/imei', function(req, res){
@@ -174,11 +177,27 @@ app.post('/imei', function(req, res){
 					res.send(reply);
 				}
 				else{
-					reply = {
-						msg: 'Hay imei',
-						imei: doc.data().IMEI
-					}
-					res.send(reply);
+					usuario.collection("Subusers").get().then(function(querySnapshot) {
+    					querySnapshot.forEach(function(doc) {
+    						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+    						cant += 1;
+   						});
+   						console.log(subusuarios);
+   						if (subusuarios === null){
+   							hay = false;
+   						}
+						reply = {
+							msg: 'Hay imei',
+							imei: doc.data().IMEI,
+							contenido: subusuarios,
+							cantidad: cant,
+							existe: hay
+						}
+						res.send(reply);
+						cant = 1;
+						subusuarios = null;
+						hay = true;
+					});
 				}
 			}
 		})
@@ -204,7 +223,7 @@ app.post('/subuser', function(req, res){
 					IMEI: null
 				})
 				.then(function(docRef) {
-			   		reply = {
+					reply = {
 			   			msg: 'Gracias'
 			   		};
 					res.send(reply);

@@ -1,7 +1,11 @@
 console.log("Corriendo Administrador");
 
 var misCookies = document.cookie;
-
+var num = 0;
+var elegido = 0;
+var agreg = false;
+var guardasub = 0;
+var clickeado = 0;
 
 //Gets the username saved in the cookie 
 function leerCookie(nombre) {
@@ -46,6 +50,12 @@ $.ajax({
             $('.INFO').css("font-weight", "Bold");
             //Shows IMEI
             $('.IMEI').text("IMEI: " + data.imei);
+            console.log(data.contenido);
+            if(data.existe === true){
+                document.querySelector(".subusuarios").innerHTML += data.contenido;
+                $('.contenedor3').show();
+                guardasub = data.cantidad;
+            }
         }
     }
 })
@@ -55,11 +65,6 @@ nuevo();
 borrar();
 editar();
 
-var num = 0;
-var elegido = 0;
-var agreg = false;
-var clickeado = 0;
-
 //Creates new subusers
 function agre(){
 	$('#agregar').click(function(){
@@ -68,6 +73,7 @@ function agre(){
 			$("#0").show();
 			agreg = true;
             clickeado += 1;
+            num = guardasub;
 		}
 		else {
 			if (agreg === false){
@@ -127,7 +133,7 @@ function nuevo(){
                 }
             })
             agreg = false;
-            num += 1;
+            num ++;
         }
         else
         {
