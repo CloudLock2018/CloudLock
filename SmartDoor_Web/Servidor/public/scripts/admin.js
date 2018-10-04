@@ -1,11 +1,10 @@
 console.log("Corriendo Administrador");
 
 var misCookies = document.cookie;
-var num = 0;
-var elegido = 0;
+var elegido;
 var agreg = false;
 var guardasub = 0;
-var clickeado = 0;
+var subusuario;
 
 //Gets the username saved in the cookie 
 function leerCookie(nombre) {
@@ -64,45 +63,35 @@ agre();
 nuevo();
 borrar();
 editar();
+eliminar();
+editarSub();
 
 //Creates new subusers
 function agre(){
 	$('#agregar').click(function(){
-        //When it is the first time you save a new subuser
-		if (num === 0 && clickeado === 0){
-			$("#0").show();
-			agreg = true;
-            clickeado += 1;
-            num = guardasub;
-		}
-		else {
-			if (agreg === false){
-                //Adds new textbox and buttons to the set or delete new subuser
-                var agregarNombre = "<div id='" + num + "' class='contenedor2'><input class='member' type='text' placeholder='Usuario' id='" + num + "'><input class='error' type='button' value='✖' id='" + num + "'><input class='buttons' type='button' value='✔' id='" + num + "'></div>";
-				$(agregarNombre).appendTo(".subusuarios");
-				$('.contenedor2').show();
-				agreg = true;
-                nuevo();
-                borrar();
-			}
-			else
-			{
-				$('.INFO').show();
-				$('.INFO').text("Agregue un nombre");
-				$('.INFO').css("color", "red");
-            	$('.INFO').css("font-weight", "Bold");
-			}
-		}
+        if (agreg === false){
+            //Adds new textbox and buttons to the set or delete new subuser
+            $('.contenedor2').show();
+            agreg = true;
+            $('#agregar').css("display", "none");
+            nuevo();
+            borrar();
+        }
+        else
+        {
+            $('.INFO').show();
+            $('.INFO').text("Agregue un nombre");
+            $('.INFO').css("color", "red");
+            $('.INFO').css("font-weight", "Bold");
+        }
 	})
 }
 
 //Saves the new subuser
 function nuevo(){
     $('.buttons').click(function(){
-    	elegido = this.id;
-        if ($('.member').val().length > 0 && clickeado > 0)
+        if ($('.member').val().length > 0)
         {
-        	var subusuario = $('.member').val();
             var data = {
                 usuario: document.getElementById("name").textContent,
                 subusuario: $('.member').val()
@@ -120,24 +109,24 @@ function nuevo(){
             			$('.INFO').css("font-weight", "Bold");
                     }
                     else if (data.msg === 'Gracias'){
-                        $('#' + elegido).closest("div").remove();
-    					var agregarSub = "<div id='" + num + "' class='contenedor3'><span class='sub' id='"+ num +"'></span><span class='IMEI' id='"+ num +"'>IMEI</span><input class='eliminar' type='button' value='✖' id='" + num + "'><input class='cambiar' type='button' value='✎' id='" + num + "'></div>";
-    					$(agregarSub).appendTo(".subusuarios");
-    					$('.sub').text(subusuario);
-    					$('.contenedor3').show();
     					$('.INFO').show();
     					$('.INFO').text("Subusuario agregado");
     					$('.INFO').css("color", "#49ff00");
             			$('.INFO').css("font-weight", "Bold");
+                        setTimeout(function(){
+                            document.location.reload(true);
+                        }, 2000);
                     }
                 }
             })
             agreg = false;
-            num ++;
         }
         else
         {
-            alert("Agregue un nombre");
+            $('.INFO').show();
+            $('.INFO').text("Agregue un nombre");
+            $('.INFO').css("color", "red");
+            $('.INFO').css("font-weight", "Bold");
             agreg = true;
         }
     });
@@ -146,8 +135,9 @@ function nuevo(){
 //Deletes the subuser about to create
 function borrar(){
 	$('.error').click(function(){
-		elegido = this.id;
-    	$('#' + elegido).closest("div").remove();
+		$('.contenedor2').css("display", "none");
+        $('.member').text("");
+        $('#agregar').show();
         agreg = false;
  	});  
 }
@@ -156,5 +146,51 @@ function borrar(){
 function editar(){
     $('#editar').click(function(){
         console.log("editar");
+    })
+}
+
+function eliminar(){
+    $(document).on("click", ".eliminar", function(){
+        elegido = $(this).attr('id');
+        console.log(elegido);
+        if (confirm('¿Está seguro que quiere borrar este subusuario?')) {
+            subusuario = $('#' + elegido + '.sub').text();
+            var data = {
+                usuario: document.getElementById("name").textContent,
+                sub: subusuario
+            }
+            $.ajax({
+                url: '/delete',
+                type: "POST",
+                dataType: "json",
+                data: data,
+                success: function(data){
+                    if (data.msg === 'Error'){
+                        $('.INFO').show();
+                        $('.INFO').text("El subusuario no existe");
+                        $('.INFO').css("color", "red");
+                        $('.INFO').css("font-weight", "Bold");
+                    }
+                    else if (data.msg === 'Borrado'){
+                        $('.INFO').show();
+                        $('.INFO').text("Subusuario eliminado");
+                        $('.INFO').css("color", "#49ff00");
+                        $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function(){
+                            document.location.reload(true);
+                        }, 2000);
+                    }
+                }
+            })
+        } else {
+        // Do nothing!
+        }
+    })
+}
+
+//Edits certain subuser's IMEI
+function editarSub(){
+    $(document).on("click", ".cambiar", function(){
+        console.log("editar sub");
     })
 }

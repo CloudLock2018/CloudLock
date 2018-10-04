@@ -158,6 +158,7 @@ app.post('/password', function(req, res){
 
 var usuarioA;
 var subusuarioA;
+var eliminarsubA;
 var subusuarios = null;
 var cant = 1;
 var hay = true;
@@ -182,7 +183,6 @@ app.post('/imei', function(req, res){
     						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
     						cant += 1;
    						});
-   						console.log(subusuarios);
    						if (subusuarios === null){
    							hay = false;
    						}
@@ -234,6 +234,29 @@ app.post('/subuser', function(req, res){
 				})
     		}
     	})
+})
+
+//Receive info from client (Admin - Delete certain subuser)
+app.post('/delete', function(req, res){
+	usuarioA = req.body.usuario;
+	eliminarsubA = req.body.sub;
+	var usuario = db.collection("Users").doc(usuarioA).collection("Subusers").doc(eliminarsubA);
+	usuario.get()
+		.then(doc => {
+			if (doc.exists) {				
+				usuario.delete();
+				reply = {
+					msg: 'Borrado'
+				};
+				res.send(reply);
+			}
+			else{
+				reply = {
+					msg: 'Error'
+				};
+				res.send(reply);
+			}
+		})
 })
 
 //-------------------------------------ADAFRUIT API---------------------------------------------//
