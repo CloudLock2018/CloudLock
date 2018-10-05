@@ -1,9 +1,9 @@
 * {
  	margin: 0;
-  	padding: 0;
-  	-webkit-box-sizing: border-box;
-  	-moz-box-sizing: border-box;
-  	box-sizing: border-box;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
@@ -11,19 +11,20 @@ body {
 	background-position: center; 
 	background-size: cover;
 	background-attachment: fixed;
-  	background-color: rgba(200,100,0,.5);
-  	background-blend-mode: multiply;
+  background-color: rgba(200,100,0,.5);
+  background-blend-mode: multiply;
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
 #logo {
-  	width:50px;
+  width: 50px;
 }
 
 #icon-text {
 	font-size: 32px;
 	color: #00bcd4;
 	font-weight: bold;
+  float: left;
 }
 
 .contenedor {
@@ -34,10 +35,12 @@ body {
  	color: #fff;
  	padding: 30px;
  	margin: 50px auto;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;
 }
 
-.contenedorAdmin,
-.contenedorInfo  {
+.contenedorAdmin {
  	background-color: white;
  	max-width: 1100px;
  	width: 100%;
@@ -49,19 +52,10 @@ body {
 	text-align: center;
 }
 
-.subusuarios {
-  background-color: white;
-  max-width: 1100px;
-  width: 100%;
-  border-radius: 10px;
-  color: #fff;
-  margin: -20px auto;
-  text-align: center;
-}
-
-.contenedor3 .sub {
+.contenedor3 .IMEI {
   margin-left: 30px;
-  margin-top: 8px;
+  color: black;
+  
 }
 
 .contenedor2,
@@ -75,11 +69,11 @@ body {
  	padding: 30px 0 70px;
  	margin: -20px auto;
  	margin-bottom: 40px;
-	text-align: center;
+  text-align: center;
 }
 
 .contenedor3 {
-    padding: 30px 0 50px;
+  padding: 30px 0 30px 30px;
 }
 
 .contenedorAdmin .user,
@@ -91,29 +85,47 @@ body {
 
 .contenedor .button,
 .contenedor2 .buttons,
-.contenedor2 .error,
+.contenedor2 .error {
+	float: right;
+  background: #FF851B;
+  color: #FFF;
+  border: none;
+  padding: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 100%;
+  transition: all .5s ease;
+  margin-right: 17px;
+  width: 50px;
+  margin-top: -5px;
+}
+
+
 .contenedor3 .eliminar,
 .contenedor3 .cambiar {
-	float: right;
-    background: #FF851B;
-    color: #FFF;
-    border: none;
-    padding: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Source Sans Pro', sans-serif;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border-radius: 100%;
-    transition: all .5s ease;
-    margin-right: 17px;
-    width: 50px;
-    margin-top: -5px;
+  float: right;
+  background: #FF851B;
+  color: #FFF;
+  border: none;
+  padding: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 100%;
+  transition: all .5s ease;
+  margin-right: 17px;
+  width: 50px;
+  margin-top: -15px;
 }
 
 .contenedor2 .error, 
 .contenedor3 .eliminar{
-    margin-right: 50px;
+  margin-right: 45px;
 }
 
 .contenedor .button:hover,
@@ -121,10 +133,11 @@ body {
 .contenedor2 .error:hover,
 .contenedor3 .eliminar:hover,
 .contenedor3 .cambiar:hover {
-    background: rgba(0, 117, 217, 0.7);
+  background: rgba(0, 117, 217, 0.7);
 }
 
-#editar{
+.button,
+.cambiar {
   font-size: 19px;
   -webkit-transform:rotateY(180deg);
   -moz-transform:rotateY(180deg);
@@ -133,8 +146,8 @@ body {
 }
 
 #eliminar{
-    font-size: 40px;
-    padding: 0px;
+  font-size: 40px;
+  padding: 0px;
 }
 
 #admin{
@@ -149,17 +162,8 @@ body {
 	float: left;
 }
 
-.IMEI,
-.INFO {
+.IMEI {
 	color: black;
-}
-
-.contenedor3 .IMEI {
-  margin-top: 30px;
-}
-
-.INFO{
-  display: none;
 }
 
 #bton{
@@ -171,25 +175,24 @@ body {
 }
 
 .contenedor2 input[type="text"] {
-    float: left;
-    outline: none;
-    display: block;
-    width: 20%;
-    padding: 8px 15px;
-    margin: 0 0 20px 27px;
-    background: #ffffff;
-    border-color: #e0e0e0;
-    border-width: thin;
-    border-radius: 10px;
-    border-bottom: 4px solid #ff851b;
-    box-sizing: border-box;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 14px;
-    font-weight: normal;
-    transition: all .5s ease;
+  float: left;
+  outline: none;
+  display: block;
+  width: 20%;
+  padding: 8px 15px;
+  margin: 0 0 20px 27px;
+  background: #ffffff;
+  border-color: #e0e0e0;
+  border-width: thin;
+  border-radius: 10px;
+  border-bottom: 4px solid #ff851b;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  transition: all .5s ease;
 }
 
 .contenedor2 input[type="text"]:focus {
-    border-bottom: 4px solid #0075d9;
+  border-bottom: 4px solid #0075d9;
 }
-
