@@ -113,9 +113,37 @@ function nuevo(){
     					$('.INFO').text("Subusuario agregado");
     					$('.INFO').css("color", "#49ff00");
             			$('.INFO').css("font-weight", "Bold");
-                        setTimeout(function(){
+                        /*setTimeout(function(){
                             document.location.reload(true);
-                        }, 2000);
+                        }, 2000);*/
+                        var reload = {
+                        	usuario: document.getElementById("name").textContent
+                        }
+                        $.ajax({
+                        	url: '/reload',
+			                type: "POST",
+			                dataType: "json",
+			                data: reload,
+			                success: function(data){
+			                	if (data.msg === 'Error'){
+			                		$('.INFO').show();
+                    				$('.INFO').text("El usuario no existe");
+                    				$('.INFO').css("color", "red");
+            						$('.INFO').css("font-weight", "Bold");
+			                	}
+			                	else if(data.msg === 'Hecho'){
+			                		$('.contenedor2').css("display", "none");
+        							$('.member').text("");
+        							$('#agregar').show();
+        							$('.contenedor3').remove();
+        							if(data.existe === true){
+						                document.querySelector(".subusuarios").innerHTML += data.contenido;
+						                $('.contenedor3').show();
+						                guardasub = data.cantidad;
+						            }
+			                	}
+			                }
+                        })
                     }
                 }
             })
@@ -176,9 +204,37 @@ function eliminar(){
                         $('.INFO').text("Subusuario eliminado");
                         $('.INFO').css("color", "#49ff00");
                         $('.INFO').css("font-weight", "Bold");
-                        setTimeout(function(){
+                        /*setTimeout(function(){
                             document.location.reload(true);
-                        }, 2000);
+                        }, 2000);*/
+                        var reload = {
+                        	usuario: document.getElementById("name").textContent
+                        }
+                        $.ajax({
+                        	url: '/reload',
+			                type: "POST",
+			                dataType: "json",
+			                data: reload,
+			                success: function(data){
+			                	if (data.msg === 'Error'){
+			                		$('.INFO').show();
+                    				$('.INFO').text("El usuario no existe");
+                    				$('.INFO').css("color", "red");
+            						$('.INFO').css("font-weight", "Bold");
+			                	}
+			                	else if(data.msg === 'Hecho'){
+			                		$('.contenedor2').css("display", "none");
+        							$('.member').text("");
+        							$('#agregar').show();
+        							$('.contenedor3').remove();
+        							if(data.existe === true){
+						                document.querySelector(".subusuarios").innerHTML += data.contenido;
+						                $('.contenedor3').show();
+						                guardasub = data.cantidad;
+						            }
+			                	}
+			                }
+                        })
                     }
                 }
             })
