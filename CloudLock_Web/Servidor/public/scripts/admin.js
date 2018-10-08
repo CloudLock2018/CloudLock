@@ -38,7 +38,7 @@ $.ajax({
     success: function(data){
         if(data.msg === 'No imei'){
         	$('.INFO').show();
-            $('.INFO').text("No existe un IMEI vinculado a su cuenta. Por favor, apoye su celular sobre la placa NFC");
+            $('.INFO').text("No existe un IMEI vinculado a su cuenta.");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
         }
