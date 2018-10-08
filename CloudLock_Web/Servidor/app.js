@@ -180,8 +180,14 @@ app.post('/imei', function(req, res){
 				else{
 					usuario.collection("Subusers").get().then(function(querySnapshot) {
     					querySnapshot.forEach(function(doc) {
-    						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
-    						cant += 1;
+    						if (subusuarios === null){
+    							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+    							cant += 1;
+    						}
+    						else{
+    							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+    							cant += 1;
+    						}
    						});
    						if (subusuarios === null){
    							hay = false;
