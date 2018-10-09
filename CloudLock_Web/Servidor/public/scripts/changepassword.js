@@ -54,10 +54,16 @@ $('#entrar').click(function(){
 					error.innerHTML = "El usuario no existe";
 	    			error.className = "error active";
 		    	}
+		    	else if (data.msg === 'Contraseña actual'){
+		    		$('#error').show();
+					error.innerHTML = "Esta es la contraseña actual";
+	    			error.className = "error active";
+		    	}
 		    	else if (data.msg === 'Contraseña Actualizada'){
 		    		$('#correcto').show();
 					correcto.innerHTML = "Contraseña Actualizada";
 	    			correcto.className = "correcto active";
+	    			window.location.href = "../index.html";
 		    	}
 		    }
 		});

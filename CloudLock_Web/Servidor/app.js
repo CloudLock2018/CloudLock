@@ -137,14 +137,22 @@ app.post('/password', function(req, res){
 	usuario.get()
 		.then(doc => {
 			if(doc.exists){
-				//Updates user's password (insecure)
-				usuario.update({
-					Contraseña: contraC
-				});
-				reply = {
-					msg: 'Contraseña Actualizada'
-				};
-				res.send(reply);
+				if (doc.data().Contraseña === contraC){
+					reply = {
+						msg: 'Contraseña actual'
+					};
+					res.send(reply);
+				}
+				else{
+					//Updates user's password (insecure)
+					usuario.update({
+						Contraseña: contraC
+					});
+					reply = {
+						msg: 'Contraseña Actualizada'
+					};
+					res.send(reply);
+					}
 			}
 			else{
 				reply = {
@@ -240,6 +248,49 @@ app.post('/subuser', function(req, res){
 				})
     		}
     	})
+})
+
+
+//Receive info from client (Admin - Reload subusers)
+app.post('/reload', function(req, res){
+	usuarioA = req.body.usuario;
+	var usuario = db.collection("Users").doc(usuarioA);
+	usuario.get()
+		.then(doc =>{
+			if(doc.exists){
+				usuario.collection("Subusers").get().then(function(querySnapshot) {
+					querySnapshot.forEach(function(doc) {
+						if (subusuarios === null){
+							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+							cant += 1;
+						}
+						else{    							
+    						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+    						cant += 1;
+						}
+					});
+					if (subusuarios === null){
+						hay = false;
+					}
+					reply = {
+						msg: 'Hecho',
+						contenido: subusuarios,
+						cantidad: cant,
+						existe: hay
+					};
+					res.send(reply);
+					cant = 1;
+					subusuarios = null;
+					hay = true;
+				});
+			}
+			else{
+				reply = {
+					msg: 'Error'
+				};
+				res.send(reply);
+			}
+		})
 })
 
 //Receive info from client (Admin - Delete certain subuser)
