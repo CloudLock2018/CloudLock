@@ -373,8 +373,10 @@ app.post('/newpassword', function(req, res){
 
 
 //-------------------------------------ADAFRUIT API---------------------------------------------//
-/*var mqtt = require('mqtt');
-var prueba = 'CloudlockTeam/f/prueba';
+var mqtt = require('mqtt');
+var Door = 'CloudlockTeam/f/Door';
+var IMEI = 'CloudlockTeam/f/IMEI';
+var Status = 'CloudlockTeam/f/Status';
 
 var client  = mqtt.connect('mqtt://io.adafruit.com', {
 	port: 1883,
@@ -383,11 +385,21 @@ var client  = mqtt.connect('mqtt://io.adafruit.com', {
 });
 
 client.on('connect', function () {
-  client.subscribe(prueba)
+  //Abrir y cerrar puerta
+  client.subscribe(Door)
+  //Enviar IMEI
+  client.subscribe(IMEI)
+  //Verificar o subir IMEI
+  client.subscribe(Status)
 });
 
 client.on('connect', function() {
-	client.publish(prueba, 'Hola')
+	//Cerrado
+	client.publish(Door, 'D0')
+	//Nulo
+	client.publish(IMEI, 'I0')
+	//Verificar
+	client.publish(Status, 'S0')
 });
 
 client.on('error', (error) => {
@@ -398,4 +410,4 @@ client.on('error', (error) => {
 client.on('message', function (topic, message) {
   // message is Buffer
   console.log(message.toString());
-})*/
+})
