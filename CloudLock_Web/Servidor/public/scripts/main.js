@@ -1,5 +1,9 @@
 console.log("Corriendo Inicio de Sesion");
 
+$("#form").submit(function(e) {
+    e.preventDefault();
+});
+
 function myFunction() {
     var x = document.getElementById("pass");
     if (x.type === "password") {

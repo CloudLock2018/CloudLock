@@ -1,5 +1,9 @@
 console.log("Corriendo Registro");
 
+$("#form").submit(function(e) {
+    e.preventDefault();
+});
+
 var nomTB = $('#nombre');
 var emailTB = $('#mail');
 var passTB = $('#contra');

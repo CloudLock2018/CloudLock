@@ -1,5 +1,9 @@
 console.log("Corriendo contraseña");
 
+$("#form").submit(function(e) {
+    e.preventDefault();
+});
+
 var nomTB = $('#usuario');
 var passTB = $('#contra');
 var pass2TB = $('#repcontra');
