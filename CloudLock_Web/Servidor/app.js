@@ -265,6 +265,62 @@ app.post('/delete', function(req, res){
 		})
 })
 
+//----------------------------------------EMAIL-------------------------------------------------//
+var usuarioP;
+var emailP;
+var nodemailer = require("nodemailer");
+
+//Receive info from client (Password)
+app.post('/newpassword', function(req, res){
+	usuarioP = req.body.usuario;
+	var usuario = db.collection("Users").doc(usuarioP);
+	usuario.get()
+		.then(doc => {
+			if(doc.exists){
+				emailP = doc.data().Email;
+				var transporter = nodemailer.createTransport(({
+					service: 'gmail',
+					auth: {
+						type: 'OAuth2',
+						user: 'cloudlockteam@gmail.com',
+						password: 'Cloudlock2018',
+						clientId: '557641999434-ukib5ncu6roold8t316tjavflnnjtsds.apps.googleusercontent.com',
+						clientSecret: 'wpt8HbRwrY1zW8_JbxWFQR9z',
+						refreshToken: '1/R1EUSacpTsW7AgV9_dY19oMRBBKYaVeb-9fANlrCJjg',
+						accessToken: 'ya29.GlswBrG4PlHMn0eeS12uEhEODfv73OPOeAoNnFU1z98Bkaad7KAQIdt8FVPhpzmNKlnn9OdmVi7rIpBwJ4gejoazX0S_eFNRBQHNRfuOMoAMBrQRj9ToWZjWoNG2'
+					}
+				}));
+
+				var mailOptions = {
+					from: 'CloudLock Team <cloudlockteam@gmail.com>',
+					to: emailP,
+					subject: 'Cambio de Contraseña',
+					text: 'Buenos Dias. Usted ha solicitado un cambio de contraseña para su cuenta. Para realizarlo, por favor ingrese a este link: http://localhost:3000/changepassword.html. El equipo de CloudLock.'
+				}
+
+				transporter.sendMail(mailOptions, function(err, res){
+					if (err){
+						console.log('Error: ' + err);
+					}
+					else {
+						console.log('Email sent');
+					}
+				})
+				reply = {
+					msg: 'Email enviado'
+				};
+				res.send(reply);
+			}
+			else{
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.send(reply);
+			}
+		})
+})
+
+
 //-------------------------------------ADAFRUIT API---------------------------------------------//
 /*var mqtt = require('mqtt');
 var prueba = 'CloudlockTeam/f/prueba';
