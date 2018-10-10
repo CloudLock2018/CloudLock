@@ -250,3 +250,15 @@ function editarSub(){
         console.log("editar sub");
     })
 }
+
+function codeAddress() {
+    object1 = document.getElementsByClassName("contenedor3")[0];
+    object2 = document.getElementsByClassName("contenedor3")[1];
+    object3 = document.getElementsByClassName("contenedor3")[2];
+    object1.style.transform = "rotateX(0deg)";
+    object2.style.transform = "rotateX(0deg)";
+    object3.style.transform = "rotateX(0deg)";
+    //$(".contenedor3").css("transform", "perspective(130px)");
+    //$(".contenedor3").css("transform", "rotateX(0deg)");
+}
+window.onload = codeAddress;
