@@ -38,9 +38,46 @@ $.ajax({
     success: function(data){
         if(data.msg === 'No mac'){
         	$('.INFO').show();
-            $('.INFO').text("No existe un MAC vinculado a su cuenta.");
+            $('.INFO').text("No existe un MAC vinculado a su cuenta. Apoye su celular sobre la placa NFC y luego espere");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
+            var info = {
+                usuario: document.getElementById("name").textContent
+            }
+            console.log(info);
+            $.ajax({
+                url: '/macAdmin',
+                type: "POST",
+                dataType: "json",
+                data: info,
+                timeout: 120000,
+                success: function(data){
+                    if (data.msg === 'Mac Actualizada'){
+                        $('.INFO').show();
+                        $('.INFO').text("Se ha actualizado su cuenta");
+                        $('.INFO').css("color", "#49ff00");
+                        $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function(){
+                            document.location.reload(true);
+                        }, 2000);
+                    }
+                    else if (data.msg === 'Error'){
+                        $('.INFO').show();
+                        $('.INFO').text("Ha ocurrido un error con el protocolo");
+                        $('.INFO').css("color", "red");
+                        $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function(){
+                            document.location.reload(true);
+                        }, 2000);
+                    }
+                },
+                error: function(err){
+                    $('.INFO').show();
+                    $('.INFO').text("Tiempo de espera agotado");
+                    $('.INFO').css("color", "red");
+                    $('.INFO').css("font-weight", "Bold");
+                }
+            })
         }
         else if (data.msg === 'Hay mac'){
         	$('.INFO').show();
@@ -170,13 +207,6 @@ function borrar(){
  	});  
 }
 
-//Edits user's MAC
-function editar(){
-    $('#editar').click(function(){
-        console.log("editar");
-    })
-}
-
 function eliminar(){
     $(document).on("click", ".eliminar", function(){
         elegido = $(this).attr('id');
@@ -241,6 +271,13 @@ function eliminar(){
         } else {
         // Do nothing!
         }
+    })
+}
+
+//Edits user's MAC
+function editar(){
+    $('#editar').click(function(){
+        console.log("editar");
     })
 }
 

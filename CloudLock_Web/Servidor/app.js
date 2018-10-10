@@ -164,59 +164,6 @@ app.post('/password', function(req, res){
 });
 
 
-var usuarioA;
-var subusuarioA;
-var eliminarsubA;
-var subusuarios = null;
-var cant = 1;
-var hay = true;
-
-//Receive info from client (Admin - MAC & subuser already saved)
-app.post('/mac', function(req, res){
-	usuarioA = req.body.usuario;
-	var usuario = db.collection("Users").doc(usuarioA);
-	usuario.get()
-		.then(doc =>{
-			if(doc.exists){
-				//Checks if user's MAC is null or not
-				if(doc.data().MAC === null){
-					reply = {
-						msg: 'No mac'
-					};
-					res.send(reply);
-				}
-				else{
-					usuario.collection("Subusers").get().then(function(querySnapshot) {
-    					querySnapshot.forEach(function(doc) {
-    						if (subusuarios === null){
-    							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
-    							cant += 1;
-    						}
-    						else{
-    							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
-    							cant += 1;
-    						}
-   						});
-   						if (subusuarios === null){
-   							hay = false;
-   						}
-						reply = {
-							msg: 'Hay mac',
-							mac: doc.data().MAC,
-							contenido: subusuarios,
-							cantidad: cant,
-							existe: hay
-						}
-						res.send(reply);
-						cant = 1;
-						subusuarios = null;
-						hay = true;
-					});
-				}
-			}
-		})
-});
-
 //Receive info from client (Admin - Save new subuser)
 app.post('/subuser', function(req, res){
 	usuarioA = req.body.usuario;
@@ -397,7 +344,7 @@ client.on('connect', function() {
 	//Cerrado
 	client.publish(Door, 'D0')
 	//Nulo
-	client.publish(MAC, 'I0')
+	client.publish(MAC, 'M0')
 	//Verificar
 	client.publish(Status, 'S0')
 });
@@ -407,7 +354,112 @@ client.on('error', (error) => {
     console.log(error);
 })
 
-client.on('message', function (topic, message) {
-  // message is Buffer
-  console.log(message.toString());
+var usuarioA;
+var subusuarioA;
+var eliminarsubA;
+var subusuarios = null;
+var cant = 1;
+var hay = true;
+var verificar = true;
+
+//Receive info from client (Admin - MAC & subuser already saved)
+app.post('/mac', function(req, res){
+	usuarioA = req.body.usuario;
+	var usuario = db.collection("Users").doc(usuarioA);
+	usuario.get()
+		.then(doc =>{
+			if(doc.exists){
+				//Checks if user's MAC is null or not
+				if(doc.data().MAC === null){
+					//Agregar
+					client.publish(Status, 'S1')
+					verificar = false;
+					reply = {
+						msg: 'No mac'
+					};
+					res.send(reply);
+				}
+				else{
+					usuario.collection("Subusers").get().then(function(querySnapshot) {
+    					querySnapshot.forEach(function(doc) {
+    						if (subusuarios === null){
+    							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+    							cant += 1;
+    						}
+    						else{
+    							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+    							cant += 1;
+    						}
+   						});
+   						if (subusuarios === null){
+   							hay = false;
+   						}
+						reply = {
+							msg: 'Hay mac',
+							mac: doc.data().MAC,
+							contenido: subusuarios,
+							cantidad: cant,
+							existe: hay
+						}
+						res.send(reply);
+						cant = 1;
+						subusuarios = null;
+						hay = true;
+					});
+				}
+			}
+		})
+});
+
+var usuarioMA;
+var MACingresado;
+var infinito = 1;
+
+app.post('/macAdmin', function(req, res){
+	usuarioMA = req.body.usuario;
+	if (verificar === false){
+		for (var i = 0; i < infinito; i++){
+			client.on('message', function (topic, message) {
+			  // message is Buffer
+			  if (topic === MAC){
+			  	if (message.toString() === 'M0'){
+					infinito++;
+			  	}
+			  	else{
+				  	MACingresado = message.toString();
+				  	console.log(MACingresado);
+				  	var usuario = db.collection("Users").doc(usuarioMA);
+					usuario.get()
+						.then(doc => {
+							usuario.update({
+								MAC: MACingresado
+							});
+							//Nulo
+							client.publish(MAC, 'M0')
+							//Verificar
+							client.publish(Status, 'S0')
+							verificar = true;
+							reply = {
+								msg: 'Mac Actualizada'
+							}
+							res.send(reply);
+						})
+			  	}
+			  }
+			})
+		}
+	}
+	else{
+		reply = {
+			msg: 'Error'
+		}
+		res.send(reply);
+	}
 })
+
+/*client.on('message', function (topic, message) {
+  // message is Buffer
+  if (topic === Door){
+  	console.log(message.toString());
+  }
+})*/
