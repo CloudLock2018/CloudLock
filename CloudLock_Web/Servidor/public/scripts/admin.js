@@ -99,8 +99,8 @@ $.ajax({
 agre();
 nuevo();
 borrar();
-editar();
 eliminar();
+editar();
 editarSub();
 
 //Creates new subusers
@@ -207,6 +207,7 @@ function borrar(){
  	});  
 }
 
+//Deletes subuser slected from the database
 function eliminar(){
     $(document).on("click", ".eliminar", function(){
         elegido = $(this).attr('id');
@@ -277,18 +278,138 @@ function eliminar(){
 //Edits user's MAC
 function editar(){
     $('#editar').click(function(){
-        console.log("editar");
+        var data = {
+            usuario: document.getElementById("name").textContent
+        }
+        $.ajax({
+            url: '/editAdmin',
+            type: "POST",
+            dataType: "json",
+            data: data,
+            success: function(data){
+                if(data.msg === 'Error'){
+                    $('.INFO').show();
+                    $('.INFO').text("No existe el usuario");
+                    $('.INFO').css("color", "red");
+                    $('.INFO').css("font-weight", "Bold");
+                }
+                else if (data.msg === 'Editar'){
+                    $('.INFO').show();
+                    $('.INFO').text("Apoye su celular sobre la placa NFC y luego espere");
+                    $('.INFO').css("color", "#49ff00");
+                    $('.INFO').css("font-weight", "Bold");
+                    var info = {
+                        usuario: document.getElementById("name").textContent
+                    }
+                    $.ajax({
+                        url: '/macAdmin',
+                        type: "POST",
+                        dataType: "json",
+                        data: info,
+                        timeout: 120000,
+                        success: function(data){
+                            if (data.msg === 'Mac Actualizada'){
+                                $('.INFO').show();
+                                $('.INFO').text("Se ha actualizado su cuenta");
+                                $('.INFO').css("color", "#49ff00");
+                                $('.INFO').css("font-weight", "Bold");
+                                setTimeout(function(){
+                                    document.location.reload(true);
+                                }, 2000);
+                            }
+                            else if (data.msg === 'Error'){
+                                $('.INFO').show();
+                                $('.INFO').text("Ha ocurrido un error con el protocolo");
+                                $('.INFO').css("color", "red");
+                                $('.INFO').css("font-weight", "Bold");
+                                setTimeout(function(){
+                                    document.location.reload(true);
+                                }, 2000);
+                            }
+                        },
+                        error: function(err){
+                            $('.INFO').show();
+                            $('.INFO').text("Tiempo de espera agotado");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                        }
+                    })
+                }
+            }
+        })
     })
 }
 
 //Edits certain subuser's MAC
 function editarSub(){
     $(document).on("click", ".cambiar", function(){
-        console.log("editar sub");
+        elegido = $(this).attr('id');
+        subusuario = $('#' + elegido + '.sub').text();
+        var data = {
+            usuario: document.getElementById("name").textContent,
+            sub: subusuario
+        }
+        $.ajax({
+            url: '/editSub',
+            type: "POST",
+            dataType: "json",
+            data: data,
+            success: function(data){
+                if(data.msg === 'Error'){
+                    $('.INFO').show();
+                    $('.INFO').text("No existe el subusuario");
+                    $('.INFO').css("color", "red");
+                    $('.INFO').css("font-weight", "Bold");
+                }
+                else if (data.msg === 'Editar'){
+                    $('.INFO').show();
+                    $('.INFO').text("Apoye su celular sobre la placa NFC y luego espere");
+                    $('.INFO').css("color", "#49ff00");
+                    $('.INFO').css("font-weight", "Bold");
+                    var info = {
+                        usuario: document.getElementById("name").textContent,
+                        sub: subusuario
+                    };
+                    $.ajax({
+                        url: '/macSub',
+                        type: "POST",
+                        dataType: "json",
+                        data: info,
+                        timeout: 120000,
+                        success: function(data){
+                            if (data.msg === 'Mac Actualizada'){
+                                $('.INFO').show();
+                                $('.INFO').text("Se ha actualizado el subusuario");
+                                $('.INFO').css("color", "#49ff00");
+                                $('.INFO').css("font-weight", "Bold");
+                                setTimeout(function(){
+                                    document.location.reload(true);
+                                }, 2000);
+                            }
+                            else if (data.msg === 'Error'){
+                                $('.INFO').show();
+                                $('.INFO').text("Ha ocurrido un error con el protocolo");
+                                $('.INFO').css("color", "red");
+                                $('.INFO').css("font-weight", "Bold");
+                                setTimeout(function(){
+                                    document.location.reload(true);
+                                }, 2000);
+                            }
+                        },
+                        error: function(err){
+                            $('.INFO').show();
+                            $('.INFO').text("Tiempo de espera agotado");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                        }
+                    })
+                }
+            }
+        })
     })
 }
 
-function codeAddress() {
+/*function codeAddress() {
     object1 = document.getElementsByClassName("contenedor3")[0];
     object2 = document.getElementsByClassName("contenedor3")[1];
     object3 = document.getElementsByClassName("contenedor3")[2];
@@ -298,4 +419,4 @@ function codeAddress() {
     //$(".contenedor3").css("transform", "perspective(130px)");
     //$(".contenedor3").css("transform", "rotateX(0deg)");
 }
-window.onload = codeAddress;
+window.onload = codeAddress;*/

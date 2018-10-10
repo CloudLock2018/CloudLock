@@ -163,6 +163,7 @@ app.post('/password', function(req, res){
 		})
 });
 
+var subusuarioA;
 
 //Receive info from client (Admin - Save new subuser)
 app.post('/subuser', function(req, res){
@@ -239,6 +240,8 @@ app.post('/reload', function(req, res){
 			}
 		})
 })
+
+var eliminarsubA;
 
 //Receive info from client (Admin - Delete certain subuser)
 app.post('/delete', function(req, res){
@@ -325,7 +328,7 @@ var Door = 'CloudlockTeam/f/Door';
 var MAC = 'CloudlockTeam/f/MAC';
 var Status = 'CloudlockTeam/f/Status';
 
-var client  = mqtt.connect('mqtt://io.adafruit.com', {
+var client = mqtt.connect('mqtt://io.adafruit.com', {
 	port: 1883,
 	username: 'CloudlockTeam',
 	password: '17d40238f10342fdb884cf02a62db208'
@@ -355,8 +358,6 @@ client.on('error', (error) => {
 })
 
 var usuarioA;
-var subusuarioA;
-var eliminarsubA;
 var subusuarios = null;
 var cant = 1;
 var hay = true;
@@ -420,32 +421,33 @@ app.post('/macAdmin', function(req, res){
 	if (verificar === false){
 		for (var i = 0; i < infinito; i++){
 			client.on('message', function (topic, message) {
-			  // message is Buffer
-			  if (topic === MAC){
-			  	if (message.toString() === 'M0'){
-					infinito++;
-			  	}
-			  	else{
-				  	MACingresado = message.toString();
-				  	console.log(MACingresado);
-				  	var usuario = db.collection("Users").doc(usuarioMA);
-					usuario.get()
-						.then(doc => {
-							usuario.update({
-								MAC: MACingresado
-							});
-							//Nulo
-							client.publish(MAC, 'M0')
-							//Verificar
-							client.publish(Status, 'S0')
-							verificar = true;
-							reply = {
-								msg: 'Mac Actualizada'
-							}
-							res.send(reply);
-						})
-			  	}
-			  }
+				// message is Buffer
+				if (topic === MAC){
+				  	if (message.toString() === 'M0'){
+						infinito++;
+				  	}
+				  	else{
+					  	MACingresado = message.toString();
+					  	console.log(MACingresado);
+					  	var usuario = db.collection("Users").doc(usuarioMA);
+						usuario.get()
+							.then(doc => {
+								usuario.update({
+									MAC: MACingresado
+								});
+								//Nulo
+								client.publish(MAC, 'M0')
+								//Verificar
+								client.publish(Status, 'S0')
+								verificar = true;
+								infinito = 1;
+								reply = {
+									msg: 'Mac Actualizada'
+								}
+								res.send(reply);
+							})
+				  	}
+				}
 			})
 		}
 	}
@@ -457,9 +459,99 @@ app.post('/macAdmin', function(req, res){
 	}
 })
 
-/*client.on('message', function (topic, message) {
-  // message is Buffer
-  if (topic === Door){
-  	console.log(message.toString());
-  }
-})*/
+var usuarioEA;
+
+app.post('/editAdmin', function (req, res){
+	usuarioEA = req.body.usuario;
+	client.publish(Status, 'S1')
+	verificar = false;
+	var usuario = db.collection("Users").doc(usuarioEA);
+	usuario.get()
+		.then(doc =>{
+			if(doc.exists){
+				reply = {
+					msg: 'Editar'
+				}
+				res.send(reply);
+			}
+			else{
+				reply = {
+					msg: 'Error'
+				}
+				res.send(reply);
+			}
+		})
+})
+
+var usuarioES;
+var subusuarioES;
+
+app.post('/editSub', function (req, res){
+	usuarioES = req.body.usuario;
+	subusuarioES = req.body.sub;
+	client.publish(Status, 'S1')
+	verificar = false;
+	var usuario = db.collection("Users").doc(usuarioES).collection("Subusers").doc(subusuarioES);
+	usuario.get()
+		.then(doc =>{
+			if(doc.exists){
+				reply = {
+					msg: 'Editar'
+				}
+				res.send(reply);
+			}
+			else{
+				reply = {
+					msg: 'Error'
+				}
+				res.send(reply);
+			}
+		})
+})
+
+var usuarioMS;
+var subusuarioMS;
+
+app.post('/macSub', function(req, res){
+	usuarioMS = req.body.usuario;
+	subusuarioMS = req.body.sub;
+	if (verificar === false){
+		for (var i = 0; i < infinito; i++){
+			client.on('message', function (topic, message) {
+				// message is Buffer
+				if (topic === MAC){
+				  	if (message.toString() === 'M0'){
+						infinito++;
+				  	}
+				  	else{
+					  	MACingresado = message.toString();
+					  	console.log(MACingresado);
+					  	var usuario = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS);
+						usuario.get()
+							.then(doc => {
+								usuario.update({
+									MAC: MACingresado
+								});
+								//Nulo
+								client.publish(MAC, 'M0')
+								//Verificar
+								client.publish(Status, 'S0')
+								verificar = true;
+								infinito = 1;
+								reply = {
+									msg: 'Mac Actualizada'
+								}
+								res.send(reply);
+							})
+				  	}
+				}
+			})
+		}
+	}
+	else{
+		reply = {
+			msg: 'Error'
+		}
+		res.send(reply);
+	}
+})
