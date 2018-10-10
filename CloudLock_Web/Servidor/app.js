@@ -189,11 +189,11 @@ app.post('/imei', function(req, res){
 					usuario.collection("Subusers").get().then(function(querySnapshot) {
     					querySnapshot.forEach(function(doc) {
     						if (subusuarios === null){
-    							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+    							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
     							cant += 1;
     						}
     						else{
-    							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+    							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
     							cant += 1;
     						}
    						});
@@ -261,11 +261,11 @@ app.post('/reload', function(req, res){
 				usuario.collection("Subusers").get().then(function(querySnapshot) {
 					querySnapshot.forEach(function(doc) {
 						if (subusuarios === null){
-							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 							cant += 1;
 						}
 						else{    							
-    						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' value='✖' id='" + cant + "'><input class='cambiar' type='button' value='✎' id='" + cant + "'></div>";
+    						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
     						cant += 1;
 						}
 					});
