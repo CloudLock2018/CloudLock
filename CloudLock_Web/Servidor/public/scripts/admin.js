@@ -26,29 +26,29 @@ return valor;
 }
 document.getElementById("name").innerHTML = leerCookie("username");
 
-//Gets user's IMEI
+//Gets user's MAC
 var data = {
     usuario: document.getElementById("name").textContent
 }
 $.ajax({
-    url: '/imei',
+    url: '/mac',
     type: "POST",
     dataType: "json",
     data: data,
     success: function(data){
-        if(data.msg === 'No imei'){
+        if(data.msg === 'No mac'){
         	$('.INFO').show();
-            $('.INFO').text("No existe un IMEI vinculado a su cuenta.");
+            $('.INFO').text("No existe un MAC vinculado a su cuenta.");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
         }
-        else if (data.msg === 'Hay imei'){
+        else if (data.msg === 'Hay mac'){
         	$('.INFO').show();
-            $('.INFO').text("Se encontro el IMEI vinculado a su cuenta.");
+            $('.INFO').text("Se encontro el MAC vinculado a su cuenta.");
             $('.INFO').css("color", "#49ff00");
             $('.INFO').css("font-weight", "Bold");
-            //Shows IMEI
-            $('.IMEI').text("IMEI: " + data.imei);
+            //Shows MAC
+            $('.MAC').text("MAC: " + data.mac);
             console.log(data.contenido);
             if(data.existe === true){
                 document.querySelector(".subusuarios").innerHTML += data.contenido;
@@ -170,7 +170,7 @@ function borrar(){
  	});  
 }
 
-//Edits user's IMEI
+//Edits user's MAC
 function editar(){
     $('#editar').click(function(){
         console.log("editar");
@@ -244,9 +244,14 @@ function eliminar(){
     })
 }
 
-//Edits certain subuser's IMEI
+//Edits certain subuser's MAC
 function editarSub(){
     $(document).on("click", ".cambiar", function(){
         console.log("editar sub");
     })
 }
+
+function codeAddress() {
+            alert('ok');
+        }
+window.onload = codeAddress;

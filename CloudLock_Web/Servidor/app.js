@@ -70,7 +70,7 @@ app.post('/register', function(req, res){
 								Nombre_de_Usuario: nombreR,
 								Email: emailR,
 								Contraseña: contraR,
-								IMEI: null
+								MAC: null
 							})
 								.then(function(docRef) {
 						    		reply = {
@@ -171,17 +171,17 @@ var subusuarios = null;
 var cant = 1;
 var hay = true;
 
-//Receive info from client (Admin - IMEI & subuser already saved)
-app.post('/imei', function(req, res){
+//Receive info from client (Admin - MAC & subuser already saved)
+app.post('/mac', function(req, res){
 	usuarioA = req.body.usuario;
 	var usuario = db.collection("Users").doc(usuarioA);
 	usuario.get()
 		.then(doc =>{
 			if(doc.exists){
-				//Checks if user's IMEI is null or not
-				if(doc.data().IMEI === null){
+				//Checks if user's MAC is null or not
+				if(doc.data().MAC === null){
 					reply = {
-						msg: 'No imei'
+						msg: 'No mac'
 					};
 					res.send(reply);
 				}
@@ -189,11 +189,11 @@ app.post('/imei', function(req, res){
 					usuario.collection("Subusers").get().then(function(querySnapshot) {
     					querySnapshot.forEach(function(doc) {
     						if (subusuarios === null){
-    							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+    							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
     							cant += 1;
     						}
     						else{
-    							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+    							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
     							cant += 1;
     						}
    						});
@@ -201,8 +201,8 @@ app.post('/imei', function(req, res){
    							hay = false;
    						}
 						reply = {
-							msg: 'Hay imei',
-							imei: doc.data().IMEI,
+							msg: 'Hay mac',
+							mac: doc.data().MAC,
 							contenido: subusuarios,
 							cantidad: cant,
 							existe: hay
@@ -234,7 +234,7 @@ app.post('/subuser', function(req, res){
     		else{
     			usuario.set({
 					Nombre_de_Subusuario: subusuarioA,
-					IMEI: null
+					MAC: null
 				})
 				.then(function(docRef) {
 					reply = {
@@ -261,11 +261,11 @@ app.post('/reload', function(req, res){
 				usuario.collection("Subusers").get().then(function(querySnapshot) {
 					querySnapshot.forEach(function(doc) {
 						if (subusuarios === null){
-							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 							cant += 1;
 						}
 						else{    							
-    						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='IMEI' id='"+ cant +"'>IMEI: "+ doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+    						subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant +"'>"+ doc.data().Nombre_de_Subusuario +"</span><span class='MAC' id='"+ cant +"'>MAC: "+ doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
     						cant += 1;
 						}
 					});
@@ -375,7 +375,7 @@ app.post('/newpassword', function(req, res){
 //-------------------------------------ADAFRUIT API---------------------------------------------//
 var mqtt = require('mqtt');
 var Door = 'CloudlockTeam/f/Door';
-var IMEI = 'CloudlockTeam/f/IMEI';
+var MAC = 'CloudlockTeam/f/MAC';
 var Status = 'CloudlockTeam/f/Status';
 
 var client  = mqtt.connect('mqtt://io.adafruit.com', {
@@ -387,9 +387,9 @@ var client  = mqtt.connect('mqtt://io.adafruit.com', {
 client.on('connect', function () {
   //Abrir y cerrar puerta
   client.subscribe(Door)
-  //Enviar IMEI
-  client.subscribe(IMEI)
-  //Verificar o subir IMEI
+  //Enviar MAC
+  client.subscribe(MAC)
+  //Verificar o subir MAC
   client.subscribe(Status)
 });
 
@@ -397,7 +397,7 @@ client.on('connect', function() {
 	//Cerrado
 	client.publish(Door, 'D0')
 	//Nulo
-	client.publish(IMEI, 'I0')
+	client.publish(MAC, 'I0')
 	//Verificar
 	client.publish(Status, 'S0')
 });
