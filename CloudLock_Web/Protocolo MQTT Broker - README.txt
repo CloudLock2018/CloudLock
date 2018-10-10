@@ -5,12 +5,12 @@ Abrir y cerrar puerta
 		Values: D1 - Abrir
 			D0 - Cerrar
 
-Enviar IMEI
-	Feed: IMEI
-		Values: I0 - Nulo
+Enviar MAC
+	Feed: MAC
+		Values: M0 - Nulo
 			XXXXXXXXX - IMEI enviado
 
-Verificar o subir IMEI
+Verificar o subir MAC
 	Feed: Status
 		Values: S0 - Verificar
 			S1 - Agregar
