@@ -287,8 +287,3 @@ function editarSub(){
         console.log("editar sub");
     })
 }
-
-function codeAddress() {
-            alert('ok');
-        }
-window.onload = codeAddress;
