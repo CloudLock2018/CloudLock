@@ -69,9 +69,9 @@ body {
  	margin: -20px auto;
  	margin-bottom: 40px;
   text-align: center;
-  transform-origin: top center;
+  /*transform-origin: top center;
   -webkit-transform: perspective(130px) rotateX(-90deg);
-  transition-duration: 1s;
+  transition-duration: 1s;*/
 }
 
 .contenedor3 {

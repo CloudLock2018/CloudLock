@@ -416,6 +416,7 @@ var usuarioMA;
 var MACingresado;
 var infinito = 1;
 
+//Receive info from Adafruit API (NFC) and saves the Mac into the user's database
 app.post('/macAdmin', function(req, res){
 	usuarioMA = req.body.usuario;
 	if (verificar === false){
@@ -461,6 +462,7 @@ app.post('/macAdmin', function(req, res){
 
 var usuarioEA;
 
+//Checks if the user exists and establish the protocols
 app.post('/editAdmin', function (req, res){
 	usuarioEA = req.body.usuario;
 	client.publish(Status, 'S1')
@@ -486,6 +488,7 @@ app.post('/editAdmin', function (req, res){
 var usuarioES;
 var subusuarioES;
 
+//Checks if the user exists and establish the protocols
 app.post('/editSub', function (req, res){
 	usuarioES = req.body.usuario;
 	subusuarioES = req.body.sub;
@@ -512,6 +515,7 @@ app.post('/editSub', function (req, res){
 var usuarioMS;
 var subusuarioMS;
 
+//Receive info from Adafruit API (NFC) and saves the Mac into the subuser's database
 app.post('/macSub', function(req, res){
 	usuarioMS = req.body.usuario;
 	subusuarioMS = req.body.sub;
@@ -526,23 +530,19 @@ app.post('/macSub', function(req, res){
 				  	else{
 					  	MACingresado = message.toString();
 					  	console.log(MACingresado);
-					  	var usuario = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS);
-						usuario.get()
-							.then(doc => {
-								usuario.update({
-									MAC: MACingresado
-								});
-								//Nulo
-								client.publish(MAC, 'M0')
-								//Verificar
-								client.publish(Status, 'S0')
-								verificar = true;
-								infinito = 1;
-								reply = {
-									msg: 'Mac Actualizada'
-								}
-								res.send(reply);
-							})
+					  	var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
+							MAC: MACingresado
+						});
+						//Nulo
+						client.publish(MAC, 'M0')
+						//Verificar
+						client.publish(Status, 'S0')
+						verificar = true;
+						infinito = 1;
+						reply = {
+							msg: 'Mac Actualizada'
+						}
+						res.send(reply);
 				  	}
 				}
 			})
@@ -555,3 +555,47 @@ app.post('/macSub', function(req, res){
 		res.send(reply);
 	}
 })
+
+var abierto = false;
+//Checks if the MAC sent exists in the database. If it does, opens the door
+client.on('message', function (topic, message) {
+	if (topic === Status){
+		if (message.toString() === 'S0'){
+			verificar = true;
+		}
+	}
+	if (topic === MAC){
+		if (verificar === true){
+			if (message.toString() === 'M0'){
+				client.publish(Door, 'D0')
+			}
+			else{
+				MACingresado = message.toString();
+				var usuario = db.collection("Users");
+				usuario.get().then(function(querySnapshot) {
+    				querySnapshot.forEach(function(doc) {
+    					if (doc.data().MAC === MACingresado){
+    						abierto = true;
+    					}
+    					else{
+    						usuario.doc(doc).collection("Subusers").get().then(function(querySnapshot) {
+    							querySnapshot.forEach(function(doc) {
+    								if (doc.data().MAC === MACingresado){
+    									abierto = true;
+    								}
+    							});
+    						});
+    					}
+    				});
+    			});
+    			if (abierto === true){
+    				client.publish(Door, 'D1')
+    			}
+    			else if (abierto === false){
+    				client.publish(Door, 'D0')
+    			}
+    			abierto = false;
+			}
+		}
+	}
+});
