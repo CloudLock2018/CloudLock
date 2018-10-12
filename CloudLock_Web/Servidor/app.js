@@ -51,7 +51,7 @@ app.post('/register', function (req, res) {
 				reply = {
 					msg: 'Error'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 			else {
 				//Checks if the email was already used
@@ -62,7 +62,7 @@ app.post('/register', function (req, res) {
 							reply = {
 								msg: 'Error, mail'
 							};
-							res.send(reply);
+							res.end(JSON.stringify(reply));
 						});
 						//if the email has never been used before, then it will create a new doc in the DB
 						if (repetido === false) {
@@ -76,7 +76,7 @@ app.post('/register', function (req, res) {
 									reply = {
 										msg: 'Gracias ' + nombreR + ', contraseña: ' + contraR
 									};
-									res.send(reply);
+									res.end(JSON.stringify(reply));
 								})
 								//Send error if it happens one
 								.catch(function (error) {
@@ -107,20 +107,20 @@ app.post('/login', function (req, res) {
 					reply = {
 						msg: 'Usuario Encontrado'
 					};
-					res.send(reply);
+					res.end(JSON.stringify(reply));
 				}
 				else {
 					reply = {
 						msg: 'Error, contra'
 					};
-					res.send(reply);
+					res.end(JSON.stringify(reply));
 				}
 			}
 			else {
 				reply = {
 					msg: 'Error, usuario'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 		})
 });
@@ -141,7 +141,7 @@ app.post('/password', function (req, res) {
 					reply = {
 						msg: 'Contraseña actual'
 					};
-					res.send(reply);
+					res.end(JSON.stringify(reply));
 				}
 				else {
 					//Updates user's password (insecure)
@@ -151,14 +151,14 @@ app.post('/password', function (req, res) {
 					reply = {
 						msg: 'Contraseña Actualizada'
 					};
-					res.send(reply);
+					res.end(JSON.stringify(reply));
 				}
 			}
 			else {
 				reply = {
 					msg: 'Error, usuario'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 		})
 });
@@ -177,7 +177,7 @@ app.post('/subuser', function (req, res) {
 				reply = {
 					msg: 'Error'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 			else {
 				usuario.set({
@@ -188,7 +188,7 @@ app.post('/subuser', function (req, res) {
 						reply = {
 							msg: 'Gracias'
 						};
-						res.send(reply);
+						res.end(JSON.stringify(reply));
 					})
 					//Send error if it happens one
 					.catch(function (error) {
@@ -226,7 +226,7 @@ app.post('/reload', function (req, res) {
 						cantidad: cant,
 						existe: hay
 					};
-					res.send(reply);
+					res.end(JSON.stringify(reply));
 					cant = 1;
 					subusuarios = null;
 					hay = true;
@@ -236,7 +236,7 @@ app.post('/reload', function (req, res) {
 				reply = {
 					msg: 'Error'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 		})
 })
@@ -255,13 +255,13 @@ app.post('/delete', function (req, res) {
 				reply = {
 					msg: 'Borrado'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 			else {
 				reply = {
 					msg: 'Error'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 		})
 })
@@ -310,13 +310,13 @@ app.post('/newpassword', function (req, res) {
 				reply = {
 					msg: 'Email enviado'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 			else {
 				reply = {
 					msg: 'Error, usuario'
 				};
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 		})
 })
@@ -378,7 +378,7 @@ app.post('/mac', function (req, res) {
 					reply = {
 						msg: 'No mac'
 					};
-					res.send(reply);
+					res.end(JSON.stringify(reply));
 				}
 				else {
 					usuario.collection("Subusers").get().then(function (querySnapshot) {
@@ -402,7 +402,7 @@ app.post('/mac', function (req, res) {
 							cantidad: cant,
 							existe: hay
 						}
-						res.send(reply);
+						res.end(JSON.stringify(reply));
 						cant = 1;
 						subusuarios = null;
 						hay = true;
@@ -429,7 +429,6 @@ app.post('/macAdmin', function (req, res) {
 					}
 					else {
 						MACingresado = message.toString();
-						console.log(MACingresado);
 						var usuario = db.collection("Users").doc(usuarioMA);
 						usuario.get()
 							.then(doc => {
@@ -445,7 +444,7 @@ app.post('/macAdmin', function (req, res) {
 								reply = {
 									msg: 'Mac Actualizada'
 								}
-								res.send(reply);
+								res.end(JSON.stringify(reply));
 							})
 					}
 				}
@@ -456,7 +455,7 @@ app.post('/macAdmin', function (req, res) {
 		reply = {
 			msg: 'Error'
 		}
-		res.send(reply);
+		res.end(JSON.stringify(reply));
 	}
 })
 
@@ -474,13 +473,13 @@ app.post('/editAdmin', function (req, res) {
 				reply = {
 					msg: 'Editar'
 				}
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 			else {
 				reply = {
 					msg: 'Error'
 				}
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 		})
 })
@@ -501,13 +500,13 @@ app.post('/editSub', function (req, res) {
 				reply = {
 					msg: 'Editar'
 				}
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 			else {
 				reply = {
 					msg: 'Error'
 				}
-				res.send(reply);
+				res.end(JSON.stringify(reply));
 			}
 		})
 })
@@ -529,7 +528,6 @@ app.post('/macSub', function (req, res) {
 					}
 					else {
 						MACingresado = message.toString();
-						console.log(MACingresado);
 						var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
 							MAC: MACingresado
 						});
@@ -542,7 +540,7 @@ app.post('/macSub', function (req, res) {
 						reply = {
 							msg: 'Mac Actualizada'
 						}
-						res.send(reply);
+						res.end(JSON.stringify(reply));
 					}
 				}
 			})
@@ -552,7 +550,7 @@ app.post('/macSub', function (req, res) {
 		reply = {
 			msg: 'Error'
 		}
-		res.send(reply);
+		res.end(JSON.stringify(reply));
 	}
 })
 
