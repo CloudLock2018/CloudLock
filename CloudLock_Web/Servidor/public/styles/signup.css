@@ -8,10 +8,10 @@
 
 body {
   background: url(../images/Fondo.jpg);
-  background-position: center; 
+  background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  background-color: rgba(200,100,0,.5);
+  background-color: rgba(200, 100, 0, .5);
   background-blend-mode: multiply;
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -29,7 +29,7 @@ body {
 }
 
 #icon-text {
-  font-size: 50px; 
+  font-size: 50px;
   color: #00bcd4;
   padding-top: 122px;
   padding-right: 30px;
@@ -42,6 +42,7 @@ body {
   color: black;
   font-size: 16px;
 }
+
 .contenedor-form {
   top: -475px;
   left: 200px;
@@ -79,9 +80,7 @@ body {
   line-height: 1;
 }
 
-.contenedor-form input[type="text"],
-.contenedor-form input[type="password"],
-.contenedor-form input[type="email"] {
+.contenedor-form input[type="text"], .contenedor-form input[type="password"], .contenedor-form input[type="email"] {
   outline: none;
   display: block;
   width: 100%;
@@ -99,9 +98,7 @@ body {
   transition: all .5s ease;
 }
 
-.contenedor-form input[type="text"]:focus,
-.contenedor-form input[type="password"]:focus,
-.contenedor-form input[type="email"]:focus {
+.contenedor-form input[type="text"]:focus, .contenedor-form input[type="password"]:focus, .contenedor-form input[type="email"]:focus {
   border-bottom: 4px solid #0075d9;
 }
 
@@ -149,6 +146,7 @@ body {
 }
 
 /* Customize the label (the container) */
+
 .container {
   display: block;
   position: relative;
@@ -163,6 +161,7 @@ body {
 }
 
 /* Hide the browser's default checkbox */
+
 .container input {
   position: absolute;
   opacity: 0;
@@ -170,6 +169,7 @@ body {
 }
 
 /* Create a custom checkbox */
+
 .checkmark {
   position: absolute;
   top: 2px;
@@ -181,16 +181,19 @@ body {
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+
+.container:hover input~.checkmark {
   background-color: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+
+.container input:checked~.checkmark {
   background-color: #2196F3;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
+
 .checkmark:after {
   content: "";
   position: absolute;
@@ -198,11 +201,13 @@ body {
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+
+.container input:checked~.checkmark:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
+
 .container .checkmark:after {
   left: 4.5px;
   top: 0px;
@@ -215,35 +220,34 @@ body {
   transform: rotate(45deg);
 }
 
-#error{
-	margin-top: 1em;
-	display: none;
+#error {
+  margin-top: 1em;
+  display: none;
 }
 
-#error span{
-	color: rgb(255, 0, 0);
+#error span {
+  color: rgb(255, 0, 0);
 }
 
-#correcto{
-	margin: 0 auto;
-	margin-top: 1em;
-	display: none;
+#correcto {
+  margin: 0 auto;
+  margin-top: 1em;
+  display: none;
 }
 
-#correcto span{
-	color: rgb(0, 255, 0);
+#correcto span {
+  color: rgb(0, 255, 0);
 }
 
 /* Estos son los estilos para nuestros mensajes de error */
+
 .error {
-  width  : 100%;
+  width: 100%;
   padding: 0;
- 
   font-size: 80%;
   color: white;
   background-color: #900;
   border-radius: 5px 5px 5px 5px;
- 
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -253,15 +257,14 @@ body {
 }
 
 /* Estos son los estilos para nuestros mensajes de correcto */
+
 .correcto {
-  width  : 100%;
+  width: 100%;
   padding: 0;
- 
   font-size: 80%;
   color: white;
   background-color: #00FE00;
   border-radius: 5px 5px 5px 5px;
- 
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
