@@ -561,39 +561,58 @@ client.on('message', function (topic, message) {
 		if (message.toString() === 'S0') {
 			verificar = true;
 		}
+		else{
+			verificar = false;
+		}
 	}
 	if (topic === MAC) {
 		if (verificar === true) {
 			if (message.toString() === 'M0') {
-				client.publish(Door, 'D0')
+
 			}
 			else {
 				MACingresado = message.toString();
+				console.log('Mac ingresada: ' + MACingresado);
 				var usuario = db.collection("Users");
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
+						console.log("Mac del documento: " + doc.data().MAC);
 						if (doc.data().MAC === MACingresado) {
 							abierto = true;
 						}
 						else {
-							usuario.doc(doc).collection("Subusers").get().then(function (querySnapshot) {
+							usuario.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
+									console.log("Mac del documento: " + doc.data().MAC);
 									if (doc.data().MAC === MACingresado) {
 										abierto = true;
 									}
 								});
+								if (abierto === true) {
+									client.publish(Door, 'D1')
+									console.log("abierto");
+								}
+								else if (abierto === false) {
+									console.log("no existe esa mac")
+								}
+								abierto = false;
 							});
 						}
 					});
+					if (abierto === true) {
+						client.publish(Door, 'D1')
+						console.log("abierto");
+					}
+					else if (abierto === false) {
+						console.log("no existe esa mac");
+					}
+					client.publish(MAC, 'M0')
+					abierto = false;
 				});
-				if (abierto === true) {
-					client.publish(Door, 'D1')
-				}
-				else if (abierto === false) {
-					client.publish(Door, 'D0')
-				}
-				abierto = false;
 			}
+		}
+		else{
+			console.log("El protocolo no se encuentra en el estado correcto. Por favor, espere");
 		}
 	}
 });
