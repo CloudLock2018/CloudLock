@@ -31,63 +31,31 @@ var db = admin.firestore();
 
 
 //---------------------------------------WEB----------------------------------------------------//
-var nombreR;
-var contraR;
-var repetido;
+var nombreV;
 
-//Receive info from client (Register)
-app.post('/register', function (req, res) {
-	repetido = false;
-	//Get info
-	nombreR = req.body.nombre;
-	emailR = req.body.email;
-	contraR = req.body.contra;
-	//Creates a document inside the collection USERS
-	var usuario = db.collection("Users").doc(nombreR);
+//Receive info from client (Verify Account)
+app.post('/verify', function (req, res) {
+	nombreV = req.body.usuario;
+	var usuario = db.collection("Users").doc(nombreV);
 	usuario.get()
-		//Check if the doc already exists and send an error if happens
 		.then(doc => {
 			if (doc.exists) {
+				usuario.update({
+					Verificado: true
+				});
 				reply = {
-					msg: 'Error'
+					msg: 'Verificado'
 				};
 				res.end(JSON.stringify(reply));
 			}
-			else {
-				//Checks if the email was already used
-				db.collection("Users").where('Email', '==', emailR).get()
-					.then(snapshot => {
-						snapshot.forEach(doc => {
-							repetido = true;
-							reply = {
-								msg: 'Error, mail'
-							};
-							res.end(JSON.stringify(reply));
-						});
-						//if the email has never been used before, then it will create a new doc in the DB
-						if (repetido === false) {
-							usuario.set({
-								Nombre_de_Usuario: nombreR,
-								Email: emailR,
-								Contraseña: contraR,
-								MAC: null
-							})
-								.then(function (docRef) {
-									reply = {
-										msg: 'Gracias ' + nombreR + ', contraseña: ' + contraR
-									};
-									res.end(JSON.stringify(reply));
-								})
-								//Send error if it happens one
-								.catch(function (error) {
-									console.error("Error adding document: ", error);
-								})
-						}
-					})
+			else{
+				reply = {
+					msg: 'Error, usuario'
+				};
+				res.end(JSON.stringify(reply));
 			}
-		})
-});
-
+		});
+})
 
 var nombreL;
 var contraL;
@@ -267,10 +235,97 @@ app.post('/delete', function (req, res) {
 })
 
 //----------------------------------------EMAIL-------------------------------------------------//
-var usuarioP;
-var emailP;
 var nodemailer = require("nodemailer");
 
+var nombreR;
+var emailR;
+var contraR;
+var repetido;
+
+//Receive info from client (Register)
+app.post('/register', function (req, res) {
+	repetido = false;
+	//Get info
+	nombreR = req.body.nombre;
+	emailR = req.body.email;
+	contraR = req.body.contra;
+	//Creates a document inside the collection USERS
+	var usuario = db.collection("Users").doc(nombreR);
+	usuario.get()
+		//Check if the doc already exists and send an error if happens
+		.then(doc => {
+			if (doc.exists) {
+				reply = {
+					msg: 'Error'
+				};
+				res.end(JSON.stringify(reply));
+			}
+			else {
+				//Checks if the email was already used
+				db.collection("Users").where('Email', '==', emailR).get()
+					.then(snapshot => {
+						snapshot.forEach(doc => {
+							repetido = true;
+							reply = {
+								msg: 'Error, mail'
+							};
+							res.end(JSON.stringify(reply));
+						});
+						//if the email has never been used before, then it will create a new doc in the DB
+						if (repetido === false) {
+							usuario.set({
+								Nombre_de_Usuario: nombreR,
+								Email: emailR,
+								Contraseña: contraR,
+								Verificado: false,
+								MAC: null
+							})
+								.then(function (docRef) {
+									var transporter = nodemailer.createTransport(({
+										service: 'gmail',
+										auth: {
+											type: 'OAuth2',
+											user: 'cloudlockteam@gmail.com',
+											password: 'Cloudlock2018',
+											clientId: '557641999434-ukib5ncu6roold8t316tjavflnnjtsds.apps.googleusercontent.com',
+											clientSecret: 'wpt8HbRwrY1zW8_JbxWFQR9z',
+											refreshToken: '1/R1EUSacpTsW7AgV9_dY19oMRBBKYaVeb-9fANlrCJjg',
+											accessToken: 'ya29.GlswBrG4PlHMn0eeS12uEhEODfv73OPOeAoNnFU1z98Bkaad7KAQIdt8FVPhpzmNKlnn9OdmVi7rIpBwJ4gejoazX0S_eFNRBQHNRfuOMoAMBrQRj9ToWZjWoNG2'
+										}
+									}));
+
+									var mailOptions = {
+										from: 'CloudLock Team <cloudlockteam@gmail.com>',
+										to: emailR,
+										subject: 'Verificar Cuenta',
+										text: 'Buenos Dias. Usted se ha registrado a CloudLock y es necesario que verifique su cuenta, en caso de que en el futuro se borren las cuentas no verificadas. Para realizarlo, por favor ingrese a este link: http://localhost:3000/verifyaccount.html. El equipo de CloudLock.'
+									}
+
+									transporter.sendMail(mailOptions, function (err, res) {
+										if (err) {
+											console.log('Error: ' + err);
+										}
+										else {
+											console.log('Email sent');
+										}
+									})
+									reply = {
+										msg: 'Gracias ' + nombreR + ', contraseña: ' + contraR
+									};
+									res.end(JSON.stringify(reply));
+								})
+								//Send error if it happens one
+								.catch(function (error) {
+									console.error("Error adding document: ", error);
+								})
+						}
+					})
+			}
+		})
+});
+
+var usuarioP;
+var emailP;
 //Receive info from client (Password)
 app.post('/newpassword', function (req, res) {
 	usuarioP = req.body.usuario;

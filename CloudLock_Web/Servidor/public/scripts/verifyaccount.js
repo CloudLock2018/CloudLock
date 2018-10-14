@@ -21,7 +21,7 @@ $('#entrar').click(function () {
 			usuario: nomTB.val()
 		};
 		$.ajax({
-			url: '/newpassword',
+			url: '/verify',
 			type: "POST",
 			dataType: "json",
 			data: data,
@@ -31,10 +31,13 @@ $('#entrar').click(function () {
 					error.innerHTML = "El usuario no existe";
 					error.className = "error active";
 				}
-				else if (data.msg === 'Email enviado') {
+				else if (data.msg === 'Verificado') {
 					$('#correcto').show();
-					correcto.innerHTML = "Email Enviado";
+					correcto.innerHTML = "Cuenta Verificada";
 					correcto.className = "correcto active";
+					setTimeout(function () {
+						window.location.href = "../index.html";
+					}, 2000);
 				}
 			}
 		});
