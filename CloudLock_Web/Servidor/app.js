@@ -470,6 +470,7 @@ app.post('/mac', function (req, res) {
 var usuarioMA;
 var MACingresado;
 var infinito = 1;
+var existente = false;
 
 //Receive info from Adafruit API (NFC) and saves the Mac into the user's database
 app.post('/macAdmin', function (req, res) {
@@ -484,22 +485,71 @@ app.post('/macAdmin', function (req, res) {
 					}
 					else {
 						MACingresado = message.toString();
+						var col = db.collection("Users");
 						var usuario = db.collection("Users").doc(usuarioMA);
 						usuario.get()
 							.then(doc => {
-								usuario.update({
-									MAC: MACingresado
+								col.get().then(function (querySnapshot) {
+									querySnapshot.forEach(function (doc) {
+										if (doc.data().MAC === MACingresado) {
+											existente = true;
+										}
+										else {
+											col.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
+												querySnapshot.forEach(function (doc) {
+													if (doc.data().MAC === MACingresado) {
+														existente = true;
+													}
+												});
+												if (existente === true){
+													//Error
+													client.publish(Door, 'D2')
+													//Nulo
+													client.publish(MAC, 'M0')
+													//Verificar
+													client.publish(Status, 'S0')
+													verificar = true;
+													infinito = 1;
+													existente = false;
+													reply = {
+														msg: "Ya existe"
+													}
+													res.end(JSON.stringify(reply));
+												}
+												else if (existente === false) {
+													usuario.update({
+														MAC: MACingresado
+													});
+													//Nulo
+													client.publish(MAC, 'M0')
+													//Verificar
+													client.publish(Status, 'S0')
+													verificar = true;
+													infinito = 1;
+													reply = {
+														msg: 'Mac Actualizada'
+													}
+													res.end(JSON.stringify(reply));
+												}
+											});
+										}
+									});
+									if (existente === true){
+										//Error
+										client.publish(Door, 'D2')
+										//Nulo
+										client.publish(MAC, 'M0')
+										//Verificar
+										client.publish(Status, 'S0')
+										verificar = true;
+										infinito = 1;
+										existente = false;
+										reply = {
+											msg: "Ya existe"
+										}
+										res.end(JSON.stringify(reply));
+									}
 								});
-								//Nulo
-								client.publish(MAC, 'M0')
-								//Verificar
-								client.publish(Status, 'S0')
-								verificar = true;
-								infinito = 1;
-								reply = {
-									msg: 'Mac Actualizada'
-								}
-								res.end(JSON.stringify(reply));
 							})
 					}
 				}
@@ -583,19 +633,68 @@ app.post('/macSub', function (req, res) {
 					}
 					else {
 						MACingresado = message.toString();
-						var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
-							MAC: MACingresado
+						var col = db.collection("Users");
+						col.get().then(function (querySnapshot) {
+							querySnapshot.forEach(function (doc) {
+								if (doc.data().MAC === MACingresado) {
+									existente = true;
+								}
+								else {
+									col.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
+										querySnapshot.forEach(function (doc) {
+											if (doc.data().MAC === MACingresado) {
+												existente = true;
+											}
+										});
+										if (existente === true){
+											//Error
+											client.publish(Door, 'D2')
+											//Nulo
+											client.publish(MAC, 'M0')
+											//Verificar
+											client.publish(Status, 'S0')
+											verificar = true;
+											infinito = 1;
+											existente = false;
+											reply = {
+												msg: "Ya existe"
+											}
+											res.end(JSON.stringify(reply));
+										}
+										else if (existente === false) {
+											var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
+												MAC: MACingresado
+											});
+											//Nulo
+											client.publish(MAC, 'M0')
+											//Verificar
+											client.publish(Status, 'S0')
+											verificar = true;
+											infinito = 1;
+											reply = {
+												msg: 'Mac Actualizada'
+											}
+											res.end(JSON.stringify(reply));
+										}
+									});
+								}
+							});
+							if (existente === true){
+								//Error
+								client.publish(Door, 'D2')
+								//Nulo
+								client.publish(MAC, 'M0')
+								//Verificar
+								client.publish(Status, 'S0')
+								verificar = true;
+								infinito = 1;
+								existente = false;
+								reply = {
+									msg: "Ya existe"
+								}
+								res.end(JSON.stringify(reply));
+							}
 						});
-						//Nulo
-						client.publish(MAC, 'M0')
-						//Verificar
-						client.publish(Status, 'S0')
-						verificar = true;
-						infinito = 1;
-						reply = {
-							msg: 'Mac Actualizada'
-						}
-						res.end(JSON.stringify(reply));
 					}
 				}
 			})
@@ -648,6 +747,7 @@ client.on('message', function (topic, message) {
 									console.log("abierto");
 								}
 								else if (abierto === false) {
+									client.publish(Door, 'D2')
 									console.log("no existe esa mac")
 								}
 								abierto = false;
@@ -659,6 +759,7 @@ client.on('message', function (topic, message) {
 						console.log("abierto");
 					}
 					else if (abierto === false) {
+						client.publish(Door, 'D2')
 						console.log("no existe esa mac");
 					}
 					client.publish(MAC, 'M0')
@@ -667,7 +768,7 @@ client.on('message', function (topic, message) {
 			}
 		}
 		else{
-			console.log("El protocolo no se encuentra en el estado correcto. Por favor, espere");
+
 		}
 	}
 });

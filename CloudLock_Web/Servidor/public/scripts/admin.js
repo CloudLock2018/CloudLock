@@ -327,6 +327,15 @@ function editar() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+                            else if (data.msg === 'Ya existe'){
+                                $('.INFO').show();
+                                $('.INFO').text("La MAC ya fue agregado en otro usuario");
+                                $('.INFO').css("color", "red");
+                                $('.INFO').css("font-weight", "Bold");
+                                setTimeout(function () {
+                                    document.location.reload(true);
+                                }, 2000);
+                            }
                         },
                         error: function (err) {
                             $('.INFO').show();
@@ -390,6 +399,15 @@ function editarSub() {
                             else if (data.msg === 'Error') {
                                 $('.INFO').show();
                                 $('.INFO').text("Ha ocurrido un error con el protocolo");
+                                $('.INFO').css("color", "red");
+                                $('.INFO').css("font-weight", "Bold");
+                                setTimeout(function () {
+                                    document.location.reload(true);
+                                }, 2000);
+                            }
+                            else if (data.msg === 'Ya existe'){
+                                $('.INFO').show();
+                                $('.INFO').text("La MAC ya fue agregado en otro usuario");
                                 $('.INFO').css("color", "red");
                                 $('.INFO').css("font-weight", "Bold");
                                 setTimeout(function () {
