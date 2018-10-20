@@ -2,8 +2,8 @@ Adafruit MQTT Broker
 
 Abrir y cerrar puerta
 	Feed: Door
-		Values: D0 - Acceso permitido
-			D1 - Acceso denegado
+		Values: D0 - Acceso denegado
+			D1 - Acceso permitido
 
 Enviar MAC
 	Feed: MAC
