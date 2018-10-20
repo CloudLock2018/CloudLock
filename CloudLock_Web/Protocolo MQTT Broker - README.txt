@@ -4,6 +4,7 @@ Abrir y cerrar puerta
 	Feed: Door
 		Values: D0 - Acceso denegado
 			D1 - Acceso permitido
+			D2 - Error al agregar
 
 Enviar MAC
 	Feed: MAC
