@@ -53,7 +53,7 @@ body {
   text-align: center;
 }
 
-.contenedor3 .MAC {
+.contenedor3 .IMEI {
   margin-left: 30px;
   color: black;
 }
@@ -162,7 +162,7 @@ body {
   float: left;
 }
 
-.MAC {
+.IMEI {
   color: black;
 }
 

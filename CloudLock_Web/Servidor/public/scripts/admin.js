@@ -24,19 +24,19 @@ function leerCookie(nombre) {
 }
 document.getElementById("name").innerHTML = leerCookie("username");
 
-//Gets user's MAC
+//Gets user's IMEI
 var data = {
     usuario: document.getElementById("name").textContent
 }
 $.ajax({
-    url: '/mac',
+    url: '/imei',
     type: "POST",
     dataType: "json",
     data: data,
     success: function (data) {
-        if (data.msg === 'No mac') {
+        if (data.msg === 'No imei') {
             $('.INFO').show();
-            $('.INFO').text("No existe un MAC vinculado a su cuenta. Apoye su celular sobre la placa NFC y luego espere");
+            $('.INFO').text("No existe un IMEI vinculado a su cuenta. Apoye su celular sobre la placa NFC y luego espere");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
             var info = {
@@ -44,13 +44,13 @@ $.ajax({
             }
             console.log(info);
             $.ajax({
-                url: '/macAdmin',
+                url: '/IMEIAdmin',
                 type: "POST",
                 dataType: "json",
                 data: info,
                 timeout: 120000,
                 success: function (data) {
-                    if (data.msg === 'Mac Actualizada') {
+                    if (data.msg === 'IMEI Actualizada') {
                         $('.INFO').show();
                         $('.INFO').text("Se ha actualizado su cuenta");
                         $('.INFO').css("color", "#49ff00");
@@ -77,13 +77,13 @@ $.ajax({
                 }
             })
         }
-        else if (data.msg === 'Hay mac') {
+        else if (data.msg === 'Hay imei') {
             $('.INFO').show();
-            $('.INFO').text("Se encontro el MAC vinculado a su cuenta.");
+            $('.INFO').text("Se encontro el IMEI vinculado a su cuenta.");
             $('.INFO').css("color", "#49ff00");
             $('.INFO').css("font-weight", "Bold");
-            //Shows MAC
-            $('.MAC').text("MAC: " + data.mac);
+            //Shows IMEI
+            $('.IMEI').text("IMEI: " + data.imei);
             console.log(data.contenido);
             if (data.existe === true) {
                 document.querySelector(".subusuarios").innerHTML += data.contenido;
@@ -276,7 +276,7 @@ function eliminar() {
     })
 }
 
-//Edits user's MAC
+//Edits user's IMEI
 function editar() {
     $('#editar').click(function () {
         var data = {
@@ -303,13 +303,13 @@ function editar() {
                         usuario: document.getElementById("name").textContent
                     }
                     $.ajax({
-                        url: '/macAdmin',
+                        url: '/imeiAdmin',
                         type: "POST",
                         dataType: "json",
                         data: info,
                         timeout: 120000,
                         success: function (data) {
-                            if (data.msg === 'Mac Actualizada') {
+                            if (data.msg === 'IMEI Actualizada') {
                                 $('.INFO').show();
                                 $('.INFO').text("Se ha actualizado su cuenta");
                                 $('.INFO').css("color", "#49ff00");
@@ -329,7 +329,7 @@ function editar() {
                             }
                             else if (data.msg === 'Ya existe'){
                                 $('.INFO').show();
-                                $('.INFO').text("La MAC ya fue agregado en otro usuario");
+                                $('.INFO').text("La IMEI ya fue agregado en otro usuario");
                                 $('.INFO').css("color", "red");
                                 $('.INFO').css("font-weight", "Bold");
                                 setTimeout(function () {
@@ -350,7 +350,7 @@ function editar() {
     })
 }
 
-//Edits certain subuser's MAC
+//Edits certain subuser's IMEI
 function editarSub() {
     $(document).on("click", ".cambiar", function () {
         elegido = $(this).attr('id');
@@ -381,13 +381,13 @@ function editarSub() {
                         sub: subusuario
                     };
                     $.ajax({
-                        url: '/macSub',
+                        url: '/imeiSub',
                         type: "POST",
                         dataType: "json",
                         data: info,
                         timeout: 120000,
                         success: function (data) {
-                            if (data.msg === 'Mac Actualizada') {
+                            if (data.msg === 'IMEI Actualizada') {
                                 $('.INFO').show();
                                 $('.INFO').text("Se ha actualizado el subusuario");
                                 $('.INFO').css("color", "#49ff00");
@@ -407,7 +407,7 @@ function editarSub() {
                             }
                             else if (data.msg === 'Ya existe'){
                                 $('.INFO').show();
-                                $('.INFO').text("La MAC ya fue agregado en otro usuario");
+                                $('.INFO').text("La IMEI ya fue agregado en otro usuario");
                                 $('.INFO').css("color", "red");
                                 $('.INFO').css("font-weight", "Bold");
                                 setTimeout(function () {

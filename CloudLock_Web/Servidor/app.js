@@ -150,7 +150,7 @@ app.post('/subuser', function (req, res) {
 			else {
 				usuario.set({
 					Nombre_de_Subusuario: subusuarioA,
-					MAC: null
+					IMEI: null
 				})
 					.then(function (docRef) {
 						reply = {
@@ -177,11 +177,11 @@ app.post('/reload', function (req, res) {
 				usuario.collection("Subusers").get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
 						if (subusuarios === null) {
-							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='MAC' id='" + cant + "'>MAC: " + doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 							cant += 1;
 						}
 						else {
-							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='MAC' id='" + cant + "'>MAC: " + doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 							cant += 1;
 						}
 					});
@@ -278,7 +278,7 @@ app.post('/register', function (req, res) {
 								Email: emailR,
 								Contraseña: contraR,
 								Verificado: false,
-								MAC: null
+								IMEI: null
 							})
 								.then(function (docRef) {
 									var transporter = nodemailer.createTransport(({
@@ -380,7 +380,7 @@ app.post('/newpassword', function (req, res) {
 //-------------------------------------ADAFRUIT API---------------------------------------------//
 var mqtt = require('mqtt');
 var Door = 'CloudlockTeam/f/Door';
-var MAC = 'CloudlockTeam/f/MAC';
+var IMEI = 'CloudlockTeam/f/IMEI';
 var Status = 'CloudlockTeam/f/Status';
 
 var client = mqtt.connect('mqtt://io.adafruit.com', {
@@ -392,9 +392,9 @@ var client = mqtt.connect('mqtt://io.adafruit.com', {
 client.on('connect', function () {
 	//Abrir y cerrar puerta
 	client.subscribe(Door)
-	//Enviar MAC
-	client.subscribe(MAC)
-	//Verificar o subir MAC
+	//Enviar IMEI
+	client.subscribe(IMEI)
+	//Verificar o subir IMEI
 	client.subscribe(Status)
 });
 
@@ -402,7 +402,7 @@ client.on('connect', function () {
 	//Cerrado
 	client.publish(Door, 'D0')
 	//Nulo
-	client.publish(MAC, 'M0')
+	client.publish(IMEI, 'M0')
 	//Verificar
 	client.publish(Status, 'S0')
 });
@@ -418,20 +418,20 @@ var cant = 1;
 var hay = true;
 var verificar = true;
 
-//Receive info from client (Admin - MAC & subuser already saved)
-app.post('/mac', function (req, res) {
+//Receive info from client (Admin - IMEI & subuser already saved)
+app.post('/imei', function (req, res) {
 	usuarioA = req.body.usuario;
 	var usuario = db.collection("Users").doc(usuarioA);
 	usuario.get()
 		.then(doc => {
 			if (doc.exists) {
-				//Checks if user's MAC is null or not
-				if (doc.data().MAC === null) {
+				//Checks if user's IMEI is null or not
+				if (doc.data().IMEI === null) {
 					//Agregar
 					client.publish(Status, 'S1')
 					verificar = false;
 					reply = {
-						msg: 'No mac'
+						msg: 'No imei'
 					};
 					res.end(JSON.stringify(reply));
 				}
@@ -439,11 +439,11 @@ app.post('/mac', function (req, res) {
 					usuario.collection("Subusers").get().then(function (querySnapshot) {
 						querySnapshot.forEach(function (doc) {
 							if (subusuarios === null) {
-								subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='MAC' id='" + cant + "'>MAC: " + doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+								subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 								cant += 1;
 							}
 							else {
-								subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='MAC' id='" + cant + "'>MAC: " + doc.data().MAC + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
+								subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 								cant += 1;
 							}
 						});
@@ -451,8 +451,8 @@ app.post('/mac', function (req, res) {
 							hay = false;
 						}
 						reply = {
-							msg: 'Hay mac',
-							mac: doc.data().MAC,
+							msg: 'Hay imei',
+							imei: doc.data().IMEI,
 							contenido: subusuarios,
 							cantidad: cant,
 							existe: hay
@@ -468,36 +468,36 @@ app.post('/mac', function (req, res) {
 });
 
 var usuarioMA;
-var MACingresado;
+var IMEIingresado;
 var infinito = 1;
 var existente = false;
 
-//Receive info from Adafruit API (NFC) and saves the Mac into the user's database
-app.post('/macAdmin', function (req, res) {
+//Receive info from Adafruit API (NFC) and saves the IMEI into the user's database
+app.post('/imeiAdmin', function (req, res) {
 	usuarioMA = req.body.usuario;
 	if (verificar === false) {
 		for (var i = 0; i < infinito; i++) {
 			client.on('message', function (topic, message) {
 				// message is Buffer
-				if (topic === MAC) {
+				if (topic === IMEI) {
 					if (message.toString() === 'M0') {
 						infinito++;
 					}
 					else {
-						MACingresado = message.toString();
+						IMEIingresado = message.toString();
 						var col = db.collection("Users");
 						var usuario = db.collection("Users").doc(usuarioMA);
 						usuario.get()
 							.then(doc => {
 								col.get().then(function (querySnapshot) {
 									querySnapshot.forEach(function (doc) {
-										if (doc.data().MAC === MACingresado) {
+										if (doc.data().IMEI === IMEIingresado) {
 											existente = true;
 										}
 										else {
 											col.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 												querySnapshot.forEach(function (doc) {
-													if (doc.data().MAC === MACingresado) {
+													if (doc.data().IMEI === IMEIingresado) {
 														existente = true;
 													}
 												});
@@ -505,7 +505,7 @@ app.post('/macAdmin', function (req, res) {
 													//Error
 													client.publish(Door, 'D2')
 													//Nulo
-													client.publish(MAC, 'M0')
+													client.publish(IMEI, 'M0')
 													//Verificar
 													client.publish(Status, 'S0')
 													verificar = true;
@@ -518,16 +518,16 @@ app.post('/macAdmin', function (req, res) {
 												}
 												else if (existente === false) {
 													usuario.update({
-														MAC: MACingresado
+														IMEI: IMEIingresado
 													});
 													//Nulo
-													client.publish(MAC, 'M0')
+													client.publish(IMEI, 'M0')
 													//Verificar
 													client.publish(Status, 'S0')
 													verificar = true;
 													infinito = 1;
 													reply = {
-														msg: 'Mac Actualizada'
+														msg: 'IMEI Actualizada'
 													}
 													res.end(JSON.stringify(reply));
 												}
@@ -538,7 +538,7 @@ app.post('/macAdmin', function (req, res) {
 										//Error
 										client.publish(Door, 'D2')
 										//Nulo
-										client.publish(MAC, 'M0')
+										client.publish(IMEI, 'M0')
 										//Verificar
 										client.publish(Status, 'S0')
 										verificar = true;
@@ -619,30 +619,30 @@ app.post('/editSub', function (req, res) {
 var usuarioMS;
 var subusuarioMS;
 
-//Receive info from Adafruit API (NFC) and saves the Mac into the subuser's database
-app.post('/macSub', function (req, res) {
+//Receive info from Adafruit API (NFC) and saves the IMEI into the subuser's database
+app.post('/imeiSub', function (req, res) {
 	usuarioMS = req.body.usuario;
 	subusuarioMS = req.body.sub;
 	if (verificar === false) {
 		for (var i = 0; i < infinito; i++) {
 			client.on('message', function (topic, message) {
 				// message is Buffer
-				if (topic === MAC) {
+				if (topic === IMEI) {
 					if (message.toString() === 'M0') {
 						infinito++;
 					}
 					else {
-						MACingresado = message.toString();
+						IMEIingresado = message.toString();
 						var col = db.collection("Users");
 						col.get().then(function (querySnapshot) {
 							querySnapshot.forEach(function (doc) {
-								if (doc.data().MAC === MACingresado) {
+								if (doc.data().IMEI === IMEIingresado) {
 									existente = true;
 								}
 								else {
 									col.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 										querySnapshot.forEach(function (doc) {
-											if (doc.data().MAC === MACingresado) {
+											if (doc.data().IMEI === IMEIingresado) {
 												existente = true;
 											}
 										});
@@ -650,7 +650,7 @@ app.post('/macSub', function (req, res) {
 											//Error
 											client.publish(Door, 'D2')
 											//Nulo
-											client.publish(MAC, 'M0')
+											client.publish(IMEI, 'M0')
 											//Verificar
 											client.publish(Status, 'S0')
 											verificar = true;
@@ -663,16 +663,16 @@ app.post('/macSub', function (req, res) {
 										}
 										else if (existente === false) {
 											var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
-												MAC: MACingresado
+												IMEI: IMEIingresado
 											});
 											//Nulo
-											client.publish(MAC, 'M0')
+											client.publish(IMEI, 'M0')
 											//Verificar
 											client.publish(Status, 'S0')
 											verificar = true;
 											infinito = 1;
 											reply = {
-												msg: 'Mac Actualizada'
+												msg: 'IMEI Actualizada'
 											}
 											res.end(JSON.stringify(reply));
 										}
@@ -683,7 +683,7 @@ app.post('/macSub', function (req, res) {
 								//Error
 								client.publish(Door, 'D2')
 								//Nulo
-								client.publish(MAC, 'M0')
+								client.publish(IMEI, 'M0')
 								//Verificar
 								client.publish(Status, 'S0')
 								verificar = true;
@@ -709,7 +709,7 @@ app.post('/macSub', function (req, res) {
 })
 
 var abierto = false;
-//Checks if the MAC sent exists in the database. If it does, opens the door
+//Checks if the IMEI sent exists in the database. If it does, opens the door
 client.on('message', function (topic, message) {
 	if (topic === Status) {
 		if (message.toString() === 'S0') {
@@ -719,26 +719,26 @@ client.on('message', function (topic, message) {
 			verificar = false;
 		}
 	}
-	if (topic === MAC) {
+	if (topic === IMEI) {
 		if (verificar === true) {
 			if (message.toString() === 'M0') {
 
 			}
 			else {
-				MACingresado = message.toString();
-				console.log('Mac ingresada: ' + MACingresado);
+				IMEIingresado = message.toString();
+				console.log('IMEI ingresada: ' + IMEIingresado);
 				var usuario = db.collection("Users");
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
-						console.log("Mac del documento: " + doc.data().MAC);
-						if (doc.data().MAC === MACingresado) {
+						console.log("IMEI del documento: " + doc.data().IMEI);
+						if (doc.data().IMEI === IMEIingresado) {
 							abierto = true;
 						}
 						else {
 							usuario.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
-									console.log("Mac del documento: " + doc.data().MAC);
-									if (doc.data().MAC === MACingresado) {
+									console.log("IMEI del documento: " + doc.data().IMEI);
+									if (doc.data().IMEI === IMEIingresado) {
 										abierto = true;
 									}
 								});
@@ -748,7 +748,7 @@ client.on('message', function (topic, message) {
 								}
 								else if (abierto === false) {
 									client.publish(Door, 'D2')
-									console.log("no existe esa mac")
+									console.log("no existe esa imei")
 								}
 								abierto = false;
 							});
@@ -760,9 +760,9 @@ client.on('message', function (topic, message) {
 					}
 					else if (abierto === false) {
 						client.publish(Door, 'D2')
-						console.log("no existe esa mac");
+						console.log("no existe esa imei");
 					}
-					client.publish(MAC, 'M0')
+					client.publish(IMEI, 'M0')
 					abierto = false;
 				});
 			}
