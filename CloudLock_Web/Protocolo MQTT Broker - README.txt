@@ -6,9 +6,9 @@ Abrir y cerrar puerta
 			D1 - Acceso permitido
 			D2 - Error al agregar
 
-Enviar MAC
-	Feed: MAC
-		Values: M0 - Nulo
+Enviar IMEI
+	Feed: IMEI
+		Values: I0 - Nulo
 			XXXXXXXXX - IMEI enviado
 
 Verificar o subir MAC

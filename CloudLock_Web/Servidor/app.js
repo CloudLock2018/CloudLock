@@ -402,7 +402,7 @@ client.on('connect', function () {
 	//Cerrado
 	client.publish(Door, 'D0')
 	//Nulo
-	client.publish(IMEI, 'M0')
+	client.publish(IMEI, 'I0')
 	//Verificar
 	client.publish(Status, 'S0')
 });
@@ -480,7 +480,7 @@ app.post('/imeiAdmin', function (req, res) {
 			client.on('message', function (topic, message) {
 				// message is Buffer
 				if (topic === IMEI) {
-					if (message.toString() === 'M0') {
+					if (message.toString() === 'I0') {
 						infinito++;
 					}
 					else {
@@ -505,7 +505,7 @@ app.post('/imeiAdmin', function (req, res) {
 													//Error
 													client.publish(Door, 'D2')
 													//Nulo
-													client.publish(IMEI, 'M0')
+													client.publish(IMEI, 'I0')
 													//Verificar
 													client.publish(Status, 'S0')
 													verificar = true;
@@ -521,7 +521,7 @@ app.post('/imeiAdmin', function (req, res) {
 														IMEI: IMEIingresado
 													});
 													//Nulo
-													client.publish(IMEI, 'M0')
+													client.publish(IMEI, 'I0')
 													//Verificar
 													client.publish(Status, 'S0')
 													verificar = true;
@@ -538,7 +538,7 @@ app.post('/imeiAdmin', function (req, res) {
 										//Error
 										client.publish(Door, 'D2')
 										//Nulo
-										client.publish(IMEI, 'M0')
+										client.publish(IMEI, 'I0')
 										//Verificar
 										client.publish(Status, 'S0')
 										verificar = true;
@@ -628,7 +628,7 @@ app.post('/imeiSub', function (req, res) {
 			client.on('message', function (topic, message) {
 				// message is Buffer
 				if (topic === IMEI) {
-					if (message.toString() === 'M0') {
+					if (message.toString() === 'I0') {
 						infinito++;
 					}
 					else {
@@ -650,7 +650,7 @@ app.post('/imeiSub', function (req, res) {
 											//Error
 											client.publish(Door, 'D2')
 											//Nulo
-											client.publish(IMEI, 'M0')
+											client.publish(IMEI, 'I0')
 											//Verificar
 											client.publish(Status, 'S0')
 											verificar = true;
@@ -666,7 +666,7 @@ app.post('/imeiSub', function (req, res) {
 												IMEI: IMEIingresado
 											});
 											//Nulo
-											client.publish(IMEI, 'M0')
+											client.publish(IMEI, 'I0')
 											//Verificar
 											client.publish(Status, 'S0')
 											verificar = true;
@@ -683,7 +683,7 @@ app.post('/imeiSub', function (req, res) {
 								//Error
 								client.publish(Door, 'D2')
 								//Nulo
-								client.publish(IMEI, 'M0')
+								client.publish(IMEI, 'I0')
 								//Verificar
 								client.publish(Status, 'S0')
 								verificar = true;
@@ -721,7 +721,7 @@ client.on('message', function (topic, message) {
 	}
 	if (topic === IMEI) {
 		if (verificar === true) {
-			if (message.toString() === 'M0') {
+			if (message.toString() === 'I0') {
 
 			}
 			else {
@@ -762,7 +762,7 @@ client.on('message', function (topic, message) {
 						client.publish(Door, 'D2')
 						console.log("no existe esa imei");
 					}
-					client.publish(IMEI, 'M0')
+					client.publish(IMEI, 'I0')
 					abierto = false;
 				});
 			}
