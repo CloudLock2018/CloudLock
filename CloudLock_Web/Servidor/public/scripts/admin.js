@@ -428,25 +428,6 @@ function editarSub() {
     })
 }
 
-$(document).ready(function () {
-    objects = document.getElementsByClassName("contenedor3");
-    setTimeout(function () {
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].style.transform = "perspective(130px)rotateX(-90deg)";
-        }
-    }, 0);
-    rotacion();
-});
-
-function rotacion() {
-    objects = document.getElementsByClassName("contenedor3");
-    setTimeout(function () {
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].style.transform = "perspective(130px)rotateX(0deg)";
-        }
-    }, 1000);
-}
-
 function rotacion2() {
     objects = document.getElementsByClassName("contenedor2");
     setTimeout(function () {
@@ -463,7 +444,7 @@ function rotacion2R() {
         for (var i = 0; i < objects.length; i++) {
             objects[i].style.transform = "perspective(130px)rotateX(-90deg)";
         }
-    }, 0);
+    }, 100);
     sacar();
 }
 
