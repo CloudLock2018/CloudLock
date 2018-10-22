@@ -11,7 +11,7 @@ Enviar IMEI
 		Values: I0 - Nulo
 			XXXXXXXXX - IMEI enviado
 
-Verificar o subir MAC
+Verificar o subir IMEI
 	Feed: Status
 		Values: S0 - Verificar
 			S1 - Agregar
