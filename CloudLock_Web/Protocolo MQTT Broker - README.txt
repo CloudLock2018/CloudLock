@@ -8,7 +8,7 @@ Abrir y cerrar puerta
 
 Enviar IMEI
 	Feed: IMEI
-		Values: I0 - Nulo
+		Values: 0 - Nulo
 			XXXXXXXXX - IMEI enviado
 
 Verificar o subir IMEI
