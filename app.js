@@ -299,7 +299,7 @@ app.post('/register', function (req, res) {
 										from: 'CloudLock Team <cloudlockteam@gmail.com>',
 										to: emailR,
 										subject: 'Verificar Cuenta',
-										text: 'Buenos Dias. Usted se ha registrado a CloudLock y es necesario que verifique su cuenta, en caso de que en el futuro se borren las cuentas no verificadas. Para realizarlo, por favor ingrese a este link: http://localhost:3000/verifyaccount.html. El equipo de CloudLock.'
+										text: 'Buenos Dias. Usted se ha registrado a CloudLock y es necesario que verifique su cuenta, en caso de que en el futuro se borren las cuentas no verificadas. Para realizarlo, por favor ingrese a este link: https://cloudlock.herokuapp.com/verifyaccount.html. El equipo de CloudLock.'
 									}
 
 									transporter.sendMail(mailOptions, function (err, res) {
@@ -352,7 +352,7 @@ app.post('/newpassword', function (req, res) {
 					from: 'CloudLock Team <cloudlockteam@gmail.com>',
 					to: emailP,
 					subject: 'Cambio de Contraseña',
-					text: 'Buenos Dias. Usted ha solicitado un cambio de contraseña para su cuenta. Para realizarlo, por favor ingrese a este link: http://localhost:3000/changepassword.html. El equipo de CloudLock.'
+					text: 'Buenos Dias. Usted ha solicitado un cambio de contraseña para su cuenta. Para realizarlo, por favor ingrese a este link: https://cloudlock.herokuapp.com/changepassword.html. El equipo de CloudLock.'
 				}
 
 				transporter.sendMail(mailOptions, function (err, res) {
