@@ -1,1 +1,1 @@
-web: node ./CloudLock_Web/ServidorServidor/app.js
+web: node ./CloudLock_Web/Servidor/app.js
