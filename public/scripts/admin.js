@@ -322,6 +322,7 @@ function editar() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+<<<<<<< HEAD:public/scripts/admin.js
                             else if (data.msg === 'Ya existe'){
                                 $('.INFO').show();
                                 $('.INFO').text("La IMEI ya fue agregado en otro usuario");
@@ -331,6 +332,8 @@ function editar() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+=======
+>>>>>>> parent of f35e2bb... Servidor - Adafruit (#8):CloudLock_Web/Servidor/public/scripts/admin.js
                         },
                         error: function (err) {
                             $('.INFO').show();
@@ -400,6 +403,7 @@ function editarSub() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+<<<<<<< HEAD:public/scripts/admin.js
                             else if (data.msg === 'Ya existe'){
                                 $('.INFO').show();
                                 $('.INFO').text("La IMEI ya fue agregado en otro usuario");
@@ -409,6 +413,8 @@ function editarSub() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+=======
+>>>>>>> parent of f35e2bb... Servidor - Adafruit (#8):CloudLock_Web/Servidor/public/scripts/admin.js
                         },
                         error: function (err) {
                             $('.INFO').show();
