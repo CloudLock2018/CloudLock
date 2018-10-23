@@ -473,7 +473,7 @@ var infinito = 1;
 var existente = false;
 
 //Receive info from Adafruit API (NFC) and saves the IMEI into the user's database
-app.post('/imeiAdmin', function (req, res) {
+app.post('/IMEIAdmin', function (req, res) {
 	usuarioMA = req.body.usuario;
 	if (verificar === false) {
 		for (var i = 0; i < infinito; i++) {
