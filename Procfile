@@ -1,1 +1,1 @@
-web: node .\CloudLock_Web\Servidor\app.js
+web: node app.js
