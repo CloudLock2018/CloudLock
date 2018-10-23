@@ -148,9 +148,6 @@ function nuevo() {
                         $('.INFO').text("Subusuario agregado");
                         $('.INFO').css("color", "#49ff00");
                         $('.INFO').css("font-weight", "Bold");
-                        setTimeout(function () {
-                            rotacion();
-                        }, 1000);
                         var reload = {
                             usuario: document.getElementById("name").textContent
                         }
@@ -214,6 +211,7 @@ function eliminar() {
         elegido = $(this).attr('id');
         console.log(elegido);
         if (confirm('¿Está seguro que quiere borrar este subusuario?')) {
+            rotacion3R();
             subusuario = $('#' + elegido + '.sub').text();
             var data = {
                 usuario: document.getElementById("name").textContent,
@@ -236,9 +234,6 @@ function eliminar() {
                         $('.INFO').text("Subusuario eliminado");
                         $('.INFO').css("color", "#49ff00");
                         $('.INFO').css("font-weight", "Bold");
-                        setTimeout(function () {
-                            rotacion();
-                        }, 1000);
                         var reload = {
                             usuario: document.getElementById("name").textContent
                         }
@@ -446,6 +441,12 @@ function rotacion2R() {
         }
     }, 100);
     sacar();
+}
+
+function rotacion3R(){
+   console.log("activado");
+   tp = document.getElementById(elegido);
+   tp.style.transform = "perspective(130px)rotateX(-90deg)";
 }
 
 function sacar() {
