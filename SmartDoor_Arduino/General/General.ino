@@ -38,11 +38,12 @@ Adafruit_MQTT_Publish Imei = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/I
 Adafruit_MQTT_Subscribe imeiStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/Status");
 
 String DOOR = "D0";
-uint32_t IMEI = "I0";
+uint32_t IMEI = 0;
 String NewStatus = "S0";
 
 /*************************** Sketch Code ************************************/
 
+String userImei = "0";
 PN532_SPI pn532spi(SPI, 5);
 SNEP nfc(pn532spi);
 uint8_t ndefBuf[128];
@@ -73,7 +74,7 @@ void setup() {
   // Setup MQTT subscription for feeds.
   mqtt.subscribe(&doorState);
   mqtt.subscribe(&imeiStatus);
-  
+
 }
 
 void loop() {
@@ -93,7 +94,7 @@ void loop() {
       if (DOOR == "D1") {
         accessGranted();
       }
-      else if(DOOR == "D0") {
+      else if (DOOR == "D0") {
         accessDenied();
       }
       else {
@@ -106,15 +107,15 @@ void loop() {
       NewStatus = (char *)imeiStatus.lastread;
       Serial.println(NewStatus);
       if (NewStatus == "S1") {
-         statusAdding();
+        statusAdding();
       }
       else {
-         statusChecking();
+        statusChecking();
       }
     }
   }
   // pings the server to keep the mqtt connection alive
-  if(! mqtt.ping()) {
+  if (! mqtt.ping()) {
     mqtt.disconnect();
   }
 }
@@ -128,9 +129,10 @@ void getMsgFromAndroid() {
     msg.print();
     int recordCount = msg.getRecordCount();
     NdefRecord record = msg.getRecord(0);
-    IMEI = readMsg(record);
+    userImei = readMsg(record);
+    IMEI = userImei.toInt();
     detectedIMEI();
-  } 
+  }
   else {
     Serial.println("Failed");
   }
@@ -154,18 +156,18 @@ void detectedIMEI() {
   Serial.print(F("\nSending Detected Imei value: "));
   Serial.print(IMEI);
   Serial.print("...");
-  if (! Imei.publish(IMEI)) 
+  if (! Imei.publish(IMEI))
   {
     Serial.println(F("Failed"));
   } else {
     Serial.println(F("OK!"));
   }
   delay(10);
-  IMEI = "I0";
+  IMEI = 0;
 }
 
 //Displays that the user IMEI was registered and opens the door.
-void accessGranted(){
+void accessGranted() { 
   //Turn green led on.
   //Move servo to open position.
   Serial.println("Your IMEI is registered, the door is now opened");
@@ -186,7 +188,7 @@ void error() {
   //Blink red led
   Serial.println("Error, your IMEI already exists in the server");
   delay(10);
-  IMEI = "I0";
+  IMEI = 0;
 }
 
 //Displays the dection mode.
@@ -214,15 +216,15 @@ void MQTT_connect() {
 
   uint8_t retries = 3;
   while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
-       Serial.println(mqtt.connectErrorString(ret));
-       Serial.println("Retrying MQTT connection in 5 seconds...");
-       mqtt.disconnect();
-       delay(5000);  // wait 5 seconds
-       retries--;
-       if (retries == 0) {
-         // basically die and wait for WDT to reset me
-         while (1);
-       }
+    Serial.println(mqtt.connectErrorString(ret));
+    Serial.println("Retrying MQTT connection in 5 seconds...");
+    mqtt.disconnect();
+    delay(5000);  // wait 5 seconds
+    retries--;
+    if (retries == 0) {
+      // basically die and wait for WDT to reset me
+      while (1);
+    }
   }
   Serial.println("MQTT Connected!");
 }
