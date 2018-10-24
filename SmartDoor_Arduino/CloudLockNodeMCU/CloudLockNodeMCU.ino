@@ -1,4 +1,4 @@
-p#include <ESP8266WiFi.h>
+#include <ESP8266WiFi.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
 #include "SPI.h"
@@ -9,7 +9,7 @@ p#include <ESP8266WiFi.h>
 
 /************************* WiFi Access Point *********************************/
 
-#define WLAN_SSID       "EDU-SPECIAL"
+#define WLAN_SSID       "Playroom"
 #define WLAN_PASS       "Jaramillo2012"
 
 /************************* Adafruit.io Setup *********************************/
@@ -53,8 +53,6 @@ int servo = 15;
 int ledR = 4;
 int ledB = 0;
 int ledG = 2;
-bool blinkRed = false;
-bool blinkBlue
 
 void MQTT_connect();
 
@@ -203,16 +201,17 @@ void accessDenied() {
 //Displays an error.
 void error() {
   digitalWrite(ledR, HIGH);
-  delay(500);
-  digitalWrite(ledR, LOW);
   Serial.println("Error, your IMEI already exists in the server");
-  delay(10);
+  delay(2000);
+  digitalWrite(ledR, LOW);
   IMEI = 0;
 }
 
 //Displays the dection mode.
 void statusAdding() {
-  //Blink blue led.
+  digitalWrite(ledR, HIGH);
+  digitalWrite(ledB, HIGH);
+  digitalWrite(ledG, HIGH);
   Serial.println("The next IMEI will be added to the server");
 }
 
