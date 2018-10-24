@@ -477,78 +477,37 @@ var existente = false;
 app.post('/IMEIAdmin', function (req, res) {
 	usuarioMA = req.body.usuario;
 	if (verificar === false) {
-		for (var i = 0; i < infinito; i++) {
-			client.on('message', function (topic, message) {
-				// message is Buffer
-				if (topic === IMEI) {
-					if (message.toString() === '0') {
-						infinito++;
-					}
-					else {
-						IMEIingresado = message.toString();
-						var col = db.collection("Users");
-						var usuario = db.collection("Users").doc(usuarioMA);
-						usuario.get()
-							.then(doc => {
-								col.get().then(function (querySnapshot) {
-									querySnapshot.forEach(function (doc) {
-										if (doc.data().IMEI === IMEIingresado) {
-											existente = true;
-										}
-										else {
-											col.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
-												querySnapshot.forEach(function (doc) {
-													if (doc.data().IMEI === IMEIingresado) {
-														existente = true;
-													}
-												});
-												if (existente === true) {
-													//Error
-													client.publish(Door, 'D2')
-													verificar = true;
-													infinito = 1;
-													existente = false;
-													reply = {
-														msg: "Ya existe"
-													}
-													res.end(JSON.stringify(reply));
-												}
-												else if (existente === false) {
-													usuario.update({
-														IMEI: IMEIingresado
-													});
-													verificar = true;
-													infinito = 1;
-													reply = {
-														msg: 'IMEI Actualizada'
-													}
-													res.end(JSON.stringify(reply));
-												}
-											});
-										}
-									});
-									if (existente === true) {
-										//Error
-										client.publish(Door, 'D2')
-										verificar = true;
-										infinito = 1;
-										existente = false;
-										reply = {
-											msg: "Ya existe"
-										}
-										res.end(JSON.stringify(reply));
-									}
-								});
-							})
-					}
+		client.on('message', function (topic, message) {
+			// message is Buffer
+			if (topic === IMEI) {
+				if (message.toString() === '0') {
+					infinito++;
 				}
-			})
+				else {
+					IMEIingresado = message.toString();
+					if (usuarioMA === null){
 
-			//Nulo
-			client.publish(IMEI, '0')
-			//Verificar
-			client.publish(Status, 'S0')
-		}
+					}
+					else{
+						var usuario = db.collection("Users").doc(usuarioMA).update({
+							IMEI: IMEIingresado
+						});
+						verificar = true;
+						infinito = 1;
+						usuarioMA = null;
+						
+					}
+					//Nulo
+					client.publish(IMEI, '0')
+					//Verificar
+					client.publish(Status, 'S0')
+					reply = {
+						msg: 'IMEI Actualizada'
+					}
+					res.end(JSON.stringify(reply));
+				}
+			}
+		})
 	}
 	else {
 		reply = {
@@ -618,74 +577,37 @@ app.post('/imeiSub', function (req, res) {
 	usuarioMS = req.body.usuario;
 	subusuarioMS = req.body.sub;
 	if (verificar === false) {
-		for (var i = 0; i < infinito; i++) {
-			client.on('message', function (topic, message) {
-				// message is Buffer
-				if (topic === IMEI) {
-					if (message.toString() === '0') {
-						infinito++;
-					}
-					else {
-						IMEIingresado = message.toString();
-						var col = db.collection("Users");
-						col.get().then(function (querySnapshot) {
-							querySnapshot.forEach(function (doc) {
-								if (doc.data().IMEI === IMEIingresado) {
-									existente = true;
-								}
-								else {
-									col.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
-										querySnapshot.forEach(function (doc) {
-											if (doc.data().IMEI === IMEIingresado) {
-												existente = true;
-											}
-										});
-										if (existente === true) {
-											//Error
-											client.publish(Door, 'D2')
-											verificar = true;
-											infinito = 1;
-											existente = false;
-											reply = {
-												msg: "Ya existe"
-											}
-											res.end(JSON.stringify(reply));
-										}
-										else if (existente === false) {
-											var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
-												IMEI: IMEIingresado
-											});
-											verificar = true;
-											infinito = 1;
-											reply = {
-												msg: 'IMEI Actualizada'
-											}
-											res.end(JSON.stringify(reply));
-										}
-									});
-								}
-							});
-							if (existente === true) {
-								//Error
-								client.publish(Door, 'D2')
-								verificar = true;
-								infinito = 1;
-								existente = false;
-								reply = {
-									msg: "Ya existe"
-								}
-								res.end(JSON.stringify(reply));
-							}
-						});
-					}
+		client.on('message', function (topic, message) {
+			// message is Buffer
+			if (topic === IMEI) {
+				if (message.toString() === '0') {
+					infinito++;
 				}
-			})
+				else {
+					IMEIingresado = message.toString();
+					if (usuarioMS === null || subusuarioMS === null){
 
-			//Nulo
-			client.publish(IMEI, '0')
-			//Verificar
-			client.publish(Status, 'S0')
-		}
+					}
+					else{
+						var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
+							IMEI: IMEIingresado
+						});
+						verificar = true;
+						infinito = 1;
+						usuarioMS = null;
+						subusuarioMS = null;
+					}
+					//Nulo
+					client.publish(IMEI, '0')
+					//Verificar
+					client.publish(Status, 'S0')
+					reply = {
+						msg: 'IMEI Actualizada'
+					}
+					res.end(JSON.stringify(reply));					
+				}
+			}
+		})
 	}
 	else {
 		reply = {
@@ -732,25 +654,27 @@ client.on('message', function (topic, message) {
 								if (abierto === true) {
 									client.publish(Door, 'D1')
 									console.log("abierto");
+									client.publish(IMEI, '0')
+									abierto = false;
+									verificar = false;
 								}
 								else if (abierto === false) {
 									client.publish(Door, 'D2')
 									console.log("no existe esa imei")
+									client.publish(IMEI, '0')
+									abierto = false;
+									verificar = false;
 								}
-								abierto = false;
 							});
 						}
 					});
 					if (abierto === true) {
 						client.publish(Door, 'D1')
 						console.log("abierto");
+						client.publish(IMEI, '0')
+						abierto = false;
+						verificar = false;
 					}
-					else if (abierto === false) {
-						client.publish(Door, 'D2')
-						console.log("no existe esa imei");
-					}
-					client.publish(IMEI, '0')
-					abierto = false;
 				});
 			}
 		}
