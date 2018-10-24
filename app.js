@@ -505,10 +505,6 @@ app.post('/IMEIAdmin', function (req, res) {
 												if (existente === true) {
 													//Error
 													client.publish(Door, 'D2')
-													//Nulo
-													client.publish(IMEI, '0')
-													//Verificar
-													client.publish(Status, 'S0')
 													verificar = true;
 													infinito = 1;
 													existente = false;
@@ -521,10 +517,6 @@ app.post('/IMEIAdmin', function (req, res) {
 													usuario.update({
 														IMEI: IMEIingresado
 													});
-													//Nulo
-													client.publish(IMEI, '0')
-													//Verificar
-													client.publish(Status, 'S0')
 													verificar = true;
 													infinito = 1;
 													reply = {
@@ -538,10 +530,6 @@ app.post('/IMEIAdmin', function (req, res) {
 									if (existente === true) {
 										//Error
 										client.publish(Door, 'D2')
-										//Nulo
-										client.publish(IMEI, '0')
-										//Verificar
-										client.publish(Status, 'S0')
 										verificar = true;
 										infinito = 1;
 										existente = false;
@@ -555,6 +543,11 @@ app.post('/IMEIAdmin', function (req, res) {
 					}
 				}
 			})
+
+			//Nulo
+			client.publish(IMEI, '0')
+			//Verificar
+			client.publish(Status, 'S0')
 		}
 	}
 	else {
@@ -650,10 +643,6 @@ app.post('/imeiSub', function (req, res) {
 										if (existente === true) {
 											//Error
 											client.publish(Door, 'D2')
-											//Nulo
-											client.publish(IMEI, '0')
-											//Verificar
-											client.publish(Status, 'S0')
 											verificar = true;
 											infinito = 1;
 											existente = false;
@@ -666,10 +655,6 @@ app.post('/imeiSub', function (req, res) {
 											var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
 												IMEI: IMEIingresado
 											});
-											//Nulo
-											client.publish(IMEI, '0')
-											//Verificar
-											client.publish(Status, 'S0')
 											verificar = true;
 											infinito = 1;
 											reply = {
@@ -683,10 +668,6 @@ app.post('/imeiSub', function (req, res) {
 							if (existente === true) {
 								//Error
 								client.publish(Door, 'D2')
-								//Nulo
-								client.publish(IMEI, '0')
-								//Verificar
-								client.publish(Status, 'S0')
 								verificar = true;
 								infinito = 1;
 								existente = false;
@@ -699,6 +680,11 @@ app.post('/imeiSub', function (req, res) {
 					}
 				}
 			})
+
+			//Nulo
+			client.publish(IMEI, '0')
+			//Verificar
+			client.publish(Status, 'S0')
 		}
 	}
 	else {
