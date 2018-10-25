@@ -5,6 +5,7 @@ var elegido;
 var agreg = false;
 var guardasub = 0;
 var subusuario;
+var on = 0;
 
 //Gets the username saved in the cookie 
 function leerCookie(nombre) {
@@ -36,7 +37,7 @@ $.ajax({
     success: function (data) {
         if (data.msg === 'No imei') {
             $('.INFO').show();
-            $('.INFO').text("No existe un IMEI vinculado a su cuenta. Apoye su celular sobre la placa NFC y luego espere");
+            $('.INFO').text("No existe un IMEI vinculado a su cuenta, apoye su celular sobre la placa NFC y luego espere");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
             var info = {
@@ -79,7 +80,7 @@ $.ajax({
         }
         else if (data.msg === 'Hay imei') {
             $('.INFO').show();
-            $('.INFO').text("Se encontro el IMEI vinculado a su cuenta.");
+            $('.INFO').text("Se encontro el IMEI vinculado a su cuenta");
             $('.INFO').css("color", "#49ff00");
             $('.INFO').css("font-weight", "Bold");
             //Shows IMEI
@@ -95,7 +96,6 @@ $.ajax({
 })
 
 agre();
-nuevo();
 borrar();
 eliminar();
 editar();
@@ -144,6 +144,7 @@ function nuevo() {
                         $('.INFO').css("font-weight", "Bold");
                     }
                     else if (data.msg === 'Gracias') {
+                        rotacion2R();
                         $('.INFO').show();
                         $('.INFO').text("Subusuario agregado");
                         $('.INFO').css("color", "#49ff00");
@@ -196,22 +197,25 @@ function nuevo() {
 //Deletes the subuser about to create
 function borrar() {
     $('.error').click(function () {
-        rotacion2R();
         $('.member').text("");
         $('#agregar').show();
         agreg = false;
         $('#agregar').prop('disabled', false);
         $('#agregar').css("background", "#FF851B");
+        rotacion3R();
     });
 }
 
 //Deletes subuser slected from the database
 function eliminar() {
     $(document).on("click", ".eliminar", function () {
+        $('#agregar').prop('disabled', false);
+        $('#agregar').css("background", "#FF851B");
+        agreg = false;
         elegido = $(this).attr('id');
         console.log(elegido);
         if (confirm('¿Está seguro que quiere borrar este subusuario?')) {
-            rotacion3R();
+            rotacion4R();
             subusuario = $('#' + elegido + '.sub').text();
             var data = {
                 usuario: document.getElementById("name").textContent,
@@ -322,7 +326,7 @@ function editar() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
-                            else if (data.msg === 'Ya existe'){
+                            else if (data.msg === 'Ya existe') {
                                 $('.INFO').show();
                                 $('.INFO').text("La IMEI ya fue agregado en otro usuario");
                                 $('.INFO').css("color", "red");
@@ -400,7 +404,7 @@ function editarSub() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
-                            else if (data.msg === 'Ya existe'){
+                            else if (data.msg === 'Ya existe') {
                                 $('.INFO').show();
                                 $('.INFO').text("La IMEI ya fue agregado en otro usuario");
                                 $('.INFO').css("color", "red");
@@ -424,6 +428,7 @@ function editarSub() {
 }
 
 function rotacion2() {
+    console.log("1a");
     objects = document.getElementsByClassName("contenedor2");
     setTimeout(function () {
         for (var i = 0; i < objects.length; i++) {
@@ -433,20 +438,31 @@ function rotacion2() {
 }
 
 function rotacion2R() {
-    objects = document.getElementsByClassName("contenedor2");
+    $(".contenedor2").css("transform", "perspective(130px) rotateX(-90deg)");
+    $(".contenedor3").each(function () {
+        $(this).css("transform", "perspective(130px) rotateX(-90deg)");
+    })
+}
+
+function rotacion3R() {
+    console.log("3a");
     setTimeout(function () {
-        console.log("1");
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].style.transform = "perspective(130px)rotateX(-90deg)";
-        }
-    }, 100);
+        $(".contenedor3").each(function () {
+            $(this).css("transform", "perspective(130px) rotateX(0deg)");
+        })
+    }, 1000);
+    $(".contenedor2").css("transform", "perspective(130px) rotateX(-90deg)");
+    $(".contenedor3").each(function () {
+        $(this).css("transform", "perspective(130px) rotateX(-90deg)");
+    })
     sacar();
 }
 
-function rotacion3R(){
-   console.log("activado");
-   tp = document.getElementById(elegido);
-   tp.style.transform = "perspective(130px)rotateX(-90deg)";
+function rotacion4R() {
+    console.log("4a");
+    $(".contenedor3").each(function () {
+        $(this).css("transform", "perspective(130px) rotateX(-90deg)");
+    })
 }
 
 function sacar() {
