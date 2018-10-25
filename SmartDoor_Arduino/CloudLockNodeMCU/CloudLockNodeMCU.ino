@@ -1,7 +1,7 @@
+#include <Adafruit_MQTT.h>
+#include <Adafruit_MQTT_Client.h>
 #include <FS.h>   
 #include <ESP8266WiFi.h>
-#include "Adafruit_MQTT.h"
-#include "Adafruit_MQTT_Client.h"
 #include "SPI.h"
 #include "PN532_SPI.h"
 #include "snep.h"
@@ -42,9 +42,9 @@ Adafruit_MQTT_Publish Imei = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/I
 //Subscribes to feed to see IMEI cheking Status.
 Adafruit_MQTT_Subscribe imeiStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/Status");
 
-String DOOR = "D0";
+String DOOR;
 String IMEI;
-String NewStatus = "S0";
+String NewStatus;
 
 /*************************** Sketch Code ************************************/
 
@@ -155,14 +155,14 @@ void getMsgFromAndroid() {
     int recordCount = msg.getRecordCount();
     NdefRecord record = msg.getRecord(0);
     IMEI = readMsg(record);
+    Serial.println(IMEI);
     detectedIMEI();
   }
   else {
     Serial.println("Failed");
   }
 }
-
-//Isolates the message from the rest of the record.
+//from the rest of the record.
 String readMsg( NdefRecord record ) {
   int payloadLength = record.getPayloadLength();
   byte payload[payloadLength];
@@ -171,20 +171,22 @@ String readMsg( NdefRecord record ) {
   for (int c = 0; c < payloadLength; c++) {
     payloadAsString += (char)payload[c];
   }
-  return payloadAsString.substring(3);
+  return payloadAsString;
 }
 
 //Publishes the detected IMEI;
-void detectedIMEI() {
+bool detectedIMEI() {
   //Publishes detected imei.
   Serial.print(F("\nSending Detected Imei value: "));
   Serial.print(IMEI);
   Serial.print("...");
-  if (! Imei.publish(IMEI,))
+  
+  if (! Imei.publish(String(IMEI).c_str()))
   {
-    Serial.println(F("Failed"));
-  } else {
-    Serial.println(F("OK!"));
+  Serial.println(F("Failed"));
+  }
+  else {
+    Serial.println(F(" OK!"));
   }
   delay(10);
   IMEI = "0";
