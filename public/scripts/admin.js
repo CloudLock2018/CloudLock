@@ -40,6 +40,8 @@ $.ajax({
             $('.INFO').text("No existe un IMEI vinculado a su cuenta, apoye su celular sobre la placa NFC y luego espere");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
+            $('#agregar').prop('disabled', true);
+            $('#agregar').css("background", "#cccccc");
             var info = {
                 usuario: document.getElementById("name").textContent
             }
@@ -326,6 +328,7 @@ function editar() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+<<<<<<< HEAD:CloudLock_Web/Servidor/public/scripts/admin.js
                             else if (data.msg === 'Ya existe') {
                                 $('.INFO').show();
                                 $('.INFO').text("La IMEI ya fue agregado en otro usuario");
@@ -335,6 +338,8 @@ function editar() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+=======
+>>>>>>> 61b76b9584ecbbd520811145cb80a181c4f94c14:public/scripts/admin.js
                         },
                         error: function (err) {
                             $('.INFO').show();
@@ -404,6 +409,7 @@ function editarSub() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+<<<<<<< HEAD:CloudLock_Web/Servidor/public/scripts/admin.js
                             else if (data.msg === 'Ya existe') {
                                 $('.INFO').show();
                                 $('.INFO').text("La IMEI ya fue agregado en otro usuario");
@@ -413,6 +419,8 @@ function editarSub() {
                                     document.location.reload(true);
                                 }, 2000);
                             }
+=======
+>>>>>>> 61b76b9584ecbbd520811145cb80a181c4f94c14:public/scripts/admin.js
                         },
                         error: function (err) {
                             $('.INFO').show();
