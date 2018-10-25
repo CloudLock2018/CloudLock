@@ -470,8 +470,6 @@ app.post('/imei', function (req, res) {
 
 var usuarioMA;
 var IMEIingresado;
-var infinito = 1;
-var existente = false;
 
 //Receive info from Adafruit API (NFC) and saves the IMEI into the user's database
 app.post('/IMEIAdmin', function (req, res) {
@@ -481,7 +479,7 @@ app.post('/IMEIAdmin', function (req, res) {
 			// message is Buffer
 			if (topic === IMEI) {
 				if (message.toString() === '0') {
-					infinito++;
+
 				}
 				else {
 					IMEIingresado = message.toString();
@@ -493,7 +491,6 @@ app.post('/IMEIAdmin', function (req, res) {
 							IMEI: IMEIingresado
 						});
 						verificar = true;
-						infinito = 1;
 						usuarioMA = null;
 						
 					}
@@ -510,6 +507,8 @@ app.post('/IMEIAdmin', function (req, res) {
 		})
 	}
 	else {
+		//Verificar
+		client.publish(Status, 'S0')
 		reply = {
 			msg: 'Error'
 		}
@@ -581,7 +580,7 @@ app.post('/imeiSub', function (req, res) {
 			// message is Buffer
 			if (topic === IMEI) {
 				if (message.toString() === '0') {
-					infinito++;
+					
 				}
 				else {
 					IMEIingresado = message.toString();
@@ -593,7 +592,6 @@ app.post('/imeiSub', function (req, res) {
 							IMEI: IMEIingresado
 						});
 						verificar = true;
-						infinito = 1;
 						usuarioMS = null;
 						subusuarioMS = null;
 					}
@@ -610,6 +608,8 @@ app.post('/imeiSub', function (req, res) {
 		})
 	}
 	else {
+		//Verificar
+		client.publish(Status, 'S0')
 		reply = {
 			msg: 'Error'
 		}
