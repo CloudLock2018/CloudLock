@@ -106,7 +106,8 @@ void setup() {
 
 void loop() {
   MQTT_connect();
-  
+  Serial.println("Reseting");
+  delay(100);
   // this is our 'wait for incoming subscription packets' busy subloop
   // try to spend your time here
 
@@ -141,16 +142,13 @@ void loop() {
       }
     }
   }
-  // pings the server to keep the mqtt connection alive
-  if (! mqtt.ping()) {
-    mqtt.disconnect();
-  }
+  delay(100);
   getMsgFromAndroid();
 }
 
 void getMsgFromAndroid() {
   Serial.println("Waiting for message from Peer");
-  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), 1);
+  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), 0);
   if (msgSize > 0) {
     NdefMessage msg  = NdefMessage(ndefBuf, msgSize);
     msg.print();
@@ -191,7 +189,6 @@ bool detectedIMEI() {
     Serial.println(F(" OK!"));
   }
   delay(10);
-  IMEI = "0";
 }
 
 //Displays that the user IMEI was registered and opens the door.
@@ -204,6 +201,7 @@ void accessGranted() {
   delay(3000);
   myservo.write(0);
   Serial.println("The door is now closed");
+  statusChecking();
 }
 
 //Displays that the user IMEI was not registered.
@@ -222,7 +220,6 @@ void error() {
   digitalWrite(ledR, LOW);
   Serial.println("Error, your IMEI already exists in the server");
   delay(2000);
-  IMEI = "0";
 }
 
 //Displays the dection mode.
