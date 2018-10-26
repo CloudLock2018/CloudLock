@@ -25,7 +25,6 @@ $('#btn').click(function () {
 		usuario: nomTB.val(),
 		contra: passTB.val()
 	}
-	console.log(data);
 	$.ajax({
 		url: '/login',
 		type: "POST",

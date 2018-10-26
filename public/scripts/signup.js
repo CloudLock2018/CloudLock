@@ -64,7 +64,6 @@ $('#entrar').click(function () {
 	}
 	//Check if the mail could be possible
 	else if (validateEmail(sEmail)) {
-		console.log('Email is valid');
 		//Saves info in a json var
 		var data = {
 			nombre: nomTB.val(),

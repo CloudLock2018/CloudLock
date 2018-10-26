@@ -635,18 +635,15 @@ client.on('message', function (topic, message) {
 			}
 			else {
 				IMEIingresado = message.toString();
-				console.log('IMEI ingresada: ' + IMEIingresado);
 				var usuario = db.collection("Users");
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
-						console.log("IMEI del documento: " + doc.data().IMEI);
 						if (doc.data().IMEI === IMEIingresado) {
 							abierto = true;
 						}
 						else {
 							usuario.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
-									console.log("IMEI del documento: " + doc.data().IMEI);
 									if (doc.data().IMEI === IMEIingresado) {
 										abierto = true;
 									}
@@ -654,14 +651,12 @@ client.on('message', function (topic, message) {
 								if (abierto === true) {
 									client.publish(Door, 'D1')
 									console.log("abierto");
-									client.publish(IMEI, '0')
 									abierto = false;
 									verificar = false;
 								}
 								else if (abierto === false) {
 									client.publish(Door, 'D2')
 									console.log("no existe esa imei")
-									client.publish(IMEI, '0')
 									abierto = false;
 									verificar = false;
 								}
@@ -671,7 +666,6 @@ client.on('message', function (topic, message) {
 					if (abierto === true) {
 						client.publish(Door, 'D1')
 						console.log("abierto");
-						client.publish(IMEI, '0')
 						abierto = false;
 						verificar = false;
 					}

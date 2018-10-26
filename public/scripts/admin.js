@@ -45,7 +45,6 @@ $.ajax({
             var info = {
                 usuario: document.getElementById("name").textContent
             }
-            console.log(info);
             $.ajax({
                 url: '/IMEIAdmin',
                 type: "POST",
@@ -90,7 +89,6 @@ $.ajax({
             }, 10000);
             //Shows IMEI
             $('.IMEI').text("IMEI: " + data.imei);
-            console.log(data.contenido);
             if (data.existe === true) {
                 document.querySelector(".subusuarios").innerHTML += data.contenido;
                 $('.contenedor3').show();
@@ -151,7 +149,6 @@ function nuevo() {
                         setTimeout(function () {
                             $('.buttons').prop('disabled', false);
                             $('.buttons').css("background", "#FF851B");
-                            console.log("skrr2");
                         }, 500);
                         $('.INFO').show();
                         $('.INFO').text("El subusuario ya existe");
@@ -239,10 +236,8 @@ function eliminar() {
             $('#agregar').prop('disabled', false);
             $('#agregar').css("background", "#FF851B");
             agreg = false;
-            console.log("team");
         }, 1500);
         elegido = $(this).attr('id');
-        console.log(elegido);
         if (confirm('¿Está seguro que quiere borrar este subusuario?')) {
             rotacion4R();
             $('#agregar').prop('disabled', true);
@@ -272,6 +267,7 @@ function eliminar() {
                         $('.INFO').text("Subusuario eliminado");
                         $('.INFO').css("color", "red");
                         $('.INFO').css("font-weight", "Bold");
+                        $('.member').val("");
                         setTimeout(function () {
                             $('.INFO').text("");
                         }, 10000);
@@ -468,7 +464,6 @@ function reactive() {
 }
 
 function rotacion2() {
-    console.log("1a");
     $(".contenedor2").css("transform", "perspective(130px) rotateX(0deg)");
     $(".contenedor3").each(function () {
         $(this).css("transform", "perspective(130px) rotateX(0deg)");
@@ -483,7 +478,6 @@ function rotacion2R() {
 }
 
 function rotacion3R() {
-    console.log("3a");
     setTimeout(function () {
         $(".contenedor3").each(function () {
             $(this).css("transform", "perspective(130px) rotateX(0deg)");
@@ -498,7 +492,6 @@ function rotacion3R() {
 }
 
 function rotacion4R() {
-    console.log("4a");
     $(".contenedor2").css("transform", "perspective(130px) rotateX(-90deg)");
     $(".contenedor3").each(function () {
         $(this).css("transform", "perspective(130px) rotateX(-90deg)");
@@ -507,7 +500,6 @@ function rotacion4R() {
 
 function sacar() {
     setTimeout(function () {
-        console.log("2");
         $('.contenedor2').css("display", "none");
     }, 500);
 }
