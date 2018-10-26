@@ -492,8 +492,6 @@ app.post('/IMEIAdmin', function (req, res) {
 						usuarioMA = null;
 						
 					}
-					//Nulo
-					client.publish(IMEI, '0')
 					//Verificar
 					client.publish(Status, 'S0')
 					reply = {
@@ -593,8 +591,6 @@ app.post('/imeiSub', function (req, res) {
 						usuarioMS = null;
 						subusuarioMS = null;
 					}
-					//Nulo
-					client.publish(IMEI, '0')
 					//Verificar
 					client.publish(Status, 'S0')
 					reply = {
