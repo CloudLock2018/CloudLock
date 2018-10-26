@@ -402,8 +402,6 @@ client.on('connect', function () {
 client.on('connect', function () {
 	//Cerrado
 	client.publish(Door, 'D0')
-	//Nulo
-	client.publish(IMEI, '0')
 	//Verificar
 	client.publish(Status, 'S0')
 });
