@@ -44,7 +44,7 @@ Adafruit_MQTT_Subscribe imeiStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME
 
 String DOOR;
 String IMEI;
-String NewStatus;
+String NewStatus = "D0";
 
 /*************************** Sketch Code ************************************/
 
@@ -52,11 +52,13 @@ String NewStatus;
 PN532_SPI pn532spi(SPI, 5);
 SNEP nfc(pn532spi);
 uint8_t ndefBuf[128];
+uint16_t  timeOut[128];
 Servo myservo;
-int servo = 15;
+int servo = 16;
 int ledR = 4;
-int ledB = 0;
-int ledG = 2;
+int ledB = 2;
+int ledG = 0;
+unsigned long entry;
 
 
 void MQTT_connect();
@@ -104,7 +106,7 @@ void setup() {
 
 void loop() {
   MQTT_connect();
-  getMsgFromAndroid();
+  
   // this is our 'wait for incoming subscription packets' busy subloop
   // try to spend your time here
 
@@ -143,23 +145,23 @@ void loop() {
   if (! mqtt.ping()) {
     mqtt.disconnect();
   }
+  getMsgFromAndroid();
 }
 
 void getMsgFromAndroid() {
-
   Serial.println("Waiting for message from Peer");
-  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf));
+  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), 1);
   if (msgSize > 0) {
     NdefMessage msg  = NdefMessage(ndefBuf, msgSize);
     msg.print();
     int recordCount = msg.getRecordCount();
-    NdefRecord record = msg.getRecord(0);
+    NdefRecord record = msg.getRecord(0);  //read 1 record
     IMEI = readMsg(record);
     Serial.println(IMEI);
     detectedIMEI();
   }
   else {
-    Serial.println("Failed");
+  Serial.println("Has not found any device");  
   }
 }
 //from the rest of the record.
@@ -194,44 +196,48 @@ bool detectedIMEI() {
 
 //Displays that the user IMEI was registered and opens the door.
 void accessGranted() {
-  digitalWrite(ledG, HIGH);
+  digitalWrite(ledR, HIGH);
+  digitalWrite(ledB, HIGH);
+  digitalWrite(ledG, LOW);
   myservo.write(180);
   Serial.println("Your IMEI is registered, the door is now opened");
   delay(3000);
   myservo.write(0);
-  digitalWrite(ledG, LOW);
-  digitalWrite(ledB, HIGH);
   Serial.println("The door is now closed");
 }
 
 //Displays that the user IMEI was not registered.
 void accessDenied() {
-  digitalWrite(ledR, HIGH);
+  digitalWrite(ledG, HIGH);
+  digitalWrite(ledB, HIGH);
+  digitalWrite(ledR, LOW);
   Serial.println("Your IMEI is not registered");
   delay(2000);
-  digitalWrite(ledR, LOW);
 }
 
 //Displays an error.
 void error() {
-  digitalWrite(ledR, HIGH);
+  digitalWrite(ledG, HIGH);
+  digitalWrite(ledB, HIGH);
+  digitalWrite(ledR, LOW);
   Serial.println("Error, your IMEI already exists in the server");
   delay(2000);
-  digitalWrite(ledR, LOW);
   IMEI = "0";
 }
 
 //Displays the dection mode.
 void statusAdding() {
-  digitalWrite(ledR, HIGH);
-  digitalWrite(ledB, HIGH);
-  digitalWrite(ledG, HIGH);
+  digitalWrite(ledR, LOW);
+  digitalWrite(ledB, LOW);
+  digitalWrite(ledG, LOW);
   Serial.println("The next IMEI will be added to the server");
 }
 
 //Displays the dection mode.
 void statusChecking() {
-  digitalWrite(ledB, HIGH);
+  digitalWrite(ledR, HIGH);
+  digitalWrite(ledG, HIGH);
+  digitalWrite(ledB, LOW);
   Serial.println("The next IMEI will be checked to see if it is registered");
 }
 
