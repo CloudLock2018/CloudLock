@@ -664,7 +664,6 @@ client.on('message', function (topic, message) {
 						}
 					});
 				});
-				client.publish(Status, 'S0')
 			}
 		}
 		else {
