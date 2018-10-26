@@ -650,12 +650,14 @@ client.on('message', function (topic, message) {
 								});
 								if (abierto === true) {
 									client.publish(Door, 'D1')
+									client.publish(Status, 'S0')
 									console.log("abierto");
 									abierto = false;
 									verificar = false;
 								}
 								else if (abierto === false) {
 									client.publish(Door, 'D2')
+									client.publish(Status, 'S0')
 									console.log("no existe esa imei")
 									abierto = false;
 									verificar = false;
@@ -663,14 +665,6 @@ client.on('message', function (topic, message) {
 							});
 						}
 					});
-					/*
-					if (abierto === true) {
-						client.publish(Door, 'D1')
-						console.log("abierto");
-						abierto = false;
-						verificar = false;
-					}
-					*/
 				});
 			}
 		}
