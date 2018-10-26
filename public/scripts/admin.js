@@ -85,6 +85,9 @@ $.ajax({
             $('.INFO').text("Se encontro el IMEI vinculado a su cuenta");
             $('.INFO').css("color", "#49ff00");
             $('.INFO').css("font-weight", "Bold");
+            setTimeout(function () {
+                $('.INFO').text("");
+            }, 10000);
             //Shows IMEI
             $('.IMEI').text("IMEI: " + data.imei);
             console.log(data.contenido);
@@ -108,8 +111,11 @@ function agre() {
     $('#agregar').click(function () {
         if (agreg === false) {
             //Adds new textbox and buttons to the set or delete new subuser
-            $('.contenedor2').show();
-            rotacion2();
+            setTimeout(function () {
+                $('.contenedor2').show();
+                rotacion2();
+            }, 1000);
+            rotacion2R();
             agreg = true;
             $('#agregar').prop('disabled', true);
             $('#agregar').css("background", "#cccccc");
@@ -129,6 +135,8 @@ function agre() {
 function nuevo() {
     $('.buttons').click(function () {
         if ($('.member').val().length > 0) {
+            $('.buttons').prop('disabled', true);
+            $('.buttons').css("background", "#cccccc");
             var data = {
                 usuario: document.getElementById("name").textContent,
                 subusuario: $('.member').val()
@@ -140,17 +148,29 @@ function nuevo() {
                 data: data,
                 success: function (data) {
                     if (data.msg === 'Error') {
+                        setTimeout(function () {
+                            $('.buttons').prop('disabled', false);
+                            $('.buttons').css("background", "#FF851B");
+                            console.log("skrr2");
+                        }, 500);
                         $('.INFO').show();
                         $('.INFO').text("El subusuario ya existe");
                         $('.INFO').css("color", "red");
                         $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function () {
+                            $('.INFO').text("");
+                        }, 10000);
                     }
                     else if (data.msg === 'Gracias') {
                         rotacion2R();
+                        reactive();
                         $('.INFO').show();
                         $('.INFO').text("Subusuario agregado");
                         $('.INFO').css("color", "#49ff00");
-                        $('.INFO').css("font-weight", "Bold");
+                        $('.INFO').css("font-weight", "Bold")
+                        setTimeout(function () {
+                            $('.INFO').text("");
+                        }, 10000);;
                         var reload = {
                             usuario: document.getElementById("name").textContent
                         }
@@ -167,6 +187,7 @@ function nuevo() {
                                     $('.INFO').css("font-weight", "Bold");
                                 }
                                 else if (data.msg === 'Hecho') {
+                                    active = true;
                                     $('.contenedor2').css("display", "none");
                                     $('.member').text("");
                                     $('#agregar').show();
@@ -183,14 +204,15 @@ function nuevo() {
                 }
             })
             agreg = false;
-            $('#agregar').prop('disabled', false);
-            $('#agregar').css("background", "#FF851B");
         }
         else {
             $('.INFO').show();
             $('.INFO').text("Agregue un nombre");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
+            setTimeout(function () {
+                $('.INFO').text("");
+            }, 10000);
             agreg = true;
         }
     });
@@ -202,8 +224,10 @@ function borrar() {
         $('.member').text("");
         $('#agregar').show();
         agreg = false;
-        $('#agregar').prop('disabled', false);
-        $('#agregar').css("background", "#FF851B");
+        setTimeout(function () {
+            $('#agregar').prop('disabled', false);
+            $('#agregar').css("background", "#FF851B");
+        }, 2500);
         rotacion3R();
     });
 }
@@ -211,13 +235,18 @@ function borrar() {
 //Deletes subuser slected from the database
 function eliminar() {
     $(document).on("click", ".eliminar", function () {
-        $('#agregar').prop('disabled', false);
-        $('#agregar').css("background", "#FF851B");
-        agreg = false;
+        setTimeout(function () {
+            $('#agregar').prop('disabled', false);
+            $('#agregar').css("background", "#FF851B");
+            agreg = false;
+            console.log("team");
+        }, 1500);
         elegido = $(this).attr('id');
         console.log(elegido);
         if (confirm('¿Está seguro que quiere borrar este subusuario?')) {
             rotacion4R();
+            $('#agregar').prop('disabled', true);
+            $('#agregar').css("background", "#cccccc");
             subusuario = $('#' + elegido + '.sub').text();
             var data = {
                 usuario: document.getElementById("name").textContent,
@@ -234,12 +263,18 @@ function eliminar() {
                         $('.INFO').text("El subusuario no existe");
                         $('.INFO').css("color", "red");
                         $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function () {
+                            $('.INFO').text("");
+                        }, 10000);
                     }
                     else if (data.msg === 'Borrado') {
                         $('.INFO').show();
                         $('.INFO').text("Subusuario eliminado");
-                        $('.INFO').css("color", "#49ff00");
+                        $('.INFO').css("color", "red");
                         $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function () {
+                            $('.INFO').text("");
+                        }, 10000);
                         var reload = {
                             usuario: document.getElementById("name").textContent
                         }
@@ -254,6 +289,9 @@ function eliminar() {
                                     $('.INFO').text("El usuario no existe");
                                     $('.INFO').css("color", "red");
                                     $('.INFO').css("font-weight", "Bold");
+                                    setTimeout(function () {
+                                        $('.INFO').text("");
+                                    }, 10000);
                                 }
                                 else if (data.msg === 'Hecho') {
                                     $('.contenedor2').css("display", "none");
@@ -294,6 +332,9 @@ function editar() {
                     $('.INFO').text("No existe el usuario");
                     $('.INFO').css("color", "red");
                     $('.INFO').css("font-weight", "Bold");
+                    setTimeout(function () {
+                        $('.INFO').text("");
+                    }, 10000);
                 }
                 else if (data.msg === 'Editar') {
                     $('.INFO').show();
@@ -334,6 +375,9 @@ function editar() {
                             $('.INFO').text("Tiempo de espera agotado");
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
                         }
                     })
                 }
@@ -362,6 +406,9 @@ function editarSub() {
                     $('.INFO').text("No existe el subusuario");
                     $('.INFO').css("color", "red");
                     $('.INFO').css("font-weight", "Bold");
+                    setTimeout(function () {
+                        $('.INFO').text("");
+                    }, 10000);
                 }
                 else if (data.msg === 'Editar') {
                     $('.INFO').show();
@@ -411,14 +458,21 @@ function editarSub() {
     })
 }
 
+function reactive() {
+    setTimeout(function () {
+        $('#agregar').prop('disabled', false);
+        $('#agregar').css("background", "#FF851B");
+    }, 1500);
+    $('.buttons').prop('disabled', false);
+    $('.buttons').css("background", "#FF851B");
+}
+
 function rotacion2() {
     console.log("1a");
-    objects = document.getElementsByClassName("contenedor2");
-    setTimeout(function () {
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].style.transform = "perspective(130px)rotateX(0deg)";
-        }
-    }, 100);
+    $(".contenedor2").css("transform", "perspective(130px) rotateX(0deg)");
+    $(".contenedor3").each(function () {
+        $(this).css("transform", "perspective(130px) rotateX(0deg)");
+    })
 }
 
 function rotacion2R() {
@@ -439,11 +493,13 @@ function rotacion3R() {
     $(".contenedor3").each(function () {
         $(this).css("transform", "perspective(130px) rotateX(-90deg)");
     })
+    $('.member').val("");
     sacar();
 }
 
 function rotacion4R() {
     console.log("4a");
+    $(".contenedor2").css("transform", "perspective(130px) rotateX(-90deg)");
     $(".contenedor3").each(function () {
         $(this).css("transform", "perspective(130px) rotateX(-90deg)");
     })
