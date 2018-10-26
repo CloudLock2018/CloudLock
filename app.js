@@ -650,6 +650,7 @@ client.on('message', function (topic, message) {
 								});
 								if (abierto === true) {
 									client.publish(Door, 'D1')
+									client.publish(IMEI, '0')
 									console.log("abierto");
 									abierto = false;
 									verificar = false;
