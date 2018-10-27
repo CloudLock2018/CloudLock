@@ -638,9 +638,9 @@ client.on('message', function (topic, message) {
 						else {
 							usuario.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
-									if (doc.data().IMEI === IMEIingresado) {
-										abierto = true;
-									}
+								if (doc.data().IMEI === IMEIingresado) {
+									abierto = true;
+								}
 								});
 								if (abierto === true) {
 									client.publish(Door, 'D1')
@@ -650,8 +650,8 @@ client.on('message', function (topic, message) {
 									client.publish(Door, 'D2')
 									console.log("no existe esa imei");
 								}
+								abierto = false;
 							});
-						abierto = false;
 						}
 					});
 				});
