@@ -656,6 +656,7 @@ client.on('message', function (topic, message) {
 					console.log("no existe esa imei");
 				}
 			}
+			IMEIingresado = null;
 		}
 		else {
 
