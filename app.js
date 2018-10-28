@@ -654,7 +654,6 @@ client.on('message', function (topic, message) {
 					client.publish(Door, 'D0')
 					console.log("no existe esa imei");
 				}
-				IMEIingresado = null;
 				abierto = false;
 			}
 		}
