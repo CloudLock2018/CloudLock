@@ -650,12 +650,10 @@ client.on('message', function (topic, message) {
 					client.publish(Door, 'D1')
 					console.log("abierto");
 					abierto = false;
-					verificar = false;
 				}
 				else if (abierto === false) {
 					client.publish(Door, 'D2')
 					console.log("no existe esa imei");
-					verificar = false;
 				}
 			}
 		}
