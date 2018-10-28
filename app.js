@@ -630,6 +630,7 @@ client.on('message', function (topic, message) {
 			else {
 				IMEIingresado = message.toString();
 				var usuario = db.collection("Users");
+				console.log(abierto);
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
 						if (doc.data().IMEI === IMEIingresado) {
