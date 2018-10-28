@@ -650,11 +650,11 @@ client.on('message', function (topic, message) {
 									client.publish(Door, 'D2')
 									console.log("no existe esa imei");
 								}
-								abierto = false;
 							});
 						}
 					});
 				});
+				abierto = false;
 			}
 		}
 		else {
