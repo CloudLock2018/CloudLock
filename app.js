@@ -642,18 +642,18 @@ client.on('message', function (topic, message) {
 									abierto = true;
 								}
 								});
-								if (abierto === true) {
-									client.publish(Door, 'D1')
-									console.log("abierto");
-								}
-								else if (abierto === false) {
-									client.publish(Door, 'D2')
-									console.log("no existe esa imei");
-								}
 							});
 						}
 					});
 				});
+				if (abierto === true) {
+					client.publish(Door, 'D1')
+					console.log("abierto");
+				}
+				else if (abierto === false) {
+					client.publish(Door, 'D2')
+					console.log("no existe esa imei");
+				}
 				abierto = false;
 			}
 		}
