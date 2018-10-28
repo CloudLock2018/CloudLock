@@ -1,4 +1,4 @@
-#include <Adafruit_MQTT.h>
+   #include <Adafruit_MQTT.h>
 #include <Adafruit_MQTT_Client.h>
 #include <FS.h>   
 #include <ESP8266WiFi.h>
@@ -171,7 +171,12 @@ String readMsg( NdefRecord record ) {
   for (int c = 0; c < payloadLength; c++) {
     payloadAsString += (char)payload[c];
   }
+  if (payloadAsString.startsWith("es")) {
+    return payloadAsString.substring(3);
+  }
+  else {
   return payloadAsString;
+  }
 }
 
 //Publishes the detected IMEI;
