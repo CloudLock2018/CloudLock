@@ -611,7 +611,7 @@ app.post('/imeiSub', function (req, res) {
 	}
 })
 
-var abierto = false;
+var abierto;
 //Checks if the IMEI sent exists in the database. If it does, opens the door
 client.on('message', function (topic, message) {
 	console.log(abierto);
