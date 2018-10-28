@@ -629,7 +629,6 @@ client.on('message', function (topic, message) {
 			}
 			else {
 				IMEIingresado = message.toString();
-				Cambio = true;
 				var usuario = db.collection("Users");
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
@@ -649,16 +648,16 @@ client.on('message', function (topic, message) {
 						}
 					});
 				});
-				if (abierto === true) {
-					client.publish(Door, 'D1')
-					console.log("abierto");
-				}
-				else if (abierto === false) {
-					client.publish(Door, 'D0')
-					console.log("no existe esa imei");
-				}
-				abierto = false;
 			}
+			if (abierto === true) {
+				client.publish(Door, 'D1')
+				console.log("abierto");
+			}
+			else if (abierto === false) {
+				client.publish(Door, 'D0')
+				console.log("no existe esa imei");
+			}
+			abierto = false;
 		}
 		else {
 
@@ -666,8 +665,3 @@ client.on('message', function (topic, message) {
 	}
 	console.log(abierto);
 });
-
-var Cambio = false;
-if (Cambio === true) {
-	console.log("todo piola");
-}
