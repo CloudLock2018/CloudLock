@@ -629,17 +629,20 @@ client.on('message', function (topic, message) {
 			}
 			else {
 				IMEIingresado = message.toString();
+				Cambio = true;
 				var usuario = db.collection("Users");
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
 						if (doc.data().IMEI === IMEIingresado) {
 							abierto = true;
+							console.log(abierto);
 						}
 						else {
 							usuario.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
 								if (doc.data().IMEI === IMEIingresado) {
 									abierto = true;
+									console.log(abierto);
 								}
 								});
 							});
@@ -661,4 +664,10 @@ client.on('message', function (topic, message) {
 
 		}
 	}
+	console.log(abierto);
 });
+
+var Cambio = false;
+if (Cambio === true) {
+	console.log("todo piola");
+}
