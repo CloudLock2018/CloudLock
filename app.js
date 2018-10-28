@@ -625,6 +625,7 @@ client.on('message', function (topic, message) {
 	}
 	console.log(abierto);
 	if (topic === IMEI) {
+		abierto = false;
 		console.log(abierto);
 		if (verificar === true) {
 			console.log(abierto);
@@ -661,6 +662,7 @@ client.on('message', function (topic, message) {
 				else if (abierto === false) {
 					client.publish(Door, 'D0')
 					console.log("no existe esa imei");
+					abierto = false;
 				}
 				console.log(abierto);
 			}
