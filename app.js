@@ -611,7 +611,6 @@ app.post('/imeiSub', function (req, res) {
 	}
 })
 
-var abierto = false;
 //Checks if the IMEI sent exists in the database. If it does, opens the door
 client.on('message', function (topic, message) {
 	if (topic === Status) {
@@ -633,31 +632,34 @@ client.on('message', function (topic, message) {
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
 						if (doc.data().IMEI === IMEIingresado) {
-							abierto = true;
-							console.log(abierto);
+							client.publish(Door, 'D1')
+							console.log("abierto");
 						}
 						else {
 							usuario.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
-								if (doc.data().IMEI === IMEIingresado) {
-									abierto = true;
-									console.log(abierto);
-								}
+									if (doc.data().IMEI === IMEIingresado) {
+										client.publish(Door, 'D1')
+										console.log("abierto");
+									}
+									else {
+										client.publish(Door, 'D0')
+									}
 								});
 							});
 						}
 					});
 				});
 			}
-			if (abierto === true) {
-				client.publish(Door, 'D1')
-				console.log("abierto");
-			}
-			else if (abierto === false) {
-				client.publish(Door, 'D0')
-				console.log("no existe esa imei");
-			}
-			abierto = false;
+			// if (abierto === true) {
+			// 	client.publish(Door, 'D1')
+			// 	console.log("abierto");
+			// }
+			// else if (abierto === false) {
+			// 	client.publish(Door, 'D0')
+			// 	console.log("no existe esa imei");
+			// }
+			// abierto = false;
 		}
 		else {
 
