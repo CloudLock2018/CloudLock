@@ -614,8 +614,6 @@ app.post('/imeiSub', function (req, res) {
 var abierto;
 //Checks if the IMEI sent exists in the database. If it does, opens the door
 client.on('message', function (topic, message) {
-	abierto = false;
-	console.log(abierto);
 	if (topic === Status) {
 		if (message.toString() === 'S0') {
 			verificar = true;
@@ -624,19 +622,15 @@ client.on('message', function (topic, message) {
 			verificar = false;
 		}
 	}
-	console.log(abierto);
 	if (topic === IMEI) {
 		console.log(abierto);
 		if (verificar === true) {
-			console.log(abierto);
 			if (message.toString() === '0') {
 
 			}
 			else {
-				console.log(abierto);
 				IMEIingresado = message.toString();
 				var usuario = db.collection("Users");
-				console.log(abierto);
 				usuario.get().then(function (querySnapshot) {
 					querySnapshot.forEach(function (doc) {
 						if (doc.data().IMEI === IMEIingresado) {
@@ -663,10 +657,13 @@ client.on('message', function (topic, message) {
 					console.log("no existe esa imei");
 				}
 				console.log(abierto);
+				abierto = false;
 			}
+			console.log(abierto);
 		}
 		else {
 
 		}
+		console.log(abierto);
 	}
 });
