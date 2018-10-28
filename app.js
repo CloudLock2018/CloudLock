@@ -647,6 +647,7 @@ client.on('message', function (topic, message) {
 						}
 					});
 				});
+				console.log(abierto);
 				if (abierto === true) {
 					client.publish(Door, 'D1')
 					console.log("abierto");
