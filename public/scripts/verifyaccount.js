@@ -6,7 +6,9 @@ $("#form").submit(function (e) {
 
 var nomTB = $('#usuario');
 
-$('#entrar').click(function () {
+$('#form').submit(function () {
+	$('#entrar').addClass("pressed");
+	$('#entrar').attr('value', '');
 	$('#error').css("display", "none");
 	$('#correcto').css("display", "none");
 	error.className = "error";
@@ -15,6 +17,8 @@ $('#entrar').click(function () {
 		$('#error').show();
 		error.innerHTML = "Nombre de usuario no ingresado";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Verificar Cuenta');
 	}
 	else {
 		var data = {
@@ -30,11 +34,15 @@ $('#entrar').click(function () {
 					$('#error').show();
 					error.innerHTML = "El usuario no existe";
 					error.className = "error active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Verificar Cuenta');
 				}
 				else if (data.msg === 'Verificado') {
 					$('#correcto').show();
 					correcto.innerHTML = "Cuenta Verificada";
 					correcto.className = "correcto active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Verificar Cuenta');
 					setTimeout(function () {
 						window.location.href = "../index.html";
 					}, 2000);

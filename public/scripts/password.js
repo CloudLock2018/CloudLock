@@ -7,6 +7,8 @@ $("#form").submit(function (e) {
 var nomTB = $('#usuario');
 
 $('#entrar').click(function () {
+	$('#entrar').addClass("pressed");
+	$('#entrar').attr('value', '');
 	$('#error').css("display", "none");
 	$('#correcto').css("display", "none");
 	error.className = "error";
@@ -15,6 +17,8 @@ $('#entrar').click(function () {
 		$('#error').show();
 		error.innerHTML = "Nombre de usuario no ingresado";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Restablecer contraseña');
 	}
 	else {
 		var data = {
@@ -30,11 +34,15 @@ $('#entrar').click(function () {
 					$('#error').show();
 					error.innerHTML = "El usuario no existe";
 					error.className = "error active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Restablecer contraseña');
 				}
 				else if (data.msg === 'Email enviado') {
 					$('#correcto').show();
 					correcto.innerHTML = "Email Enviado";
 					correcto.className = "correcto active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Restablecer contraseña');
 				}
 			}
 		});

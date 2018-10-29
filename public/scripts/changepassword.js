@@ -8,7 +8,9 @@ var nomTB = $('#usuario');
 var passTB = $('#contra');
 var pass2TB = $('#repcontra');
 
-$('#entrar').click(function () {
+$('#form').submit(function () {
+	$('#entrar').addClass("pressed");
+	$('#entrar').attr('value', '');
 	$('#error').css("display", "none");
 	$('#correcto').css("display", "none");
 	error.className = "error";
@@ -17,26 +19,36 @@ $('#entrar').click(function () {
 		$('#error').show();
 		error.innerHTML = "Las contraseñas no coinciden";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Restablecer contraseña');
 	}
 	else if (passTB.val().length === 0) {
 		$('#error').show();
 		error.innerHTML = "Contraseña no ingresada";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Restablecer contraseña');
 	}
 	else if (passTB.val().length > 20) {
 		$('#error').show();
 		error.innerHTML = "Contraseña muy larga (Máximo: 20 caracteres)";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Restablecer contraseña');
 	}
 	else if (passTB.val().length < 6) {
 		$('#error').show();
 		error.innerHTML = "Contraseña muy corta (Mínimo: 6 caracteres)";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Restablecer contraseña');
 	}
 	else if (pass2TB.val().length === 0) {
 		$('#error').show();
 		error.innerHTML = "Repetir Contraseña no ingresada";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Restablecer contraseña');
 	}
 	else {
 		var data = {
@@ -53,13 +65,19 @@ $('#entrar').click(function () {
 					$('#error').show();
 					error.innerHTML = "El usuario no existe";
 					error.className = "error active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Restablecer contraseña');
 				}
 				else if (data.msg === 'Contraseña actual') {
 					$('#error').show();
 					error.innerHTML = "Esta es la contraseña actual";
 					error.className = "error active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Restablecer contraseña');
 				}
 				else if (data.msg === 'Contraseña Actualizada') {
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Restablecer contraseña');
 					$('#correcto').show();
 					correcto.innerHTML = "Contraseña Actualizada";
 					correcto.className = "correcto active";

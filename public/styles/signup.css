@@ -115,11 +115,19 @@ body {
   letter-spacing: 1px;
   cursor: pointer;
   border-radius: 10px;
-  transition: all .5s ease;
+  transition: background-color .5s ease;
 }
 
 .contenedor-form input[type="submit"]:hover {
   background: rgba(0, 117, 217, 0.7);
+}
+
+.contenedor-form input[type="submit"].pressed {
+  background: #CCCCCC;
+  background-image: url(../images/ajax-loader.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 10%;
 }
 
 .contenedor-form .reset-password {

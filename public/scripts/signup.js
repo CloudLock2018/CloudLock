@@ -10,7 +10,9 @@ var passTB = $('#contra');
 var pass2TB = $('#repcontra');
 
 //Function when the button is clicked
-$('#entrar').click(function () {
+$('#form').submit(function () {
+	$('#entrar').addClass("pressed");
+	$('#entrar').attr('value', '');
 	$('.error').css("display", "none");
 	$('#correcto').css("display", "none");
 	error.className = "error";
@@ -20,47 +22,65 @@ $('#entrar').click(function () {
 		$('#error').show();
 		error.innerHTML = "Las contraseñas no coinciden";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	//Checks if there is info in the TextBoxes
 	if (nomTB.val().length === 0) {
 		$('.error').show();
 		error.innerHTML = "Nombre de usuario no ingresado";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	else if (nomTB.val().length > 16) {
 		$('#error').show();
 		error.innerHTML = "Nombre de usuario muy largo (Máximo: 16 caracteres)";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	else if (nomTB.val().length < 6) {
 		$('#error').show();
 		error.innerHTML = "Nombre de usuario muy corto (Mínimo: 6 caracteres)";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	else if (emailTB.val().length === 0) {
 		$('#error').show();
 		error.innerHTML = "Correo electrónico no ingresado";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	else if (passTB.val().length === 0) {
 		$('#error').show();
 		error.innerHTML = "Contraseña no ingresada";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	else if (passTB.val().length > 20) {
 		$('#error').show();
 		error.innerHTML = "Contraseña muy larga (Máximo: 20 caracteres)";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	else if (passTB.val().length < 6) {
 		$('#error').show();
 		error.innerHTML = "Contraseña muy corta (Mínimo: 6 caracteres)";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	else if (pass2TB.val().length === 0) {
 		$('#error').show();
 		error.innerHTML = "Repetir Contraseña no ingresada";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 	//Check if the mail could be possible
 	else if (validateEmail(sEmail)) {
@@ -82,14 +102,20 @@ $('#entrar').click(function () {
 					$('#error').show();
 					error.innerHTML = "Nombre de Usuario ya utilizado";
 					error.className = "error active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Registrate');
 				}
 				else if (data.msg === 'Error, mail') {
 					$('#error').show();
 					error.innerHTML = "Correo electrónico ya utilizado";
 					error.className = "error active";
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Registrate');
 				}
 				else {
 					$('#correcto').show();
+					$('#entrar').removeClass("pressed");
+					$('#entrar').attr('value', 'Registrate');
 					correcto.innerHTML = "Registro realizado correctamente";
 					correcto.className = "correcto active";
 					setTimeout(function () {
@@ -103,6 +129,8 @@ $('#entrar').click(function () {
 		$('#error').show();
 		error.innerHTML = "Correo electrónico inválido";
 		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
 	}
 });
 

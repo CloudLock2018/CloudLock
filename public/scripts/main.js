@@ -16,7 +16,9 @@ function myFunction() {
 var nomTB = $('#usuario');
 var passTB = $('#pass');
 
-$('#btn').click(function () {
+$('#form').submit(function () {
+	$('#btn').addClass("pressed");
+	$('#btn').attr('value', '');
 	$('.error').css("display", "none");
 	$('#correcto').css("display", "none");
 	error.className = "error";
@@ -35,16 +37,22 @@ $('#btn').click(function () {
 				$('#error').show();
 				error.innerHTML = "El usuario no existe";
 				error.className = "error active";
+				$('#btn').removeClass("pressed");
+				$('#btn').attr('value', 'Entrar');
 			}
 			else if (data.msg === 'Error, contra') {
 				$('#error').show();
 				error.innerHTML = "La contraseña es incorrecta";
 				error.className = "error active";
+				$('#btn').removeClass("pressed");
+				$('#btn').attr('value', 'Entrar');
 			}
 			else if (data.msg === 'Usuario Encontrado') {
 				$('#correcto').show();
 				correcto.innerHTML = "Usuario Encontrado";
 				correcto.className = "correcto active";
+				$('#btn').removeClass("pressed");
+				$('#btn').attr('value', 'Entrar');
 				var date = new Date();
 				var minutes = 30;
 				date.setTime(date.getTime() + (minutes * 60 * 1000));
@@ -53,4 +61,4 @@ $('#btn').click(function () {
 			}
 		}
 	});
-})
+});
