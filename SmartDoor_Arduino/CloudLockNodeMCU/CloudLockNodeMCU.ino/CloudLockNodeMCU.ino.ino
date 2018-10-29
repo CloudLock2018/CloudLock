@@ -144,11 +144,13 @@ void loop() {
 
 void getMsgFromAndroid() {
   Serial.println("Waiting for message from Peer");
-  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), 0);
+  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), (uint16_t) 2000);
+  Serial.println(msgSize);
   if (msgSize > 0) {
     NdefMessage msg  = NdefMessage(ndefBuf, msgSize);
     int recordCount = msg.getRecordCount();
     NdefRecord record = msg.getRecord(0);  //read 1 record
+    msg.print();
     IMEI = readMsg(record);
     detectedIMEI();
   }
