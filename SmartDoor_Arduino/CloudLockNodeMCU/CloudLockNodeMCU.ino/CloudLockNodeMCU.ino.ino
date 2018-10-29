@@ -42,6 +42,8 @@ Adafruit_MQTT_Publish Imei = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/I
 //Subscribes to feed to see IMEI cheking Status.
 Adafruit_MQTT_Subscribe imeiStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/Status");
 
+Adafruit_MQTT_Publish sendStatus = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/Status");
+
 String DOOR;
 String IMEI;
 String NewStatus = "S0";
@@ -56,8 +58,8 @@ uint16_t  timeOut[128];
 Servo myservo;
 int servo = 16;
 int ledR = 4;
-int ledB = 2;
-int ledG = 0;
+int ledB = 0;
+int ledG = 2;
 unsigned long entry;
 
 
@@ -183,6 +185,7 @@ bool detectedIMEI() {
   Serial.println(F("Failed"));
   }
   else {
+    sendStatus.publish(String("S0").c_str());
     Serial.println(F(" OK!"));
   }
   delay(10);
