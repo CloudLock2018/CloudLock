@@ -76,6 +76,17 @@ $.ajax({
                     $('.INFO').text("Tiempo de espera agotado");
                     $('.INFO').css("color", "red");
                     $('.INFO').css("font-weight", "Bold");
+                    $.ajax({
+                        url: '/timeout',
+                        type: "POST",
+                        success: function(data){
+                            if (data.msg === "Listo"){
+                                setTimeout(function () {
+                                    $('.INFO').text("");
+                                }, 10000);
+                            }
+                        }
+                    })
                 }
             })
         }
@@ -371,9 +382,17 @@ function editar() {
                             $('.INFO').text("Tiempo de espera agotado");
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
-                            setTimeout(function () {
-                                $('.INFO').text("");
-                            }, 10000);
+                            $.ajax({
+                                url: '/timeout',
+                                type: "POST",
+                                success: function(data){
+                                    if (data.msg === "Listo"){
+                                        setTimeout(function () {
+                                            $('.INFO').text("");
+                                        }, 10000);
+                                    }
+                                }
+                            })
                         }
                     })
                 }
@@ -446,6 +465,17 @@ function editarSub() {
                             $('.INFO').text("Tiempo de espera agotado");
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
+                            $.ajax({
+                                url: '/timeout',
+                                type: "POST",
+                                success: function(data){
+                                    if (data.msg === "Listo"){
+                                        setTimeout(function () {
+                                            $('.INFO').text("");
+                                        }, 10000);
+                                    }
+                                }
+                            })
                         }
                     })
                 }

@@ -26,7 +26,7 @@ $('#form').submit(function () {
 		$('#entrar').attr('value', 'Registrate');
 	}
 	//Checks if there is info in the TextBoxes
-	if (nomTB.val().length === 0) {
+	else if (nomTB.val().length === 0) {
 		$('.error').show();
 		error.innerHTML = "Nombre de usuario no ingresado";
 		error.className = "error active";
