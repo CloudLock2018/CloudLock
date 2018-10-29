@@ -44,7 +44,7 @@ Adafruit_MQTT_Subscribe imeiStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME
 
 String DOOR;
 String IMEI;
-String NewStatus = "D0";
+String NewStatus = "S0";
 
 /*************************** Sketch Code ************************************/
 
@@ -107,7 +107,7 @@ void setup() {
 void loop() {
   MQTT_connect();
   Serial.println("Reseting");
-  delay(100);
+  delay(10);
   // this is our 'wait for incoming subscription packets' busy subloop
   // try to spend your time here
 
@@ -121,12 +121,6 @@ void loop() {
       Serial.println(DOOR);
       if (DOOR == "D1") {
         accessGranted();
-      }
-      else if (DOOR == "D0") {
-        accessDenied();
-      }
-      else {
-        error();
       }
     }
     //Checks value of imeiStatus feed.
@@ -142,7 +136,10 @@ void loop() {
       }
     }
   }
-  delay(100);
+  if (NewStatus == "S0") {
+    accessDenied();
+  }
+  delay(10);
   getMsgFromAndroid();
 }
 
