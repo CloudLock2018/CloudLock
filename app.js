@@ -399,13 +399,6 @@ client.on('connect', function () {
 	client.subscribe(Status)
 });
 
-client.on('connect', function () {
-	//Cerrado
-	client.publish(Door, 'D0')
-	//Verificar
-	client.publish(Status, 'S0')
-});
-
 client.on('error', (error) => {
 	console.log('MQTT Client Errored');
 	console.log(error);
@@ -492,8 +485,6 @@ app.post('/IMEIAdmin', function (req, res) {
 						usuarioMA = null;
 						
 					}
-					//Verificar
-					client.publish(Status, 'S0')
 					reply = {
 						msg: 'IMEI Actualizada'
 					}
@@ -503,8 +494,6 @@ app.post('/IMEIAdmin', function (req, res) {
 		})
 	}
 	else {
-		//Verificar
-		client.publish(Status, 'S0')
 		reply = {
 			msg: 'Error'
 		}
@@ -591,8 +580,6 @@ app.post('/imeiSub', function (req, res) {
 						usuarioMS = null;
 						subusuarioMS = null;
 					}
-					//Verificar
-					client.publish(Status, 'S0')
 					reply = {
 						msg: 'IMEI Actualizada'
 					}
@@ -602,8 +589,6 @@ app.post('/imeiSub', function (req, res) {
 		})
 	}
 	else {
-		//Verificar
-		client.publish(Status, 'S0')
 		reply = {
 			msg: 'Error'
 		}
