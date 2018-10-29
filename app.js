@@ -611,6 +611,16 @@ app.post('/imeiSub', function (req, res) {
 	}
 })
 
+//If timeout occurs, the server establish Status feed to S0
+app.post('/timeout', function(req, res){
+	//Verificar
+	client.publish(Status, 'S0')
+	reply = {
+		msg: 'Listo'
+	}
+	res.end(JSON.stringify(reply));
+})
+
 //Checks if the IMEI sent exists in the database. If it does, opens the door
 client.on('message', function (topic, message) {
 	if (topic === Status) {
