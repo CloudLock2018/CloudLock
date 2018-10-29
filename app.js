@@ -642,24 +642,12 @@ client.on('message', function (topic, message) {
 										client.publish(Door, 'D1')
 										console.log("abierto");
 									}
-									else {
-										client.publish(Door, 'D0')
-									}
 								});
 							});
 						}
 					});
 				});
 			}
-			// if (abierto === true) {
-			// 	client.publish(Door, 'D1')
-			// 	console.log("abierto");
-			// }
-			// else if (abierto === false) {
-			// 	client.publish(Door, 'D0')
-			// 	console.log("no existe esa imei");
-			// }
-			// abierto = false;
 		}
 		else {
 
