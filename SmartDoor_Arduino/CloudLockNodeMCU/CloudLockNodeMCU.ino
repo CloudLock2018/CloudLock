@@ -107,9 +107,7 @@ void setup() {
 void loop() {
   MQTT_connect();
   Serial.println("Reseting");
-  delay(10);
-  // this is our 'wait for incoming subscription packets' busy subloop
-  // try to spend your time here
+  DOOR = "D0";
 
   Adafruit_MQTT_Subscribe *subscription;
   //Checks value of subscribed feeds.
@@ -136,10 +134,9 @@ void loop() {
       }
     }
   }
-  if (NewStatus == "S0") {
+  if (DOOR == "D0") {
     accessDenied();
   }
-  delay(10);
   getMsgFromAndroid();
 }
 
@@ -148,11 +145,9 @@ void getMsgFromAndroid() {
   int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), 0);
   if (msgSize > 0) {
     NdefMessage msg  = NdefMessage(ndefBuf, msgSize);
-    msg.print();
     int recordCount = msg.getRecordCount();
     NdefRecord record = msg.getRecord(0);  //read 1 record
     IMEI = readMsg(record);
-    Serial.println(IMEI);
     detectedIMEI();
   }
   else {
@@ -212,16 +207,8 @@ void accessDenied() {
   digitalWrite(ledB, HIGH);
   digitalWrite(ledR, LOW);
   Serial.println("Your IMEI is not registered");
-  delay(2000);
-}
-
-//Displays an error.
-void error() {
-  digitalWrite(ledG, HIGH);
-  digitalWrite(ledB, HIGH);
-  digitalWrite(ledR, LOW);
-  Serial.println("Error, your IMEI already exists in the server");
-  delay(2000);
+  delay(3000);
+  statusChecking();
 }
 
 //Displays the dection mode.
