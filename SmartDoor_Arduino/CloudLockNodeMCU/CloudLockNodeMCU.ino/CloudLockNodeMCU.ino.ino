@@ -60,6 +60,7 @@ int servo = 16;
 int ledR = 4;
 int ledB = 0;
 int ledG = 2;
+bool sentImei = false;
 unsigned long entry;
 
 
@@ -109,11 +110,10 @@ void setup() {
 void loop() {
   MQTT_connect();
   Serial.println("Reseting");
-  DOOR = "D0";
 
   Adafruit_MQTT_Subscribe *subscription;
   //Checks value of subscribed feeds.
-  while ((subscription = mqtt.readSubscription(5000))) {
+  while ((subscription = mqtt.readSubscription(4000))) {
     //Checks value of doorState feed.
     if (subscription == &doorState) {
       Serial.print(F("Last Door State value: "));
@@ -136,15 +136,16 @@ void loop() {
       }
     }
   }
-  if (DOOR == "D0") {
+  if (sentImei == true) {
     accessDenied();
   }
   getMsgFromAndroid();
+  Serial.println(sentImei);
 }
 
 void getMsgFromAndroid() {
   Serial.println("Waiting for message from Peer");
-  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), (uint16_t) 2000);
+  int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), (uint16_t) 4000);
   Serial.println(msgSize);
   if (msgSize > 0) {
     NdefMessage msg  = NdefMessage(ndefBuf, msgSize);
@@ -189,6 +190,7 @@ bool detectedIMEI() {
   else {
     sendStatus.publish(String("S0").c_str());
     Serial.println(F(" OK!"));
+    sentImei = true;
   }
   delay(10);
 }
@@ -204,6 +206,7 @@ void accessGranted() {
   myservo.write(0);
   Serial.println("The door is now closed");
   statusChecking();
+  sentImei = false;
 }
 
 //Displays that the user IMEI was not registered.
@@ -214,6 +217,7 @@ void accessDenied() {
   Serial.println("Your IMEI is not registered");
   delay(3000);
   statusChecking();
+  sentImei = false;
 }
 
 //Displays the dection mode.
