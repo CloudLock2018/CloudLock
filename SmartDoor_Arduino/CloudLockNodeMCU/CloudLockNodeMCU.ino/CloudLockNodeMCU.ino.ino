@@ -80,7 +80,6 @@ void setup() {
   Serial.println();
   Serial.println();
 
-  WiFiManager wifiManager;
   
   wifiManager.setBreakAfterConfig(true);
   
