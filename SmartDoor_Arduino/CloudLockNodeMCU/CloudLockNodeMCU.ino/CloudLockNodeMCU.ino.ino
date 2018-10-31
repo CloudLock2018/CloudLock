@@ -62,7 +62,7 @@ int ledB = 0;
 int ledG = 2;
 bool sentImei = false;
 unsigned long entry;
-
+WiFiManager wifiManager;
 
 void MQTT_connect();
 
@@ -75,12 +75,12 @@ void setup() {
   pinMode(ledR, OUTPUT);
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
+  pinMode(A0, INPUT);
   
   // Connect to WiFi access point.
   Serial.println();
   Serial.println();
 
-  
   wifiManager.setBreakAfterConfig(true);
   
   if (!wifiManager.autoConnect("CloudLock", "cloudlock")) {
@@ -107,6 +107,7 @@ void setup() {
 }
 
 void loop() {
+  checkRstButton();
   MQTT_connect();
   Serial.println("Reseting");
 
@@ -235,6 +236,16 @@ void statusChecking() {
   Serial.println("The next IMEI will be checked to see if it is registered");
 }
 
+void checkRstButton(){
+   if (analogRead(A0) == 0) {
+     WiFi.disconnect();
+     if (!wifiManager.startConfigPortal("CloudLock", "cloudlock")) {
+        delay(3000);
+        ESP.reset();
+        delay(5000);
+     }
+   }
+}
 //Connects and reconnects as necessary to the MQTT server.
 void MQTT_connect() {
   int8_t ret;
@@ -245,18 +256,12 @@ void MQTT_connect() {
   }
 
   Serial.print("Connecting to MQTT... ");
-
-  uint8_t retries = 3;
   while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
+    checkRstButton();
     Serial.println(mqtt.connectErrorString(ret));
     Serial.println("Retrying MQTT connection in 5 seconds...");
     mqtt.disconnect();
     delay(5000);  // wait 5 seconds
-    retries--;
-    if (retries == 0) {
-      // basically die and wait for WDT to reset me
-      while (1);
-    }
   }
   Serial.println("MQTT Connected!");
 }
