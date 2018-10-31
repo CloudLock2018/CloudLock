@@ -39,15 +39,13 @@ $('#form').submit(function () {
 				error.className = "error active";
 				$('#btn').removeClass("pressed");
 				$('#btn').attr('value', 'Entrar');
-			}
-			else if (data.msg === 'Error, contra') {
+			} else if (data.msg === 'Error, contra') {
 				$('#error').show();
 				error.innerHTML = "La contraseña es incorrecta";
 				error.className = "error active";
 				$('#btn').removeClass("pressed");
 				$('#btn').attr('value', 'Entrar');
-			}
-			else if (data.msg === 'Usuario Encontrado') {
+			} else if (data.msg === 'Usuario Encontrado') {
 				$('#correcto').show();
 				correcto.innerHTML = "Usuario Encontrado";
 				correcto.className = "correcto active";

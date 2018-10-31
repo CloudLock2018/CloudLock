@@ -14,8 +14,7 @@ function leerCookie(nombre) {
         var busca = lista[i].search(nombre);
         if (busca > -1) {
             micookie = lista[i];
-        }
-        else {
+        } else {
             window.location.href = "../index.html";
         }
     }
@@ -60,8 +59,7 @@ $.ajax({
                         setTimeout(function () {
                             document.location.reload(true);
                         }, 2000);
-                    }
-                    else if (data.msg === 'Error') {
+                    } else if (data.msg === 'Error') {
                         $('.INFO').show();
                         $('.INFO').text("Ha ocurrido un error con el protocolo");
                         $('.INFO').css("color", "red");
@@ -79,8 +77,8 @@ $.ajax({
                     $.ajax({
                         url: '/timeout',
                         type: "POST",
-                        success: function(data){
-                            if (data.msg === "Listo"){
+                        success: function (data) {
+                            if (data.msg === "Listo") {
                                 setTimeout(function () {
                                     $('.INFO').text("");
                                 }, 10000);
@@ -89,8 +87,7 @@ $.ajax({
                     })
                 }
             })
-        }
-        else if (data.msg === 'Hay imei') {
+        } else if (data.msg === 'Hay imei') {
             $('.INFO').show();
             $('.INFO').text("Se encontro el IMEI vinculado a su cuenta");
             $('.INFO').css("color", "#49ff00");
@@ -130,8 +127,7 @@ function agre() {
             $('#agregar').css("background", "#cccccc");
             nuevo();
             borrar();
-        }
-        else {
+        } else {
             $('.INFO').show();
             $('.INFO').text("Agregue un nombre");
             $('.INFO').css("color", "red");
@@ -168,8 +164,7 @@ function nuevo() {
                         setTimeout(function () {
                             $('.INFO').text("");
                         }, 10000);
-                    }
-                    else if (data.msg === 'Gracias') {
+                    } else if (data.msg === 'Gracias') {
                         rotacion2R();
                         reactive();
                         $('.INFO').show();
@@ -193,8 +188,7 @@ function nuevo() {
                                     $('.INFO').text("El usuario no existe");
                                     $('.INFO').css("color", "red");
                                     $('.INFO').css("font-weight", "Bold");
-                                }
-                                else if (data.msg === 'Hecho') {
+                                } else if (data.msg === 'Hecho') {
                                     active = true;
                                     $('.contenedor2').css("display", "none");
                                     $('.member').text("");
@@ -212,8 +206,7 @@ function nuevo() {
                 }
             })
             agreg = false;
-        }
-        else {
+        } else {
             $('.INFO').show();
             $('.INFO').text("Agregue un nombre");
             $('.INFO').css("color", "red");
@@ -272,8 +265,7 @@ function eliminar() {
                         setTimeout(function () {
                             $('.INFO').text("");
                         }, 10000);
-                    }
-                    else if (data.msg === 'Borrado') {
+                    } else if (data.msg === 'Borrado') {
                         $('.INFO').show();
                         $('.INFO').text("Subusuario eliminado");
                         $('.INFO').css("color", "red");
@@ -299,8 +291,7 @@ function eliminar() {
                                     setTimeout(function () {
                                         $('.INFO').text("");
                                     }, 10000);
-                                }
-                                else if (data.msg === 'Hecho') {
+                                } else if (data.msg === 'Hecho') {
                                     $('.contenedor2').css("display", "none");
                                     $('.member').text("");
                                     $('#agregar').show();
@@ -342,8 +333,7 @@ function editar() {
                     setTimeout(function () {
                         $('.INFO').text("");
                     }, 10000);
-                }
-                else if (data.msg === 'Editar') {
+                } else if (data.msg === 'Editar') {
                     $('.INFO').show();
                     $('.INFO').text("Apoye su celular sobre la placa NFC y luego espere");
                     $('.INFO').css("color", "#49ff00");
@@ -366,8 +356,7 @@ function editar() {
                                 setTimeout(function () {
                                     document.location.reload(true);
                                 }, 2000);
-                            }
-                            else if (data.msg === 'Error') {
+                            } else if (data.msg === 'Error') {
                                 $('.INFO').show();
                                 $('.INFO').text("Ha ocurrido un error con el protocolo");
                                 $('.INFO').css("color", "red");
@@ -385,8 +374,8 @@ function editar() {
                             $.ajax({
                                 url: '/timeout',
                                 type: "POST",
-                                success: function(data){
-                                    if (data.msg === "Listo"){
+                                success: function (data) {
+                                    if (data.msg === "Listo") {
                                         setTimeout(function () {
                                             $('.INFO').text("");
                                         }, 10000);
@@ -424,8 +413,7 @@ function editarSub() {
                     setTimeout(function () {
                         $('.INFO').text("");
                     }, 10000);
-                }
-                else if (data.msg === 'Editar') {
+                } else if (data.msg === 'Editar') {
                     $('.INFO').show();
                     $('.INFO').text("Apoye su celular sobre la placa NFC y luego espere");
                     $('.INFO').css("color", "#49ff00");
@@ -449,8 +437,7 @@ function editarSub() {
                                 setTimeout(function () {
                                     document.location.reload(true);
                                 }, 2000);
-                            }
-                            else if (data.msg === 'Error') {
+                            } else if (data.msg === 'Error') {
                                 $('.INFO').show();
                                 $('.INFO').text("Ha ocurrido un error con el protocolo");
                                 $('.INFO').css("color", "red");
@@ -468,8 +455,8 @@ function editarSub() {
                             $.ajax({
                                 url: '/timeout',
                                 type: "POST",
-                                success: function(data){
-                                    if (data.msg === "Listo"){
+                                success: function (data) {
+                                    if (data.msg === "Listo") {
                                         setTimeout(function () {
                                             $('.INFO').text("");
                                         }, 10000);

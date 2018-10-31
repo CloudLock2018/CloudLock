@@ -63,12 +63,14 @@ body {
   from {
     transform: perspective(130px) rotateX(-90deg);
   }
+
   to {
     transform: perspective(130px) rotateX(0deg);
   }
 }
 
-.contenedor2, .contenedor3 {
+.contenedor2,
+.contenedor3 {
   display: none;
   background-color: white;
   max-width: 1100px;
@@ -88,13 +90,16 @@ body {
   padding: 30px 0 30px 30px;
 }
 
-.contenedorAdmin .user, .contenedor3 .sub {
+.contenedorAdmin .user,
+.contenedor3 .sub {
   color: black;
   font-weight: bold;
   float: left;
 }
 
-.contenedor .button, .contenedor2 .buttons, .contenedor2 .error {
+.contenedor .button,
+.contenedor2 .buttons,
+.contenedor2 .error {
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -112,7 +117,8 @@ body {
   margin-top: -5px;
 }
 
-.contenedor3 .eliminar, .contenedor3 .cambiar {
+.contenedor3 .eliminar,
+.contenedor3 .cambiar {
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -130,15 +136,21 @@ body {
   margin-top: -15px;
 }
 
-.contenedor2 .error, .contenedor3 .eliminar {
+.contenedor2 .error,
+.contenedor3 .eliminar {
   margin-right: 45px;
 }
 
-.contenedor .button:hover, .contenedor2 .buttons:hover, .contenedor2 .error:hover, .contenedor3 .eliminar:hover, .contenedor3 .cambiar:hover {
+.contenedor .button:hover,
+.contenedor2 .buttons:hover,
+.contenedor2 .error:hover,
+.contenedor3 .eliminar:hover,
+.contenedor3 .cambiar:hover {
   background: rgba(0, 117, 217, 0.7);
 }
 
-.button, .cambiar {
+.button,
+.cambiar {
   font-size: 19px;
   transform: rotateY(180deg);
   transform: rotateY(180deg);
@@ -171,7 +183,8 @@ body {
   margin-right: 40px
 }
 
-.nombre, #btn {
+.nombre,
+#btn {
   display: inline-block;
 }
 
@@ -198,26 +211,18 @@ body {
   border-bottom: 4px solid #0075d9;
 }
 
-/* width */
-
 ::-webkit-scrollbar {
   width: 10px;
 }
-
-/* Track */
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-/* Handle */
-
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
 }
-
-/* Handle on hover */
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;

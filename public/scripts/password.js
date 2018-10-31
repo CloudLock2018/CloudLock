@@ -19,8 +19,7 @@ $('#entrar').click(function () {
 		error.className = "error active";
 		$('#entrar').removeClass("pressed");
 		$('#entrar').attr('value', 'Restablecer contraseña');
-	}
-	else {
+	} else {
 		var data = {
 			usuario: nomTB.val()
 		};
@@ -36,8 +35,7 @@ $('#entrar').click(function () {
 					error.className = "error active";
 					$('#entrar').removeClass("pressed");
 					$('#entrar').attr('value', 'Restablecer contraseña');
-				}
-				else if (data.msg === 'Email enviado') {
+				} else if (data.msg === 'Email enviado') {
 					$('#correcto').show();
 					correcto.innerHTML = "Email Enviado";
 					correcto.className = "correcto active";

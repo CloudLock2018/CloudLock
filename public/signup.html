@@ -12,48 +12,50 @@
 <body>
     <a href="index.html"><img align="left" id="logo" src="./images/Icono.png" alt="Logo"></a>
     <h1 id="icon-text">CloudLock</h1>
-    <br>
+    <br id="space">
     <p id="descripcion">Cloudlock es un innovador sistema de seguridad para puertas, el cual puede ser administrado
         desde la comodidad de su hogar. A través de la última tecnología en celulares NFC y trabajando en conjunto con
         los servicios en la nube, usted tendrá control total de la seguridad de su hogar donde quiera que esté. Cree
         una cuenta y empiece a disfrutar de los servicios que ofrece Cloudlock.</p>
-    <div class="contenedor-form">
-        <!-- NO BORRAR --><a></a><!-- NO BORRAR -->
-        <div class="formulario">
-            <h2>
-                <center>Crea tu cuenta</center>
-            </h2>
-            <form action="#" id="form">
-                <input title="Completa este campo" type="text" name="NU" id="nombre" placeholder="Nombre de Usuario"
-                    required>
-                <input title="Completa este campo" type="text" name="NU" id="mail" placeholder="Correo Electrónico"
-                    required>
-                <input title="Completa este campo" type="password" name="contra" id="contra" placeholder="Contraseña"
-                    required>
-                <input title="Completa este campo" type="password" name="contra" id="repcontra" placeholder="Confirmar Contraseña"
-                    required>
-                <label class="container">
-                    <input title="Mostrar Contraseña" type="checkbox" name="Mostrar Contraseña" onclick="myFunction()">
-                    <span class="checkmark"></span>
-                </label>
-                <span class="show-password">Mostrar Contraseña</span>
-                <br><br>
-                <input type="submit" id="entrar" value="Registrate">
-                <span class="error" aria-live="polite"></span>
-                <span class="correcto" aria-live="polite"></span>
-                <div id="error">
-                    <span id="errText"></span>
-                </div>
-                <div id="correcto">
-                    <span id="corText"></span>
-                </div>
-            </form>
+    <div class="contenedor-centro">
+        <div class="contenedor-form">
+            <!-- NO BORRAR --><a></a><!-- NO BORRAR -->
+            <div class="formulario">
+                <h2>
+                    <center>Crea tu cuenta</center>
+                </h2>
+                <form action="#" id="form">
+                    <input title="Completa este campo" type="text" name="NU" id="nombre" placeholder="Nombre de Usuario"
+                        required>
+                    <input title="Completa este campo" type="text" name="NU" id="mail" placeholder="Correo Electrónico"
+                        required>
+                    <input title="Completa este campo" type="password" name="contra" id="contra" placeholder="Contraseña"
+                        required>
+                    <input title="Completa este campo" type="password" name="contra" id="repcontra" placeholder="Confirmar Contraseña"
+                        required>
+                    <label class="container">
+                        <input title="Mostrar Contraseña" type="checkbox" name="Mostrar Contraseña" onclick="myFunction()">
+                        <span class="checkmark"></span>
+                    </label>
+                    <span class="show-password">Mostrar Contraseña</span>
+                    <br><br>
+                    <input type="submit" id="entrar" value="Registrate">
+                    <span class="error" aria-live="polite"></span>
+                    <span class="correcto" aria-live="polite"></span>
+                    <div id="error">
+                        <span id="errText"></span>
+                    </div>
+                    <div id="correcto">
+                        <span id="corText"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="reset-password">
+                <a href="index.html">¿Tienes una cuenta? Entrar</a>
+            </div>
         </div>
-        <div class="reset-password">
-            <a href="index.html">¿Tienes una cuenta? Entrar</a>
+        <div class="contenedor-registrarse">
         </div>
-    </div>
-    <div class="contenedor-registrarse">
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./scripts/signup.js"></script>

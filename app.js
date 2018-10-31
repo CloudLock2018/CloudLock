@@ -1,6 +1,3 @@
-//Server Location (Axel): C:\Users\43871824\Documents\4to TIC\Proyecto Final\CloudLock\CloudLock_Web\Servidor
-//Server Location (Joako): C:\Users\43322826\Documents\GitHub\CloudLock\CloudLock_Web\Servidor
-
 //Initialize Express (Server)
 var express = require('express');
 var bodyParser = require('body-parser')
@@ -8,10 +5,14 @@ var app = express();
 
 //Set up Server
 var port = process.env.PORT || 3000
-app.listen(port, function () { console.log('Listen on port 3000') });
+app.listen(port, function () {
+	console.log('Listen on port 3000')
+});
 app.use('/', express.static('public'));
 //Set up BodyParse
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+	extended: false
+}))
 app.use(bodyParser.json())
 //Allow CORS 
 app.use(function (req, res, next) {
@@ -48,8 +49,7 @@ app.post('/verify', function (req, res) {
 					msg: 'Verificado'
 				};
 				res.end(JSON.stringify(reply));
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error, usuario'
 				};
@@ -77,15 +77,13 @@ app.post('/login', function (req, res) {
 						msg: 'Usuario Encontrado'
 					};
 					res.end(JSON.stringify(reply));
-				}
-				else {
+				} else {
 					reply = {
 						msg: 'Error, contra'
 					};
 					res.end(JSON.stringify(reply));
 				}
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error, usuario'
 				};
@@ -111,8 +109,7 @@ app.post('/password', function (req, res) {
 						msg: 'Contraseña actual'
 					};
 					res.end(JSON.stringify(reply));
-				}
-				else {
+				} else {
 					//Updates user's password (insecure)
 					usuario.update({
 						Contraseña: contraC
@@ -122,8 +119,7 @@ app.post('/password', function (req, res) {
 					};
 					res.end(JSON.stringify(reply));
 				}
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error, usuario'
 				};
@@ -147,12 +143,11 @@ app.post('/subuser', function (req, res) {
 					msg: 'Error'
 				};
 				res.end(JSON.stringify(reply));
-			}
-			else {
+			} else {
 				usuario.set({
-					Nombre_de_Subusuario: subusuarioA,
-					IMEI: null
-				})
+						Nombre_de_Subusuario: subusuarioA,
+						IMEI: null
+					})
 					.then(function (docRef) {
 						reply = {
 							msg: 'Gracias'
@@ -180,8 +175,7 @@ app.post('/reload', function (req, res) {
 						if (subusuarios === null) {
 							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 							cant += 1;
-						}
-						else {
+						} else {
 							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 							cant += 1;
 						}
@@ -200,8 +194,7 @@ app.post('/reload', function (req, res) {
 					subusuarios = null;
 					hay = true;
 				});
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error'
 				};
@@ -225,8 +218,7 @@ app.post('/delete', function (req, res) {
 					msg: 'Borrado'
 				};
 				res.end(JSON.stringify(reply));
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error'
 				};
@@ -260,8 +252,7 @@ app.post('/register', function (req, res) {
 					msg: 'Error'
 				};
 				res.end(JSON.stringify(reply));
-			}
-			else {
+			} else {
 				//Checks if the email was already used
 				db.collection("Users").where('Email', '==', emailR).get()
 					.then(snapshot => {
@@ -275,12 +266,12 @@ app.post('/register', function (req, res) {
 						//if the email has never been used before, then it will create a new doc in the DB
 						if (repetido === false) {
 							usuario.set({
-								Nombre_de_Usuario: nombreR,
-								Email: emailR,
-								Contraseña: contraR,
-								Verificado: false,
-								IMEI: null
-							})
+									Nombre_de_Usuario: nombreR,
+									Email: emailR,
+									Contraseña: contraR,
+									Verificado: false,
+									IMEI: null
+								})
 								.then(function (docRef) {
 									var transporter = nodemailer.createTransport(({
 										service: 'gmail',
@@ -305,8 +296,7 @@ app.post('/register', function (req, res) {
 									transporter.sendMail(mailOptions, function (err, res) {
 										if (err) {
 											console.log('Error: ' + err);
-										}
-										else {
+										} else {
 											console.log('Email sent');
 										}
 									})
@@ -358,8 +348,7 @@ app.post('/newpassword', function (req, res) {
 				transporter.sendMail(mailOptions, function (err, res) {
 					if (err) {
 						console.log('Error: ' + err);
-					}
-					else {
+					} else {
 						console.log('Email sent');
 					}
 				})
@@ -367,8 +356,7 @@ app.post('/newpassword', function (req, res) {
 					msg: 'Email enviado'
 				};
 				res.end(JSON.stringify(reply));
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error, usuario'
 				};
@@ -426,15 +414,13 @@ app.post('/imei', function (req, res) {
 						msg: 'No imei'
 					};
 					res.end(JSON.stringify(reply));
-				}
-				else {
+				} else {
 					usuario.collection("Subusers").get().then(function (querySnapshot) {
 						querySnapshot.forEach(function (doc) {
 							if (subusuarios === null) {
 								subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 								cant += 1;
-							}
-							else {
+							} else {
 								subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar' value='✎' id='" + cant + "'></div>";
 								cant += 1;
 							}
@@ -471,19 +457,17 @@ app.post('/IMEIAdmin', function (req, res) {
 			if (topic === IMEI) {
 				if (message.toString() === '0') {
 
-				}
-				else {
+				} else {
 					IMEIingresado = message.toString();
-					if (usuarioMA === null){
+					if (usuarioMA === null) {
 
-					}
-					else{
+					} else {
 						var usuario = db.collection("Users").doc(usuarioMA).update({
 							IMEI: IMEIingresado
 						});
 						verificar = true;
 						usuarioMA = null;
-						
+
 					}
 					reply = {
 						msg: 'IMEI Actualizada'
@@ -492,8 +476,7 @@ app.post('/IMEIAdmin', function (req, res) {
 				}
 			}
 		})
-	}
-	else {
+	} else {
 		reply = {
 			msg: 'Error'
 		}
@@ -516,8 +499,7 @@ app.post('/editAdmin', function (req, res) {
 					msg: 'Editar'
 				}
 				res.end(JSON.stringify(reply));
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error'
 				}
@@ -543,8 +525,7 @@ app.post('/editSub', function (req, res) {
 					msg: 'Editar'
 				}
 				res.end(JSON.stringify(reply));
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error'
 				}
@@ -565,14 +546,12 @@ app.post('/imeiSub', function (req, res) {
 			// message is Buffer
 			if (topic === IMEI) {
 				if (message.toString() === '0') {
-					
-				}
-				else {
-					IMEIingresado = message.toString();
-					if (usuarioMS === null || subusuarioMS === null){
 
-					}
-					else{
+				} else {
+					IMEIingresado = message.toString();
+					if (usuarioMS === null || subusuarioMS === null) {
+
+					} else {
 						var actualizarSub = db.collection("Users").doc(usuarioMS).collection("Subusers").doc(subusuarioMS).update({
 							IMEI: IMEIingresado
 						});
@@ -583,12 +562,11 @@ app.post('/imeiSub', function (req, res) {
 					reply = {
 						msg: 'IMEI Actualizada'
 					}
-					res.end(JSON.stringify(reply));					
+					res.end(JSON.stringify(reply));
 				}
 			}
 		})
-	}
-	else {
+	} else {
 		reply = {
 			msg: 'Error'
 		}
@@ -597,7 +575,7 @@ app.post('/imeiSub', function (req, res) {
 })
 
 //If timeout occurs, the server establish Status feed to S0
-app.post('/timeout', function(req, res){
+app.post('/timeout', function (req, res) {
 	//Verificar
 	client.publish(Status, 'S0')
 	reply = {
@@ -611,8 +589,7 @@ client.on('message', function (topic, message) {
 	if (topic === Status) {
 		if (message.toString() === 'S0') {
 			verificar = true;
-		}
-		else {
+		} else {
 			verificar = false;
 		}
 	}
@@ -620,8 +597,7 @@ client.on('message', function (topic, message) {
 		if (verificar === true) {
 			if (message.toString() === '0') {
 
-			}
-			else {
+			} else {
 				IMEIingresado = message.toString();
 				var usuario = db.collection("Users");
 				usuario.get().then(function (querySnapshot) {
@@ -629,8 +605,7 @@ client.on('message', function (topic, message) {
 						if (doc.data().IMEI === IMEIingresado) {
 							client.publish(Door, 'D1')
 							console.log("abierto");
-						}
-						else {
+						} else {
 							usuario.doc(doc.data().Nombre_de_Usuario).collection("Subusers").get().then(function (querySnapshot) {
 								querySnapshot.forEach(function (doc) {
 									if (doc.data().IMEI === IMEIingresado) {
@@ -643,8 +618,7 @@ client.on('message', function (topic, message) {
 					});
 				});
 			}
-		}
-		else {
+		} else {
 
 		}
 	}

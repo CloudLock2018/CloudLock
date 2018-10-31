@@ -19,8 +19,7 @@ $('#form').submit(function () {
 		error.className = "error active";
 		$('#entrar').removeClass("pressed");
 		$('#entrar').attr('value', 'Verificar Cuenta');
-	}
-	else {
+	} else {
 		var data = {
 			usuario: nomTB.val()
 		};
@@ -36,8 +35,7 @@ $('#form').submit(function () {
 					error.className = "error active";
 					$('#entrar').removeClass("pressed");
 					$('#entrar').attr('value', 'Verificar Cuenta');
-				}
-				else if (data.msg === 'Verificado') {
+				} else if (data.msg === 'Verificado') {
 					$('#correcto').show();
 					correcto.innerHTML = "Cuenta Verificada";
 					correcto.className = "correcto active";
