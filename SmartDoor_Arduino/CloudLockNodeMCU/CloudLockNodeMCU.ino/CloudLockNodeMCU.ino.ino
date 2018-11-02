@@ -62,10 +62,7 @@ int ledB = 0;
 int ledG = 2;
 bool sentImei = false;
 unsigned long entry;
-<<<<<<< HEAD
 
-=======
->>>>>>> 62d99dbeac5e8a915511ada95d04f1bdc53966bf
 WiFiManager wifiManager;
 
 void MQTT_connect();
@@ -117,7 +114,7 @@ void loop() {
 
   Adafruit_MQTT_Subscribe *subscription;
   //Checks value of subscribed feeds.
-  while ((subscription = mqtt.readSubscription(4000))) {
+  while ((subscription = mqtt.readSubscription(5000))) {
     //Checks value of doorState feed.
     if (subscription == &doorState) {
       Serial.print(F("Last Door State value: "));
@@ -143,6 +140,7 @@ void loop() {
   if (sentImei == true) {
     accessDenied();
   }
+  statusChecking();
   getMsgFromAndroid();
   Serial.println(sentImei);
 }
@@ -209,7 +207,6 @@ void accessGranted() {
   delay(3000);
   myservo.write(0);
   Serial.println("The door is now closed");
-  statusChecking();
   sentImei = false;
 }
 
@@ -220,7 +217,6 @@ void accessDenied() {
   digitalWrite(ledR, LOW);
   Serial.println("Your IMEI is not registered");
   delay(3000);
-  statusChecking();
   sentImei = false;
 }
 
@@ -256,7 +252,6 @@ void MQTT_connect() {
 
   // Stop if already connected.
   if (mqtt.connected()) {
-    mqttConnectLed();
     return;
   }
 
@@ -269,6 +264,7 @@ void MQTT_connect() {
     delay(5000);  // wait 5 seconds
   }
   Serial.println("MQTT Connected!");
+  mqttConnectLed();
 }
 
 void mqttConnectLed() {
