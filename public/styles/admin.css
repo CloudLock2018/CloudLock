@@ -117,7 +117,7 @@ body {
   margin-top: -5px;
 }
 
-.contenedor #eliminar {
+.contenedor #default {
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -160,7 +160,7 @@ body {
 }
 
 .contenedor .button:hover,
-.contenedor #eliminar:hover,
+.contenedor #default:hover,
 .contenedor2 .buttons:hover,
 .contenedor2 .error:hover,
 .contenedor3 .eliminar:hover,

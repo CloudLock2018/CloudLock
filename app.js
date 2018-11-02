@@ -203,6 +203,40 @@ app.post('/reload', function (req, res) {
 		})
 })
 
+var usuarioDA;
+
+//Receive info from client (Admin - Delete user's IMEI)
+app.post('/deleteAdmin', function(req, res){
+	usuarioDA = req.body.usuario;
+	var usuario = db.collection("Users").doc(usuarioDA);
+	usuario.get()
+		.then(doc => {
+			if (doc.exists){
+				if (doc.data().IMEI === "Sin IMEI"){
+					reply = {
+						msg: 'Ya borrado'
+					};
+					res.end(JSON.stringify(reply));
+				}
+				else {
+					usuario.update({
+						IMEI: "Sin IMEI"
+					});
+					reply = {
+						msg: 'Borrado'
+					};
+					res.end(JSON.stringify(reply));
+				}
+			}
+			else {
+				reply = {
+					msg: 'Error'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
 var eliminarsubA;
 
 //Receive info from client (Admin - Delete certain subuser)
@@ -595,7 +629,7 @@ client.on('message', function (topic, message) {
 	}
 	if (topic === IMEI) {
 		if (verificar === true) {
-			if (message.toString() === '0') {
+			if (message.toString() === '0' || message.toString() === 'Sin IMEI') {
 
 			} else {
 				IMEIingresado = message.toString();

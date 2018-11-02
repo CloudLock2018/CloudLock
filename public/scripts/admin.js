@@ -41,6 +41,8 @@ $.ajax({
             $('.INFO').css("font-weight", "Bold");
             $('#agregar').prop('disabled', true);
             $('#agregar').css("background", "#cccccc");
+            $('#default').prop('disabled', true);
+            $('#default').css("background", "#cccccc");
             var info = {
                 usuario: document.getElementById("name").textContent
             }
@@ -95,6 +97,8 @@ $.ajax({
             setTimeout(function () {
                 $('.INFO').text("");
             }, 10000);
+            $('#default').prop('disabled', false);
+            $('#default').css("background", "#FF851B");
             //Shows IMEI
             $('.IMEI').text("IMEI: " + data.imei);
             if (data.existe === true) {
@@ -108,6 +112,7 @@ $.ajax({
 
 agre();
 borrar();
+eliminarAdmin();
 eliminar();
 editar();
 editarSub();
@@ -233,7 +238,55 @@ function borrar() {
     });
 }
 
-//Deletes subuser slected from the database
+//Declares user's IMEI non-existent
+function eliminarAdmin(){
+    $('#default').click(function(){
+        console.log("Editar IMEI");
+        if (confirm('¿Está seguro que quiere borrar su IMEI?')) {
+            var data = {
+                usuario: document.getElementById("name").textContent
+            };
+            $.ajax({
+                url: '/deleteAdmin',
+                type: "POST",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    if (data.msg === 'Borrado'){
+                        $('.INFO').show();
+                        $('.INFO').text("Se ha borrado su IMEI");
+                        $('.INFO').css("color", "#49ff00");
+                        $('.INFO').css("font-weight", "Bold");
+                        $('.IMEI').text("IMEI: Sin IMEI");
+                    }
+                    else if (data.msg === 'Ya borrado'){
+                        $('.INFO').show();
+                        $('.INFO').text("El IMEI ya fue borrado anteriormente");
+                        $('.INFO').css("color", "red");
+                        $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function () {
+                            $('.INFO').text("");
+                        }, 10000);
+                    }
+                    else if (data.msg === 'Error'){
+                        $('.INFO').show();
+                        $('.INFO').text("El usuario no existe");
+                        $('.INFO').css("color", "red");
+                        $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function () {
+                            $('.INFO').text("");
+                        }, 10000);
+                    }
+                }
+            })
+        } else {
+            // Do nothing!
+        }
+
+    });
+}
+
+//Deletes subuser selected from the database
 function eliminar() {
     $(document).on("click", ".eliminar", function () {
         setTimeout(function () {
