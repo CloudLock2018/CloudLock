@@ -16,6 +16,14 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+#centrado {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
 #descripcion {
   color: white;
   font-size: 23px;
@@ -84,9 +92,7 @@ body {
   line-height: 1;
 }
 
-.contenedor-form input[type="text"],
-.contenedor-form input[type="password"],
-.contenedor-form input[type="email"] {
+.contenedor-form input[type="text"], .contenedor-form input[type="password"], .contenedor-form input[type="email"] {
   outline: none;
   display: block;
   width: 100%;
@@ -104,9 +110,7 @@ body {
   transition: all .5s ease;
 }
 
-.contenedor-form input[type="text"]:focus,
-.contenedor-form input[type="password"]:focus,
-.contenedor-form input[type="email"]:focus {
+.contenedor-form input[type="text"]:focus, .contenedor-form input[type="password"]:focus, .contenedor-form input[type="email"]:focus {
   border-bottom: 4px solid #0075d9;
 }
 
@@ -308,50 +312,35 @@ body {
 }
 
 @media screen and (max-width: 1100px) {
-
-  #descripcion,
-  #logo,
-  #icon-text,
-  #space {
+  #descripcion, #logo, #icon-text, #space {
     display: none;
   }
-
-  .contenedor-form,
-  .contenedor-registrarse {
+  .contenedor-form, .contenedor-registrarse {
     position: static;
     margin: 0;
     max-width: 60%;
   }
-
-  #usuario,
-  .show-password {
+  #usuario, .show-password {
     font-size: 1em;
   }
-
   #MainText {
     font-size: 1.8em;
   }
-
   .formulario {
     font-size: 1.6em;
   }
-
   .checkmark {
     margin-top: 0.3em;
   }
-
   #entrar {
     font-size: 1.1em;
   }
-
   #reset {
     font-size: 1.2em;
   }
-
   .contenedor-form {
     margin-bottom: 2em;
   }
-
   .contenedor-centro {
     width: 100%;
     height: 100vh;
