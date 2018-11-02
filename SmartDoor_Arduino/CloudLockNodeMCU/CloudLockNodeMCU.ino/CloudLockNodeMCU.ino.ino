@@ -63,6 +63,7 @@ int ledG = 2;
 bool sentImei = false;
 unsigned long entry;
 
+WiFiManager wifiManager;
 
 void MQTT_connect();
 
@@ -95,7 +96,7 @@ void setup() {
     Serial.print(".");
   }
   Serial.println();
-
+  wifiConnectLed();
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
@@ -241,6 +242,7 @@ void MQTT_connect() {
 
   // Stop if already connected.
   if (mqtt.connected()) {
+    mqttConnectLed();
     return;
   }
 
@@ -260,3 +262,14 @@ void MQTT_connect() {
   }
   Serial.println("MQTT Connected!");
 }
+
+void mqttConnectLed() {
+  digitalWrite(ledR, LOW);
+  digitalWrite(ledB, LOW);
+}
+
+void wifiConnectLed () {
+  digitalWrite(ledB, LOW);
+  digitalWrite(ledG, LOW);
+}
+
