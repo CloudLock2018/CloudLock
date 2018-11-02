@@ -6,6 +6,7 @@ var agreg = false;
 var guardasub = 0;
 var subusuario;
 var on = 0;
+var on2 = 0;
 
 //Gets the username saved in the cookie 
 function leerCookie(nombre) {
@@ -255,79 +256,15 @@ function borrar() {
 //Declares user's IMEI non-existent
 function eliminarAdmin() {
     $('#default').click(function () {
-        console.log("Editar IMEI");
-        if (confirm('¿Está seguro que quiere borrar su IMEI?')) {
-            rotacion5R();
-            $('#agregar').prop('disabled', true);
-            $('#agregar').css("background", "#cccccc");
-            $('#editar').prop('disabled', true);
-            $('#editar').css("background", "#cccccc");
-            $('#default').prop('disabled', true);
-            $('#default').css("background", "#cccccc");
-            var data = {
-                usuario: document.getElementById("name").textContent
-            };
-            $.ajax({
-                url: '/deleteAdmin',
-                type: "POST",
-                dataType: "json",
-                data: data,
-                success: function (data) {
-                    if (data.msg === 'Borrado') {
-                        $('.INFO').show();
-                        $('.INFO').text("Se ha borrado su IMEI");
-                        $('.INFO').css("color", "#49ff00");
-                        $('.INFO').css("font-weight", "Bold");
-                        $('.contenedorAdmin .IMEI').text("IMEI: Desactivado");
-                        $('#agregar').prop('disabled', false);
-                        $('#agregar').css("background", "#FF851B");
-                        $('#editar').prop('disabled', false);
-                        $('#editar').css("background", "#FF851B");
-                        $('#default').prop('disabled', false);
-                        $('#default').css("background", "#FF851B");
-                    } else if (data.msg === 'Ya borrado') {
-                        $('.INFO').show();
-                        $('.INFO').text("El IMEI ya fue borrado anteriormente");
-                        $('.INFO').css("color", "red");
-                        $('.INFO').css("font-weight", "Bold");
-                        setTimeout(function () {
-                            $('#agregar').prop('disabled', false);
-                            $('#agregar').css("background", "#FF851B");
-                            $('#editar').prop('disabled', false);
-                            $('#editar').css("background", "#FF851B");
-                            $('#default').prop('disabled', false);
-                            $('#default').css("background", "#FF851B");
-                        }, 2000);
-                        setTimeout(function () {
-                            $('.INFO').text("");
-                        }, 10000);
-                    } else if (data.msg === 'Error') {
-                        $('.INFO').show();
-                        $('.INFO').text("El usuario no existe");
-                        $('.INFO').css("color", "red");
-                        $('.INFO').css("font-weight", "Bold");
-                        $('#agregar').prop('disabled', false);
-                        $('#agregar').css("background", "#FF851B");
-                        $('#editar').prop('disabled', false);
-                        $('#editar').css("background", "#FF851B");
-                        $('#default').prop('disabled', false);
-                        $('#default').css("background", "#FF851B");
-                        setTimeout(function () {
-                            $('.INFO').text("");
-                        }, 10000);
-                    }
-                }
-            })
-        } else {
-            // Do nothing!
-        }
-
+        aviso2();
+        on2 = 2;
     });
 }
-
 //Deletes subuser selected from the database
 function eliminar() {
     $(document).on("click", ".eliminar", function () {
+        aviso();
+        on = 2;
         setTimeout(function () {
             $('#agregar').prop('disabled', false);
             $('#agregar').css("background", "#FF851B");
@@ -338,81 +275,8 @@ function eliminar() {
             agreg = false;
         }, 1500);
         elegido = $(this).attr('id');
-        if (confirm('¿Está seguro que quiere borrar este subusuario?')) {
-            rotacion4R();
-            $('#agregar').prop('disabled', true);
-            $('#agregar').css("background", "#cccccc");
-            $('#editar').prop('disabled', true);
-            $('#editar').css("background", "#cccccc");
-            $('#default').prop('disabled', true);
-            $('#default').css("background", "#cccccc");
-            subusuario = $('#' + elegido + '.sub').text();
-            var data = {
-                usuario: document.getElementById("name").textContent,
-                sub: subusuario
-            }
-            $.ajax({
-                url: '/delete',
-                type: "POST",
-                dataType: "json",
-                data: data,
-                success: function (data) {
-                    if (data.msg === 'Error') {
-                        $('.INFO').show();
-                        $('.INFO').text("El subusuario no existe");
-                        $('.INFO').css("color", "red");
-                        $('.INFO').css("font-weight", "Bold");
-                        setTimeout(function () {
-                            $('.INFO').text("");
-                        }, 10000);
-                    } else if (data.msg === 'Borrado') {
-                        $('.INFO').show();
-                        $('.INFO').text("Subusuario eliminado");
-                        $('.INFO').css("color", "red");
-                        $('.INFO').css("font-weight", "Bold");
-                        $('.member').val("");
-                        setTimeout(function () {
-                            $('.INFO').text("");
-                        }, 10000);
-                        var reload = {
-                            usuario: document.getElementById("name").textContent
-                        }
-                        $.ajax({
-                            url: '/reload',
-                            type: "POST",
-                            dataType: "json",
-                            data: reload,
-                            success: function (data) {
-                                if (data.msg === 'Error') {
-                                    $('.INFO').show();
-                                    $('.INFO').text("El usuario no existe");
-                                    $('.INFO').css("color", "red");
-                                    $('.INFO').css("font-weight", "Bold");
-                                    setTimeout(function () {
-                                        $('.INFO').text("");
-                                    }, 10000);
-                                } else if (data.msg === 'Hecho') {
-                                    $('.contenedor2').css("display", "none");
-                                    $('.member').text("");
-                                    $('#agregar').show();
-                                    $('.contenedor3').remove();
-                                    if (data.existe === true) {
-                                        document.querySelector(".subusuarios").innerHTML += data.contenido;
-                                        $('.contenedor3').show();
-                                        guardasub = data.cantidad;
-                                    }
-                                }
-                            }
-                        })
-                    }
-                }
-            })
-        } else {
-            // Do nothing!
-        }
-    })
+    });
 }
-
 //Edits user's IMEI
 function editar() {
     $('#editar').click(function () {
@@ -702,4 +566,421 @@ window.onload = function () {
         $('#editar').prop('disabled', false);
         $('#default').prop('disabled', false);
     }, 500);
+}
+
+function aviso() {
+    janelaPopUp.abre("asdf", 'p blue', '¡Atención!', '¿Está seguro que quiere borrar este subusuario?');
+}
+
+function aviso2() {
+    janelaPopUp.abre("asdf", 'p blue', '¡Atención!', '¿Está seguro que quiere borrar su IMEI?');
+}
+
+var janelaPopUp = new Object();
+janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, functionEnviar, textoCancelar, textoEnviar) {
+    var cancelar = (textoCancelar !== undefined) ? textoCancelar : 'Cancelar';
+    var enviar = (textoEnviar !== undefined) ? textoEnviar : 'Aceptar';
+    classes += ' ';
+    var classArray = classes.split(' ');
+    classes = '';
+    classesFundo = '';
+    var classBot = '';
+    $.each(classArray, function (index, value) {
+        switch (value) {
+            case 'blue': classesFundo += this + ' ';
+            default: classes += this + ' '; break;
+        }
+    });
+    var popFundo = '<div id="popFundo_' + id + '" class="popUpFundo ' + classesFundo + '"></div>'
+    var janela = '<div id="' + id + '" class="popUp ' + classes + '"><h1>' + titulo + "</h1><div><span>" + corpo + "</span></div><button class='puCancelar " + classBot + "' id='" + id + "_cancelar' data-parent=" + id + ">" + cancelar + "</button><button class='puEnviar " + classBot + "' data-parent=" + id + " id='" + id + "_enviar'>" + enviar + "</button></div>";
+    $("window, body").css('overflow', 'hidden');
+
+    $("body").append(popFundo);
+    $("body").append(janela);
+    $("body").append(popFundo);
+    //alert(janela);
+    $("#popFundo_" + id).fadeIn("fast");
+    $("#" + id).addClass("popUpEntrada");
+
+    $("#" + id + '_cancelar').on("click", function () {
+        on = 0;
+        on2 = 0;
+        if ((functionCancelar !== undefined) && (functionCancelar !== '')) {
+            janelaPopUp.fecha(id);
+        } else {
+            janelaPopUp.fecha(id);
+        }
+    });
+
+    $("#" + id + '_enviar').on("click", function () {
+        on2 = 2;
+        if ((functionEnviar !== undefined) && (functionEnviar !== '')) {
+            if (on === 2) {
+                rotacion4R();
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                subusuario = $('#' + elegido + '.sub').text();
+                var data = {
+                    usuario: document.getElementById("name").textContent,
+                    sub: subusuario
+                }
+                $.ajax({
+                    url: '/delete',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Error') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El subusuario no existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("Subusuario eliminado");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('.member').val("");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                            var reload = {
+                                usuario: document.getElementById("name").textContent
+                            }
+                            $.ajax({
+                                url: '/reload',
+                                type: "POST",
+                                dataType: "json",
+                                data: reload,
+                                success: function (data) {
+                                    if (data.msg === 'Error') {
+                                        $('.INFO').show();
+                                        $('.INFO').text("El usuario no existe");
+                                        $('.INFO').css("color", "red");
+                                        $('.INFO').css("font-weight", "Bold");
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        setTimeout(function () {
+                                            $('.INFO').text("");
+                                        }, 10000);
+                                    } else if (data.msg === 'Hecho') {
+                                        $('.contenedor2').css("display", "none");
+                                        $('.member').text("");
+                                        $('#agregar').show();
+                                        $('.contenedor3').remove();
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        if (data.existe === true) {
+                                            document.querySelector(".subusuarios").innerHTML += data.contenido;
+                                            $('.contenedor3').show();
+                                            guardasub = data.cantidad;
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+            } else if (on2 === 2) {
+                rotacion5R();
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                var data = {
+                    usuario: document.getElementById("name").textContent
+                };
+                $.ajax({
+                    url: '/deleteAdmin',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("Se ha borrado su IMEI");
+                            $('.INFO').css("color", "#49ff00");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('.contenedorAdmin .IMEI').text("IMEI: Desactivado");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                        } else if (data.msg === 'Ya borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El IMEI ya fue borrado anteriormente");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            setTimeout(function () {
+                                $('#agregar').prop('disabled', false);
+                                $('#agregar').css("background", "#FF851B");
+                                $('#editar').prop('disabled', false);
+                                $('#editar').css("background", "#FF851B");
+                                $('#default').prop('disabled', false);
+                                $('#default').css("background", "#FF851B");
+                            }, 2000);
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Error') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El usuario no existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        }
+                    }
+                })
+            } else {
+                on = 0;
+                on2 = 0;
+            }
+            janelaPopUp.fecha(id);
+        } else {
+            if (on === 2) {
+                rotacion4R();
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                subusuario = $('#' + elegido + '.sub').text();
+                var data = {
+                    usuario: document.getElementById("name").textContent,
+                    sub: subusuario
+                }
+                $.ajax({
+                    url: '/delete',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Error') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El subusuario no existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("Subusuario eliminado");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('.member').val("");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                            var reload = {
+                                usuario: document.getElementById("name").textContent
+                            }
+                            $.ajax({
+                                url: '/reload',
+                                type: "POST",
+                                dataType: "json",
+                                data: reload,
+                                success: function (data) {
+                                    if (data.msg === 'Error') {
+                                        $('.INFO').show();
+                                        $('.INFO').text("El usuario no existe");
+                                        $('.INFO').css("color", "red");
+                                        $('.INFO').css("font-weight", "Bold");
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        setTimeout(function () {
+                                            $('.INFO').text("");
+                                        }, 10000);
+                                    } else if (data.msg === 'Hecho') {
+                                        $('.contenedor2').css("display", "none");
+                                        $('.member').text("");
+                                        $('#agregar').show();
+                                        $('.contenedor3').remove();
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        if (data.existe === true) {
+                                            document.querySelector(".subusuarios").innerHTML += data.contenido;
+                                            $('.contenedor3').show();
+                                            guardasub = data.cantidad;
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+            } else if (on2 === 2) {
+                rotacion5R();
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                var data = {
+                    usuario: document.getElementById("name").textContent
+                };
+                $.ajax({
+                    url: '/deleteAdmin',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("Se ha borrado su IMEI");
+                            $('.INFO').css("color", "#49ff00");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('.contenedorAdmin .IMEI').text("IMEI: Desactivado");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                        } else if (data.msg === 'Ya borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El IMEI ya fue borrado anteriormente");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            setTimeout(function () {
+                                $('#agregar').prop('disabled', false);
+                                $('#agregar').css("background", "#FF851B");
+                                $('#editar').prop('disabled', false);
+                                $('#editar').css("background", "#FF851B");
+                                $('#default').prop('disabled', false);
+                                $('#default').css("background", "#FF851B");
+                            }, 2000);
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Error') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El usuario no existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        }
+                    }
+                })
+            } else {
+                on = 0;
+                on2 = 0;
+            }
+        }
+        janelaPopUp.fecha(id);
+    });
+}
+
+janelaPopUp.fecha = function (id) {
+    if (id !== undefined) {
+        $("#" + id).removeClass("popUpEntrada").addClass("popUpSaida");
+
+        $("#popFundo_" + id).fadeOut(1000, function () {
+            $("#popFundo_" + id).remove();
+            $("#" + $(this).attr("id") + ", #" + id).remove();
+            if (!($(".popUp")[0])) {
+                $("window, body").css('overflow', 'auto');
+            }
+        });
+
+
+    }
+    else {
+        $(".popUp").removeClass("popUpEntrada").addClass("popUpSaida");
+
+        $(".popUpFundo").fadeOut(1000, function () {
+            $(".popUpFundo").remove();
+            $(".popUp").remove();
+            $("window, body").css('overflow', 'auto');
+        });
+    }
 }

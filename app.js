@@ -145,9 +145,9 @@ app.post('/subuser', function (req, res) {
 				res.end(JSON.stringify(reply));
 			} else {
 				usuario.set({
-						Nombre_de_Subusuario: subusuarioA,
-						IMEI: null
-					})
+					Nombre_de_Subusuario: subusuarioA,
+					IMEI: null
+				})
 					.then(function (docRef) {
 						reply = {
 							msg: 'Gracias'
@@ -298,12 +298,12 @@ app.post('/register', function (req, res) {
 						//if the email has never been used before, then it will create a new doc in the DB
 						if (repetido === false) {
 							usuario.set({
-									Nombre_de_Usuario: nombreR,
-									Email: emailR,
-									Contraseña: contraR,
-									Verificado: false,
-									IMEI: null
-								})
+								Nombre_de_Usuario: nombreR,
+								Email: emailR,
+								Contraseña: contraR,
+								Verificado: false,
+								IMEI: null
+							})
 								.then(function (docRef) {
 									var transporter = nodemailer.createTransport(({
 										service: 'gmail',

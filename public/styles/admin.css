@@ -14,6 +14,7 @@ body {
   background-color: rgba(200, 100, 0, .5);
   background-blend-mode: multiply;
   font-family: 'Source Sans Pro', sans-serif;
+  background-repeat: no-repeat;
 }
 
 #logo {
@@ -67,14 +68,12 @@ body {
   from {
     transform: perspective(130px) rotateX(-90deg);
   }
-
   to {
     transform: perspective(130px) rotateX(0deg);
   }
 }
 
-.contenedor2,
-.contenedor3 {
+.contenedor2, .contenedor3 {
   display: none;
   background-color: white;
   max-width: 1100px;
@@ -94,16 +93,13 @@ body {
   padding: 30px 0 30px 30px;
 }
 
-.contenedorAdmin .user,
-.contenedor3 .sub {
+.contenedorAdmin .user, .contenedor3 .sub {
   color: black;
   font-weight: bold;
   float: left;
 }
 
-.contenedor .button,
-.contenedor2 .buttons,
-.contenedor2 .error {
+.contenedor .button, .contenedor2 .buttons, .contenedor2 .error {
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -140,8 +136,7 @@ body {
   line-height: 34px;
 }
 
-.contenedor3 .eliminar,
-.contenedor3 .cambiar {
+.contenedor3 .eliminar, .contenedor3 .cambiar {
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -159,22 +154,15 @@ body {
   margin-top: -15px;
 }
 
-.contenedor2 .error,
-.contenedor3 .eliminar {
+.contenedor2 .error, .contenedor3 .eliminar {
   margin-right: 45px;
 }
 
-.contenedor .button:hover,
-.contenedor #default:hover,
-.contenedor2 .buttons:hover,
-.contenedor2 .error:hover,
-.contenedor3 .eliminar:hover,
-.contenedor3 .cambiar:hover {
+.contenedor .button:hover, .contenedor #default:hover, .contenedor2 .buttons:hover, .contenedor2 .error:hover, .contenedor3 .eliminar:hover, .contenedor3 .cambiar:hover {
   background: rgba(0, 117, 217, 0.7);
 }
 
-.button,
-.cambiar {
+.button, .cambiar {
   font-size: 19px;
   transform: rotateY(180deg);
   transform: rotateY(180deg);
@@ -216,8 +204,7 @@ body {
   margin-right: 40px
 }
 
-.nombre,
-#btn {
+.nombre, #btn {
   display: inline-block;
 }
 
@@ -259,4 +246,447 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic);
+@-webkit-keyframes popUpEntrada {
+  0% {
+    opacity: 0;
+    margin-top: -20%;
+  }
+  75% {
+    margin-top: 5%;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes popUpEntrada {
+  0% {
+    opacity: 0;
+    margin-top: -20%;
+  }
+  75% {
+    margin-top: 5%;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes popUpSaida {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+    margin-top: -20%;
+  }
+  100% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+}
+
+@keyframes popUpSaida {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+    margin-top: -20%;
+  }
+  100% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+}
+
+body, html, root, document {
+  display: block;
+  height: 500px;
+}
+
+.popUpFundo {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #4879c3;
+  opacity: 0.8;
+  z-index: 50;
+}
+
+.popUp {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: none;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  padding: 0;
+  font-size: 14px;
+  font-family: 'PT Sans', sans-serif;
+  color: #fff;
+  border-style: none;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.popUp button:focus {
+  outline-style: none;
+}
+
+.popUp>h1 {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: 0;
+  padding: 5px;
+  min-height: 40px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background-color: transparent;
+  border-style: none;
+  border-width: 5px;
+  border-color: black;
+}
+
+.vermelha>h1 {
+  border-color: #fa5032;
+}
+
+.verde>h1 {
+  border-color: #42ad4f;
+}
+
+.azul>h1 {
+  border-color: #659cff;
+}
+
+.popUp>div {
+  display: block;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  padding: 5%;
+  text-align: center;
+  vertical-align: middle;
+  border-width: 1px;
+  border-color: #ccc;
+  border-style: none none solid none;
+  overflow: auto;
+}
+
+.popUp>div>span {
+  display: table-cell;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.popUp>button {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: 0;
+  padding: 10px;
+  width: 50%;
+  border: 1px none #ccc;
+  color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.alert {
+  width: 100% !important;
+}
+
+.popUp .puCancelar {
+  float: right;
+}
+
+.popUp .puEnviar {
+  float: left;
+}
+
+.p {
+  margin: 0;
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+  max-height: 200px;
+  transform: translate(-50%, -50%);
+}
+
+.p>div {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  height: calc(100% -108px);
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+.p>div>div, .p span {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 300px;
+  height: 108px;
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+.p>button {
+  height: 50px;
+}
+
+.puEnviar {
+  margin: 5px 0;
+}
+
+.puCancelar {
+  margin: 5px 0;
+}
+
+.m {
+  margin: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  max-height: 300px;
+  transform: translate(-50%, -50%);
+}
+
+.m>div {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  height: calc(100% -108px);
+  margin: 0;
+  padding: 0;
+  border-style: none;
+  border-color: #ccc;
+}
+
+.m>div>div, .m>span, .m>div>span {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 400px;
+  height: 208px;
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+.m>button {
+  height: 50px;
+}
+
+.g {
+  margin: 0;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  max-height: 500px;
+  transform: translate(-50%, -50%);
+}
+
+.g>div {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  height: calc(100% -108px);
+  margin: 0;
+  padding: 0;
+  border-style: none;
+  border-color: #ccc;
+}
+
+.g>div>div, .g span {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 600px;
+  height: 408px;
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+.g>button {
+  height: 60px;
+}
+
+.alert.puEnviar {
+  display: none;
+}
+
+.popUpEntrada {
+  display: block !important;
+  animation: popUpEntrada 0.5s;
+  -webkit-animation: popUpEntrada 0.5s;
+}
+
+.popUpSaida {
+  display: block !important;
+  animation: popUpSaida 0.5s;
+  -webkit-animation: popUpSaida 0.5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.blue {
+  background-color: #51b2d6;
+}
+
+.blue>button {
+  background-color: #38a7d0;
+}
+
+.blue>button:hover {
+  background-color: #72c1de;
+}
+
+.popUpFundo.blue {
+  background-color: #134152;
+}
+
+.green {
+  background-color: #43b649;
+}
+
+.green>button {
+  background-color: #3da743;
+}
+
+.green>button:hover {
+  background-color: #4fbe55;
+}
+
+.popUpFundo.green {
+  background-color: #173f19;
+}
+
+.red {
+  background-color: #d55c4b;
+}
+
+.red>button {
+  background-color: #d04b38;
+}
+
+.red>button:hover {
+  background-color: #d86959;
+}
+
+.popUpFundo.red {
+  background-color: #4a1811;
+}
+
+.orange {
+  background-color: #f9a025;
+}
+
+.orange>button {
+  background-color: #f89710;
+}
+
+.orange>button:hover {
+  background-color: #f9ac42;
+}
+
+.popUpFundo.orange {
+  background-color: #8c5b02;
+}
+
+.purple {
+  background-color: #ab4bd5;
+}
+
+.purple>button {
+  background-color: #a238d0;
+}
+
+.purple>button:hover {
+  background-color: #b159d8;
+}
+
+.popUpFundo.purple {
+  background-color: #3f114a;
+}
+
+.white {
+  background-color: #fff;
+  color: #555;
+}
+
+.white>h1 {
+  color: #000;
+}
+
+.white>button {
+  background-color: #f3f3f3;
+  color: #555;
+}
+
+.white>button:hover {
+  background-color: #e3e3e3;
+}
+
+.popUpFundo.white {
+  background-color: #555;
+}
+
+/*
+That part is just for the form
+*/
+
+.colorfulForm {
+  width: 350px;
+  margin: 60px auto;
+}
+
+.colorfulForm input, .colorfulForm textarea, .colorfulForm select {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 350px;
+  padding: 5px;
+  background-color: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+.colorfulForm label {
+  display: block;
+  font-family: Verdana, Arial;
+  margin: 10px 0 5px 0;
+}
+
+.colorfulForm button {
+  width: 100px;
+  margin: 3px 7px;
+  padding: 5px;
+  color: #fff;
+  border-style: none;
 }
