@@ -35,6 +35,7 @@ $.ajax({
     data: data,
     success: function (data) {
         if (data.msg === 'No imei') {
+            $('.contenedorAdmin').css('display', 'block');
             $('.INFO').show();
             $('.INFO').text("No existe un IMEI vinculado a su cuenta, apoye su celular sobre la placa NFC y luego espere");
             $('.INFO').css("color", "red");
@@ -43,6 +44,8 @@ $.ajax({
             $('#agregar').css("background", "#cccccc");
             $('#default').prop('disabled', true);
             $('#default').css("background", "#cccccc");
+            $('#editar').prop('disabled', true);
+            $('#editar').css("background", "#cccccc");
             var info = {
                 usuario: document.getElementById("name").textContent
             }
@@ -90,6 +93,7 @@ $.ajax({
                 }
             })
         } else if (data.msg === 'Hay imei') {
+            $('.contenedorAdmin').css('display', 'block');
             $('.INFO').show();
             $('.INFO').text("Se encontro el IMEI vinculado a su cuenta");
             $('.INFO').css("color", "#49ff00");
@@ -97,8 +101,6 @@ $.ajax({
             setTimeout(function () {
                 $('.INFO').text("");
             }, 10000);
-            $('#default').prop('disabled', false);
-            $('#default').css("background", "#FF851B");
             //Shows IMEI
             $('.IMEI').text("IMEI: " + data.imei);
             if (data.existe === true) {
@@ -130,6 +132,10 @@ function agre() {
             agreg = true;
             $('#agregar').prop('disabled', true);
             $('#agregar').css("background", "#cccccc");
+            $('#default').prop('disabled', true);
+            $('#default').css("background", "#cccccc");
+            $('#editar').prop('disabled', true);
+            $('#editar').css("background", "#cccccc");
             nuevo();
             borrar();
         } else {
@@ -147,6 +153,8 @@ function nuevo() {
         if ($('.member').val().length > 0) {
             $('.buttons').prop('disabled', true);
             $('.buttons').css("background", "#cccccc");
+            $('.error').prop('disabled', true);
+            $('.error').css("background", "#cccccc");
             var data = {
                 usuario: document.getElementById("name").textContent,
                 subusuario: $('.member').val()
@@ -161,6 +169,8 @@ function nuevo() {
                         setTimeout(function () {
                             $('.buttons').prop('disabled', false);
                             $('.buttons').css("background", "#FF851B");
+                            $('.error').prop('disabled', false);
+                            $('.error').css("background", "#FF851B");
                         }, 500);
                         $('.INFO').show();
                         $('.INFO').text("El subusuario ya existe");
@@ -233,16 +243,27 @@ function borrar() {
         setTimeout(function () {
             $('#agregar').prop('disabled', false);
             $('#agregar').css("background", "#FF851B");
+            $('#editar').prop('disabled', false);
+            $('#editar').css("background", "#FF851B");
+            $('#default').prop('disabled', false);
+            $('#default').css("background", "#FF851B");
         }, 2500);
         rotacion3R();
     });
 }
 
 //Declares user's IMEI non-existent
-function eliminarAdmin(){
-    $('#default').click(function(){
+function eliminarAdmin() {
+    $('#default').click(function () {
         console.log("Editar IMEI");
         if (confirm('¿Está seguro que quiere borrar su IMEI?')) {
+            rotacion5R();
+            $('#agregar').prop('disabled', true);
+            $('#agregar').css("background", "#cccccc");
+            $('#editar').prop('disabled', true);
+            $('#editar').css("background", "#cccccc");
+            $('#default').prop('disabled', true);
+            $('#default').css("background", "#cccccc");
             var data = {
                 usuario: document.getElementById("name").textContent
             };
@@ -252,27 +273,45 @@ function eliminarAdmin(){
                 dataType: "json",
                 data: data,
                 success: function (data) {
-                    if (data.msg === 'Borrado'){
+                    if (data.msg === 'Borrado') {
                         $('.INFO').show();
                         $('.INFO').text("Se ha borrado su IMEI");
                         $('.INFO').css("color", "#49ff00");
                         $('.INFO').css("font-weight", "Bold");
-                        $('.IMEI').text("IMEI: Sin IMEI");
-                    }
-                    else if (data.msg === 'Ya borrado'){
+                        $('.contenedorAdmin .IMEI').text("IMEI: Desactivado");
+                        $('#agregar').prop('disabled', false);
+                        $('#agregar').css("background", "#FF851B");
+                        $('#editar').prop('disabled', false);
+                        $('#editar').css("background", "#FF851B");
+                        $('#default').prop('disabled', false);
+                        $('#default').css("background", "#FF851B");
+                    } else if (data.msg === 'Ya borrado') {
                         $('.INFO').show();
                         $('.INFO').text("El IMEI ya fue borrado anteriormente");
                         $('.INFO').css("color", "red");
                         $('.INFO').css("font-weight", "Bold");
                         setTimeout(function () {
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                        }, 2000);
+                        setTimeout(function () {
                             $('.INFO').text("");
                         }, 10000);
-                    }
-                    else if (data.msg === 'Error'){
+                    } else if (data.msg === 'Error') {
                         $('.INFO').show();
                         $('.INFO').text("El usuario no existe");
                         $('.INFO').css("color", "red");
                         $('.INFO').css("font-weight", "Bold");
+                        $('#agregar').prop('disabled', false);
+                        $('#agregar').css("background", "#FF851B");
+                        $('#editar').prop('disabled', false);
+                        $('#editar').css("background", "#FF851B");
+                        $('#default').prop('disabled', false);
+                        $('#default').css("background", "#FF851B");
                         setTimeout(function () {
                             $('.INFO').text("");
                         }, 10000);
@@ -292,6 +331,10 @@ function eliminar() {
         setTimeout(function () {
             $('#agregar').prop('disabled', false);
             $('#agregar').css("background", "#FF851B");
+            $('#editar').prop('disabled', false);
+            $('#editar').css("background", "#FF851B");
+            $('#default').prop('disabled', false);
+            $('#default').css("background", "#FF851B");
             agreg = false;
         }, 1500);
         elegido = $(this).attr('id');
@@ -299,6 +342,10 @@ function eliminar() {
             rotacion4R();
             $('#agregar').prop('disabled', true);
             $('#agregar').css("background", "#cccccc");
+            $('#editar').prop('disabled', true);
+            $('#editar').css("background", "#cccccc");
+            $('#default').prop('disabled', true);
+            $('#default').css("background", "#cccccc");
             subusuario = $('#' + elegido + '.sub').text();
             var data = {
                 usuario: document.getElementById("name").textContent,
@@ -369,6 +416,16 @@ function eliminar() {
 //Edits user's IMEI
 function editar() {
     $('#editar').click(function () {
+        $('#agregar').prop('disabled', true);
+        $('#agregar').css("background", "#cccccc");
+        $('#editar').prop('disabled', true);
+        $('#editar').css("background", "#cccccc");
+        $('#default').prop('disabled', true);
+        $('#default').css("background", "#cccccc");
+        $('.eliminar').prop('disabled', true);
+        $('.eliminar').css("background", "#cccccc");
+        $('.cambiar').prop('disabled', true);
+        $('.cambiar').css("background", "#cccccc");
         var data = {
             usuario: document.getElementById("name").textContent
         }
@@ -379,6 +436,16 @@ function editar() {
             data: data,
             success: function (data) {
                 if (data.msg === 'Error') {
+                    $('#agregar').prop('disabled', false);
+                    $('#agregar').css("background", "#FF851B");
+                    $('#editar').prop('disabled', false);
+                    $('#editar').css("background", "#FF851B");
+                    $('#default').prop('disabled', false);
+                    $('#default').css("background", "#FF851B");
+                    $('.eliminar').prop('disabled', false);
+                    $('.eliminar').css("background", "#FF851B");
+                    $('.cambiar').prop('disabled', false);
+                    $('.cambiar').css("background", "#FF851B");
                     $('.INFO').show();
                     $('.INFO').text("No existe el usuario");
                     $('.INFO').css("color", "red");
@@ -402,6 +469,16 @@ function editar() {
                         timeout: 120000,
                         success: function (data) {
                             if (data.msg === 'IMEI Actualizada') {
+                                $('#agregar').prop('disabled', false);
+                                $('#agregar').css("background", "#FF851B");
+                                $('#editar').prop('disabled', false);
+                                $('#editar').css("background", "#FF851B");
+                                $('#default').prop('disabled', false);
+                                $('#default').css("background", "#FF851B");
+                                $('.eliminar').prop('disabled', false);
+                                $('.eliminar').css("background", "#FF851B");
+                                $('.cambiar').prop('disabled', false);
+                                $('.cambiar').css("background", "#FF851B");
                                 $('.INFO').show();
                                 $('.INFO').text("Se ha actualizado su cuenta");
                                 $('.INFO').css("color", "#49ff00");
@@ -410,6 +487,16 @@ function editar() {
                                     document.location.reload(true);
                                 }, 2000);
                             } else if (data.msg === 'Error') {
+                                $('#agregar').prop('disabled', false);
+                                $('#agregar').css("background", "#FF851B");
+                                $('#editar').prop('disabled', false);
+                                $('#editar').css("background", "#FF851B");
+                                $('#default').prop('disabled', false);
+                                $('#default').css("background", "#FF851B");
+                                $('.eliminar').prop('disabled', false);
+                                $('.eliminar').css("background", "#FF851B");
+                                $('.cambiar').prop('disabled', false);
+                                $('.cambiar').css("background", "#FF851B");
                                 $('.INFO').show();
                                 $('.INFO').text("Ha ocurrido un error con el protocolo");
                                 $('.INFO').css("color", "red");
@@ -420,6 +507,16 @@ function editar() {
                             }
                         },
                         error: function (err) {
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            $('.eliminar').prop('disabled', false);
+                            $('.eliminar').css("background", "#FF851B");
+                            $('.cambiar').prop('disabled', false);
+                            $('.cambiar').css("background", "#FF851B");
                             $('.INFO').show();
                             $('.INFO').text("Tiempo de espera agotado");
                             $('.INFO').css("color", "red");
@@ -528,9 +625,15 @@ function reactive() {
     setTimeout(function () {
         $('#agregar').prop('disabled', false);
         $('#agregar').css("background", "#FF851B");
+        $('#editar').prop('disabled', false);
+        $('#editar').css("background", "#FF851B");
+        $('#default').prop('disabled', false);
+        $('#default').css("background", "#FF851B");
     }, 1500);
     $('.buttons').prop('disabled', false);
     $('.buttons').css("background", "#FF851B");
+    $('.error').prop('disabled', false);
+    $('.error').css("background", "#FF851B");
 }
 
 function rotacion2() {
@@ -568,6 +671,25 @@ function rotacion4R() {
     })
 }
 
+function rotacion5() {
+    $(".contenedorAdmin").css("transform", "perspective(130px) rotateX(0deg)");
+    $(".contenedor2").css("transform", "perspective(130px) rotateX(0deg)");
+    $(".contenedor3").each(function () {
+        $(this).css("transform", "perspective(130px) rotateX(0deg)");
+    })
+}
+
+function rotacion5R() {
+    $(".contenedorAdmin").css("transform", "perspective(130px) rotateX(-90deg)");
+    $(".contenedor2").css("transform", "perspective(130px) rotateX(-90deg)");
+    $(".contenedor3").each(function () {
+        $(this).css("transform", "perspective(130px) rotateX(-90deg)");
+    })
+    setTimeout(function () {
+        rotacion5();
+    }, 1500);
+}
+
 function sacar() {
     setTimeout(function () {
         $('.contenedor2').css("display", "none");
@@ -578,5 +700,6 @@ window.onload = function () {
     setTimeout(function () {
         $('#agregar').prop('disabled', false);
         $('#editar').prop('disabled', false);
+        $('#default').prop('disabled', false);
     }, 500);
 }

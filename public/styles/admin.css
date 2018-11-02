@@ -52,6 +52,10 @@ body {
   margin: -20px auto;
   margin-bottom: 40px;
   text-align: center;
+  transform-origin: top center;
+  transition-duration: .5s;
+  animation: rotation ease .5s;
+  display: none;
 }
 
 .contenedor3 .IMEI {
@@ -122,8 +126,8 @@ body {
   background: #FF851B;
   color: #FFF;
   border: none;
-  padding: 5px;
-  font-size: 30px;
+  padding: 8px;
+  font-size: 26px;
   font-weight: bold;
   font-family: 'Source Sans Pro', sans-serif;
   letter-spacing: 1px;
@@ -133,6 +137,7 @@ body {
   margin-right: 17px;
   width: 50px;
   margin-top: -5px;
+  line-height: 34px;
 }
 
 .contenedor3 .eliminar,
@@ -182,10 +187,19 @@ body {
   padding: 0px;
 }
 
+#editar {
+  font-size: 19px;
+}
+
 #admin {
   color: gray;
   font-style: italic;
   float: left;
+}
+
+#agregar {
+  padding: 9px;
+  font-size: 25px;
 }
 
 #users {

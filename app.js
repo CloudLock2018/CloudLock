@@ -206,29 +206,27 @@ app.post('/reload', function (req, res) {
 var usuarioDA;
 
 //Receive info from client (Admin - Delete user's IMEI)
-app.post('/deleteAdmin', function(req, res){
+app.post('/deleteAdmin', function (req, res) {
 	usuarioDA = req.body.usuario;
 	var usuario = db.collection("Users").doc(usuarioDA);
 	usuario.get()
 		.then(doc => {
-			if (doc.exists){
-				if (doc.data().IMEI === "Sin IMEI"){
+			if (doc.exists) {
+				if (doc.data().IMEI === "Desactivado") {
 					reply = {
 						msg: 'Ya borrado'
 					};
 					res.end(JSON.stringify(reply));
-				}
-				else {
+				} else {
 					usuario.update({
-						IMEI: "Sin IMEI"
+						IMEI: "Desactivado"
 					});
 					reply = {
 						msg: 'Borrado'
 					};
 					res.end(JSON.stringify(reply));
 				}
-			}
-			else {
+			} else {
 				reply = {
 					msg: 'Error'
 				};
@@ -629,7 +627,7 @@ client.on('message', function (topic, message) {
 	}
 	if (topic === IMEI) {
 		if (verificar === true) {
-			if (message.toString() === '0' || message.toString() === 'Sin IMEI') {
+			if (message.toString() === '0' || message.toString() === 'Desactivado') {
 
 			} else {
 				IMEIingresado = message.toString();
