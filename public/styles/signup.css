@@ -299,6 +299,38 @@ body {
   .contenedor-registrarse {
     position: static;
     margin: 0;
+    max-width: 60%;
+  }
+
+  #nombre,
+  #mail,
+  #contra,
+  #repcontra {
+    font-size: 0.8em;
+  }
+
+  #MainText {
+    font-size: 1.8em;
+  }
+
+  .formulario {
+    font-size: 1.6em;
+  }
+
+  .checkmark {
+    margin-top: 0.3em;
+  }
+
+  #entrar {
+    font-size: 1.1em;
+  }
+
+  #reset {
+    font-size: 1.5em;
+  }
+
+  .show-password {
+    font-size: 1em;
   }
 
   .contenedor-centro {
