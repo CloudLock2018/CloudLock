@@ -8,6 +8,9 @@ var subusuario;
 var on = 0;
 var on2 = 0;
 
+window.setInterval(orden, 100);
+window.setInterval(orden2, 100);
+
 //Gets the username saved in the cookie 
 function leerCookie(nombre) {
     var lista = document.cookie.split(";");
@@ -129,6 +132,8 @@ function agre() {
                 $('.contenedor2').show();
                 rotacion2();
             }, 1000);
+            setTimeout(function () {
+            }, 500);
             rotacion2R();
             agreg = true;
             $('#agregar').prop('disabled', true);
@@ -558,6 +563,22 @@ function sacar() {
     setTimeout(function () {
         $('.contenedor2').css("display", "none");
     }, 500);
+}
+
+function orden() {
+    $('span').each(function () {
+        if ($(this).text() == 'IMEI: null') {
+            $(this).css('margin-right', '384px');
+        }
+    });
+}
+
+function orden2() {
+    $('span').each(function () {
+        if ($(this).text() == 'IMEI: Desactivado') {
+            $(this).css('margin-right', '459px');
+        }
+    });
 }
 
 window.onload = function () {

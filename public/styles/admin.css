@@ -7,14 +7,16 @@
 }
 
 body {
-  background: url(../images/Fondo.jpg);
+  background: url(../images/Fondo.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
   background-color: rgba(200, 100, 0, .5);
   background-blend-mode: multiply;
   font-family: 'Source Sans Pro', sans-serif;
-  background-repeat: no-repeat;
 }
 
 #logo {
@@ -52,15 +54,19 @@ body {
   padding: 30px;
   margin: -20px auto;
   margin-bottom: 40px;
-  text-align: center;
+  text-align: right;
   transform-origin: top center;
   transition-duration: .5s;
   animation: rotation ease .5s;
   display: none;
 }
 
+.contenedorAdmin .IMEI {
+  margin-right: 422px;
+}
+
 .contenedor3 .IMEI {
-  margin-left: 30px;
+  margin-right: 290px;
   color: black;
 }
 
@@ -83,7 +89,7 @@ body {
   padding: 30px 0 70px;
   margin: -20px auto;
   margin-bottom: 40px;
-  text-align: center;
+  text-align: right;
   transform-origin: top center;
   transition-duration: .5s;
   animation: rotation ease .5s;
@@ -305,7 +311,6 @@ body {
 
 body, html, root, document {
   display: block;
-  height: 500px;
 }
 
 .popUpFundo {
@@ -429,6 +434,7 @@ body, html, root, document {
   height: 100%;
   max-height: 200px;
   transform: translate(-50%, -50%);
+  border-radius: 10px;
 }
 
 .p>div {
@@ -454,7 +460,7 @@ body, html, root, document {
 }
 
 .p>button {
-  height: 50px;
+  height: 52px;
 }
 
 .puEnviar {
@@ -689,4 +695,11 @@ That part is just for the form
   padding: 5px;
   color: #fff;
   border-style: none;
+}
+
+@media screen and (max-width: 875px) {
+  #limit {
+    width: 875px;
+    margin: auto;
+  }
 }

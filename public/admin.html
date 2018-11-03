@@ -10,29 +10,30 @@
 </head>
 
 <body>
-	<div class="contenedor">
-		<a href="index.html"><img align="left" id="logo" src="./images/Icono.png" alt="Logo"></a>
-		<span id="icon-text"><a href="index.html">CloudLock</a></span>
-		<span class="INFO">&nbsp;</span>
-		<button class="button" id="editar" title="Editar IMEI" disabled>✎</button>
-		<button class="button" id="agregar" title="Agregar Subusuario" disabled>+</button>
-		<button class="button" id="default" title="Eliminar IMEI" disabled>&#9888;</button>
-	</div>
+	<div id="limit">
+		<div class="contenedor">
+			<a href="index.html"><img align="left" id="logo" src="./images/Icono.png" alt="Logo"></a>
+			<span id="icon-text"><a href="index.html">CloudLock</a></span>
+			<span class="INFO">&nbsp;</span>
+			<button class="button" id="editar" title="Editar IMEI" disabled>✎</button>
+			<button class="button" id="agregar" title="Agregar Subusuario" disabled>+</button>
+			<button class="button" id="default" title="Eliminar IMEI" disabled>&#9888;</button>
+		</div>
 
-	<div class="contenedorAdmin">
-		<span class="user" id="name">Usuario</span>
-		<span id="admin">&nbsp; (Administrador)</span>
-		<span class="IMEI">IMEI</span>
-	</div>
+		<div class="contenedorAdmin">
+			<span class="user" id="name">Usuario</span>
+			<span id="admin">&nbsp; (Administrador)</span>
+			<span class="IMEI">IMEI</span>
+		</div>
 
-	<div class="subusuarios">
-		<div class='contenedor2' id="0">
-			<input class='member' type='text' placeholder='Usuario'>
-			<input class='error' type='button' title="Borrar Subusuario" value='✖'>
-			<input class='buttons' type='button' title="Guardar Subusuario" value='✔'>
+		<div class="subusuarios">
+			<div class='contenedor2' id="0">
+				<input class='member' type='text' placeholder='Usuario'>
+				<input class='error' type='button' title="Borrar Subusuario" value='✖'>
+				<input class='buttons' type='button' title="Guardar Subusuario" value='✔'>
+			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="./scripts/admin.js"></script>
 </body>
