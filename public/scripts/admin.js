@@ -157,76 +157,88 @@ function agre() {
 function nuevo() {
     $('.buttons').click(function () {
         if ($('.member').val().length > 0) {
-            $('.buttons').prop('disabled', true);
-            $('.buttons').css("background", "#cccccc");
-            $('.error').prop('disabled', true);
-            $('.error').css("background", "#cccccc");
-            var data = {
-                usuario: document.getElementById("name").textContent,
-                subusuario: $('.member').val()
-            }
-            $.ajax({
-                url: '/subuser',
-                type: "POST",
-                dataType: "json",
-                data: data,
-                success: function (data) {
-                    if (data.msg === 'Error') {
-                        setTimeout(function () {
-                            $('.buttons').prop('disabled', false);
-                            $('.buttons').css("background", "#FF851B");
-                            $('.error').prop('disabled', false);
-                            $('.error').css("background", "#FF851B");
-                        }, 500);
-                        $('.INFO').show();
-                        $('.INFO').text("El subusuario ya existe");
-                        $('.INFO').css("color", "red");
-                        $('.INFO').css("font-weight", "Bold");
-                        setTimeout(function () {
-                            $('.INFO').text("");
-                        }, 10000);
-                    } else if (data.msg === 'Gracias') {
-                        rotacion2R();
-                        reactive();
-                        $('.INFO').show();
-                        $('.INFO').text("Subusuario agregado");
-                        $('.INFO').css("color", "#49ff00");
-                        $('.INFO').css("font-weight", "Bold")
-                        setTimeout(function () {
-                            $('.INFO').text("");
-                        }, 10000);;
-                        var reload = {
-                            usuario: document.getElementById("name").textContent
-                        }
-                        $.ajax({
-                            url: '/reload',
-                            type: "POST",
-                            dataType: "json",
-                            data: reload,
-                            success: function (data) {
-                                if (data.msg === 'Error') {
-                                    $('.INFO').show();
-                                    $('.INFO').text("El usuario no existe");
-                                    $('.INFO').css("color", "red");
-                                    $('.INFO').css("font-weight", "Bold");
-                                } else if (data.msg === 'Hecho') {
-                                    active = true;
-                                    $('.contenedor2').css("display", "none");
-                                    $('.member').text("");
-                                    $('#agregar').show();
-                                    $('.contenedor3').remove();
-                                    if (data.existe === true) {
-                                        document.querySelector(".subusuarios").innerHTML += data.contenido;
-                                        $('.contenedor3').show();
-                                        guardasub = data.cantidad;
+            if ($('.member').val().length <= 25) {
+                $('.buttons').prop('disabled', true);
+                $('.buttons').css("background", "#cccccc");
+                $('.error').prop('disabled', true);
+                $('.error').css("background", "#cccccc");
+                var data = {
+                    usuario: document.getElementById("name").textContent,
+                    subusuario: $('.member').val()
+                }
+                $.ajax({
+                    url: '/subuser',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Error') {
+                            setTimeout(function () {
+                                $('.buttons').prop('disabled', false);
+                                $('.buttons').css("background", "#FF851B");
+                                $('.error').prop('disabled', false);
+                                $('.error').css("background", "#FF851B");
+                            }, 500);
+                            $('.INFO').show();
+                            $('.INFO').text("El subusuario ya existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Gracias') {
+                            rotacion2R();
+                            reactive();
+                            $('.INFO').show();
+                            $('.INFO').text("Subusuario agregado");
+                            $('.INFO').css("color", "#49ff00");
+                            $('.INFO').css("font-weight", "Bold")
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                            var reload = {
+                                usuario: document.getElementById("name").textContent
+                            }
+                            $.ajax({
+                                url: '/reload',
+                                type: "POST",
+                                dataType: "json",
+                                data: reload,
+                                success: function (data) {
+                                    if (data.msg === 'Error') {
+                                        $('.INFO').show();
+                                        $('.INFO').text("El usuario no existe");
+                                        $('.INFO').css("color", "red");
+                                        $('.INFO').css("font-weight", "Bold");
+                                    } else if (data.msg === 'Hecho') {
+                                        active = true;
+                                        $('.contenedor2').css("display", "none");
+                                        $('.member').text("");
+                                        $('#agregar').show();
+                                        $('.contenedor3').remove();
+                                        if (data.existe === true) {
+                                            document.querySelector(".subusuarios").innerHTML += data.contenido;
+                                            $('.contenedor3').show();
+                                            guardasub = data.cantidad;
+                                        }
                                     }
                                 }
-                            }
-                        })
+                            })
+                        }
                     }
-                }
-            })
-            agreg = false;
+                })
+                agreg = false;
+            }
+            else {
+                $('.INFO').show();
+                $('.INFO').text("Nombre demasiado largo (Máximo: 25 caracteres)");
+                $('.INFO').css("color", "red");
+                $('.INFO').css("font-weight", "Bold");
+                setTimeout(function () {
+                    $('.INFO').text("");
+                }, 10000);
+                agreg = true;
+            }
         } else {
             $('.INFO').show();
             $('.INFO').text("Agregue un nombre");

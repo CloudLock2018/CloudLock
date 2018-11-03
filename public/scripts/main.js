@@ -46,9 +46,9 @@ $('#form').submit(function () {
 				$('#btn').removeClass("pressed");
 				$('#btn').attr('value', 'Entrar');
 			} else if (data.msg === 'Usuario Encontrado') {
-				$('#correcto').show();
-				correcto.innerHTML = "Usuario Encontrado";
-				correcto.className = "correcto active";
+				// $('#correcto').show();
+				// correcto.innerHTML = "Usuario Encontrado";
+				// correcto.className = "correcto active";
 				$('#btn').removeClass("pressed");
 				$('#btn').attr('value', 'Entrar');
 				var date = new Date();
