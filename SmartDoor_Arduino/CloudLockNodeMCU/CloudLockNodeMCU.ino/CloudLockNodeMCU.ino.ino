@@ -62,13 +62,9 @@ int ledB = 0;
 int ledG = 2;
 bool sentImei = false;
 unsigned long entry;
-<<<<<<< HEAD
 
 =======
->>>>>>> 62d99dbeac5e8a915511ada95d04f1bdc53966bf
 WiFiManager wifiManager;
-
-void MQTT_connect();
 
 void setup() {
   Serial.begin(9600);
@@ -98,7 +94,7 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println();
+  
   wifiConnectLed();
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
@@ -107,7 +103,6 @@ void setup() {
   // Setup MQTT subscription for feeds.
   mqtt.subscribe(&doorState);
   mqtt.subscribe(&imeiStatus);
-
 }
 
 void loop() {
@@ -275,4 +270,3 @@ void wifiConnectLed () {
   digitalWrite(ledB, LOW);
   digitalWrite(ledG, LOW);
 }
-
