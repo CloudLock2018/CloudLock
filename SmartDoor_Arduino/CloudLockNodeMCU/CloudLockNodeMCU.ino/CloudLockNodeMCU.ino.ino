@@ -63,7 +63,6 @@ int ledG = 2;
 bool sentImei = false;
 unsigned long entry;
 
-=======
 WiFiManager wifiManager;
 
 void setup() {
