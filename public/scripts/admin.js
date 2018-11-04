@@ -2,6 +2,7 @@ console.log("Corriendo Administrador");
 
 var misCookies = document.cookie;
 var elegido;
+var existente = true;
 var agreg = false;
 var guardasub = 0;
 var subusuario;
@@ -44,6 +45,7 @@ $.ajax({
             $('.INFO').text("No existe un IMEI vinculado a su cuenta, apoye su celular sobre la placa NFC y luego espere");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
+            existente = false;
             $('#agregar').prop('disabled', true);
             $('#agregar').css("background", "#cccccc");
             $('#default').prop('disabled', true);
@@ -126,27 +128,35 @@ editarSub();
 //Creates new subusers
 function agre() {
     $('#agregar').click(function () {
-        if (agreg === false) {
-            //Adds new textbox and buttons to the set or delete new subuser
-            setTimeout(function () {
-                $('.contenedor2').show();
-                rotacion2();
-            }, 1000);
-            setTimeout(function () {
-            }, 500);
-            rotacion2R();
-            agreg = true;
-            $('#agregar').prop('disabled', true);
-            $('#agregar').css("background", "#cccccc");
-            $('#default').prop('disabled', true);
-            $('#default').css("background", "#cccccc");
-            $('#editar').prop('disabled', true);
-            $('#editar').css("background", "#cccccc");
-            nuevo();
-            borrar();
-        } else {
+        if (existente === true){
+            if (agreg === false) {
+                //Adds new textbox and buttons to the set or delete new subuser
+                setTimeout(function () {
+                    $('.contenedor2').show();
+                    rotacion2();
+                }, 1000);
+                setTimeout(function () {
+                }, 500);
+                rotacion2R();
+                agreg = true;
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                nuevo();
+                borrar();
+            } else {
+                $('.INFO').show();
+                $('.INFO').text("Agregue un nombre");
+                $('.INFO').css("color", "red");
+                $('.INFO').css("font-weight", "Bold");
+            }
+        }
+        else {
             $('.INFO').show();
-            $('.INFO').text("Agregue un nombre");
+            $('.INFO').text("No se puede agregar un subusuario si no tiene un IMEI asignado");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
         }
@@ -273,8 +283,16 @@ function borrar() {
 //Declares user's IMEI non-existent
 function eliminarAdmin() {
     $('#default').click(function () {
-        aviso2();
-        on2 = 2;
+        if (existente === true){
+            aviso2();
+            on2 = 2;
+        }
+        else {
+            $('.INFO').show();
+            $('.INFO').text("No se puede desactivar su IMEI si no tiene uno asignado");
+            $('.INFO').css("color", "red");
+            $('.INFO').css("font-weight", "Bold");
+        }
     });
 }
 //Deletes subuser selected from the database
@@ -297,59 +315,98 @@ function eliminar() {
 //Edits user's IMEI
 function editar() {
     $('#editar').click(function () {
-        $('#agregar').prop('disabled', true);
-        $('#agregar').css("background", "#cccccc");
-        $('#editar').prop('disabled', true);
-        $('#editar').css("background", "#cccccc");
-        $('#default').prop('disabled', true);
-        $('#default').css("background", "#cccccc");
-        $('.eliminar').prop('disabled', true);
-        $('.eliminar').css("background", "#cccccc");
-        $('.cambiar').prop('disabled', true);
-        $('.cambiar').css("background", "#cccccc");
-        var data = {
-            usuario: document.getElementById("name").textContent
-        }
-        $.ajax({
-            url: '/editAdmin',
-            type: "POST",
-            dataType: "json",
-            data: data,
-            success: function (data) {
-                if (data.msg === 'Error') {
-                    $('#agregar').prop('disabled', false);
-                    $('#agregar').css("background", "#FF851B");
-                    $('#editar').prop('disabled', false);
-                    $('#editar').css("background", "#FF851B");
-                    $('#default').prop('disabled', false);
-                    $('#default').css("background", "#FF851B");
-                    $('.eliminar').prop('disabled', false);
-                    $('.eliminar').css("background", "#FF851B");
-                    $('.cambiar').prop('disabled', false);
-                    $('.cambiar').css("background", "#FF851B");
-                    $('.INFO').show();
-                    $('.INFO').text("No existe el usuario");
-                    $('.INFO').css("color", "red");
-                    $('.INFO').css("font-weight", "Bold");
-                    setTimeout(function () {
-                        $('.INFO').text("");
-                    }, 10000);
-                } else if (data.msg === 'Editar') {
-                    $('.INFO').show();
-                    $('.INFO').text("Apoye su celular sobre la placa NFC y luego espere");
-                    $('.INFO').css("color", "#49ff00");
-                    $('.INFO').css("font-weight", "Bold");
-                    var info = {
-                        usuario: document.getElementById("name").textContent
-                    }
-                    $.ajax({
-                        url: '/imeiAdmin',
-                        type: "POST",
-                        dataType: "json",
-                        data: info,
-                        timeout: 120000,
-                        success: function (data) {
-                            if (data.msg === 'IMEI Actualizada') {
+        if (existente === true) {
+            $('#agregar').prop('disabled', true);
+            $('#agregar').css("background", "#cccccc");
+            $('#editar').prop('disabled', true);
+            $('#editar').css("background", "#cccccc");
+            $('#default').prop('disabled', true);
+            $('#default').css("background", "#cccccc");
+            $('.eliminar').prop('disabled', true);
+            $('.eliminar').css("background", "#cccccc");
+            $('.cambiar').prop('disabled', true);
+            $('.cambiar').css("background", "#cccccc");
+            var data = {
+                usuario: document.getElementById("name").textContent
+            }
+            $.ajax({
+                url: '/editAdmin',
+                type: "POST",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    if (data.msg === 'Error') {
+                        $('#agregar').prop('disabled', false);
+                        $('#agregar').css("background", "#FF851B");
+                        $('#editar').prop('disabled', false);
+                        $('#editar').css("background", "#FF851B");
+                        $('#default').prop('disabled', false);
+                        $('#default').css("background", "#FF851B");
+                        $('.eliminar').prop('disabled', false);
+                        $('.eliminar').css("background", "#FF851B");
+                        $('.cambiar').prop('disabled', false);
+                        $('.cambiar').css("background", "#FF851B");
+                        $('.INFO').show();
+                        $('.INFO').text("No existe el usuario");
+                        $('.INFO').css("color", "red");
+                        $('.INFO').css("font-weight", "Bold");
+                        setTimeout(function () {
+                            $('.INFO').text("");
+                        }, 10000);
+                    } else if (data.msg === 'Editar') {
+                        $('.INFO').show();
+                        $('.INFO').text("Apoye su celular sobre la placa NFC y luego espere");
+                        $('.INFO').css("color", "#49ff00");
+                        $('.INFO').css("font-weight", "Bold");
+                        var info = {
+                            usuario: document.getElementById("name").textContent
+                        }
+                        $.ajax({
+                            url: '/imeiAdmin',
+                            type: "POST",
+                            dataType: "json",
+                            data: info,
+                            timeout: 120000,
+                            success: function (data) {
+                                if (data.msg === 'IMEI Actualizada') {
+                                    $('#agregar').prop('disabled', false);
+                                    $('#agregar').css("background", "#FF851B");
+                                    $('#editar').prop('disabled', false);
+                                    $('#editar').css("background", "#FF851B");
+                                    $('#default').prop('disabled', false);
+                                    $('#default').css("background", "#FF851B");
+                                    $('.eliminar').prop('disabled', false);
+                                    $('.eliminar').css("background", "#FF851B");
+                                    $('.cambiar').prop('disabled', false);
+                                    $('.cambiar').css("background", "#FF851B");
+                                    $('.INFO').show();
+                                    $('.INFO').text("Se ha actualizado su cuenta");
+                                    $('.INFO').css("color", "#49ff00");
+                                    $('.INFO').css("font-weight", "Bold");
+                                    setTimeout(function () {
+                                        document.location.reload(true);
+                                    }, 2000);
+                                } else if (data.msg === 'Error') {
+                                    $('#agregar').prop('disabled', false);
+                                    $('#agregar').css("background", "#FF851B");
+                                    $('#editar').prop('disabled', false);
+                                    $('#editar').css("background", "#FF851B");
+                                    $('#default').prop('disabled', false);
+                                    $('#default').css("background", "#FF851B");
+                                    $('.eliminar').prop('disabled', false);
+                                    $('.eliminar').css("background", "#FF851B");
+                                    $('.cambiar').prop('disabled', false);
+                                    $('.cambiar').css("background", "#FF851B");
+                                    $('.INFO').show();
+                                    $('.INFO').text("Ha ocurrido un error con el protocolo");
+                                    $('.INFO').css("color", "red");
+                                    $('.INFO').css("font-weight", "Bold");
+                                    setTimeout(function () {
+                                        document.location.reload(true);
+                                    }, 2000);
+                                }
+                            },
+                            error: function (err) {
                                 $('#agregar').prop('disabled', false);
                                 $('#agregar').css("background", "#FF851B");
                                 $('#editar').prop('disabled', false);
@@ -361,63 +418,32 @@ function editar() {
                                 $('.cambiar').prop('disabled', false);
                                 $('.cambiar').css("background", "#FF851B");
                                 $('.INFO').show();
-                                $('.INFO').text("Se ha actualizado su cuenta");
-                                $('.INFO').css("color", "#49ff00");
-                                $('.INFO').css("font-weight", "Bold");
-                                setTimeout(function () {
-                                    document.location.reload(true);
-                                }, 2000);
-                            } else if (data.msg === 'Error') {
-                                $('#agregar').prop('disabled', false);
-                                $('#agregar').css("background", "#FF851B");
-                                $('#editar').prop('disabled', false);
-                                $('#editar').css("background", "#FF851B");
-                                $('#default').prop('disabled', false);
-                                $('#default').css("background", "#FF851B");
-                                $('.eliminar').prop('disabled', false);
-                                $('.eliminar').css("background", "#FF851B");
-                                $('.cambiar').prop('disabled', false);
-                                $('.cambiar').css("background", "#FF851B");
-                                $('.INFO').show();
-                                $('.INFO').text("Ha ocurrido un error con el protocolo");
+                                $('.INFO').text("Tiempo de espera agotado");
                                 $('.INFO').css("color", "red");
                                 $('.INFO').css("font-weight", "Bold");
-                                setTimeout(function () {
-                                    document.location.reload(true);
-                                }, 2000);
-                            }
-                        },
-                        error: function (err) {
-                            $('#agregar').prop('disabled', false);
-                            $('#agregar').css("background", "#FF851B");
-                            $('#editar').prop('disabled', false);
-                            $('#editar').css("background", "#FF851B");
-                            $('#default').prop('disabled', false);
-                            $('#default').css("background", "#FF851B");
-                            $('.eliminar').prop('disabled', false);
-                            $('.eliminar').css("background", "#FF851B");
-                            $('.cambiar').prop('disabled', false);
-                            $('.cambiar').css("background", "#FF851B");
-                            $('.INFO').show();
-                            $('.INFO').text("Tiempo de espera agotado");
-                            $('.INFO').css("color", "red");
-                            $('.INFO').css("font-weight", "Bold");
-                            $.ajax({
-                                url: '/timeout',
-                                type: "POST",
-                                success: function (data) {
-                                    if (data.msg === "Listo") {
-                                        setTimeout(function () {
-                                            $('.INFO').text("");
-                                        }, 10000);
+                                $.ajax({
+                                    url: '/timeout',
+                                    type: "POST",
+                                    success: function (data) {
+                                        if (data.msg === "Listo") {
+                                            setTimeout(function () {
+                                                $('.INFO').text("");
+                                            }, 10000);
+                                        }
                                     }
-                                }
-                            })
-                        }
-                    })
+                                })
+                            }
+                        })
+                    }
                 }
-            }
-        })
+            })
+        }
+        else {
+            $('.INFO').show();
+            $('.INFO').text("No se puede editar su IMEI si no tiene uno asignado");
+            $('.INFO').css("color", "red");
+            $('.INFO').css("font-weight", "Bold");
+        }
     })
 }
 
