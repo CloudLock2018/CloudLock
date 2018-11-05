@@ -138,6 +138,7 @@ void loop() {
     else
     {
         sendStatus.publish(String("S0").c_str());
+        sentImei = false;
     }
   }
   statusChecking();
