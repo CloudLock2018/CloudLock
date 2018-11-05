@@ -131,7 +131,14 @@ void loop() {
   }
   if (sentImei == true) 
   {
-      accessDenied();
+    if (NewStatus == "S0")
+    {
+        accessDenied();
+    }
+    else
+    {
+        sendStatus.publish(String("S0").c_str());
+    }
   }
   statusChecking();
   getMsgFromAndroid();
@@ -190,11 +197,7 @@ bool detectedIMEI()
   }
   else 
   {
-      Serial.println(F(" OK!"));
-      if (NewStatus == "S0") 
-      {
-          sentImei = true;
-      }
+      sentImei = true;
   }
   delay(10);
 }
