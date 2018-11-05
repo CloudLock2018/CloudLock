@@ -32,6 +32,7 @@ body {
 }
 
 .contenedor {
+  outline: none;
   background-color: white;
   max-width: 1100px;
   height: 100px;
@@ -46,6 +47,7 @@ body {
 }
 
 .contenedorAdmin {
+  outline: none;
   background-color: white;
   max-width: 1100px;
   width: 100%;
@@ -80,6 +82,7 @@ body {
 }
 
 .contenedor2, .contenedor3 {
+  outline: none;
   display: none;
   background-color: white;
   max-width: 1100px;
@@ -106,6 +109,7 @@ body {
 }
 
 .contenedor .button, .contenedor2 .buttons, .contenedor2 .error {
+  outline: none;
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -124,6 +128,7 @@ body {
 }
 
 .contenedor #default {
+  outline: none;
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -143,6 +148,7 @@ body {
 }
 
 .contenedor3 .eliminar, .contenedor3 .cambiar {
+  outline: none;
   float: right;
   background: #FF851B;
   color: #FFF;
@@ -161,6 +167,7 @@ body {
 }
 
 .contenedor2 .error, .contenedor3 .eliminar {
+  outline: none;
   margin-right: 45px;
 }
 
@@ -215,6 +222,7 @@ body {
 }
 
 .contenedor2 input[type="text"] {
+  outline: none;
   float: left;
   outline: none;
   display: block;

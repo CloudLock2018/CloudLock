@@ -112,6 +112,7 @@ body {
 }
 
 .contenedor-form input[type="submit"] {
+  outline: none;
   background: #FF851B;
   color: #FFF;
   width: 100%;
