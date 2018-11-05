@@ -1,4 +1,4 @@
-/************************* Libraries *********************************************/
+/************************* Libraries ***************************/
 #include <Adafruit_MQTT.h>
 #include <Adafruit_MQTT_Client.h>
 #include <FS.h>   
@@ -12,14 +12,14 @@
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>
 
-/*************************** Adafruit.io login info *********************************************************************************************************************************************************/
+/*************************** Adafruit.io login info ***************************/
 
 #define AIO_SERVER      "io.adafruit.com"
-#define AIO_SERVERPORT  1883                   // use 8883 for SSL
+#define AIO_SERVERPORT  1883
 #define AIO_USERNAME    "CloudlockTeam"
 #define AIO_KEY         "17d40238f10342fdb884cf02a62db208"
 
-/*************************** MQTT setup *********************************************************************************************************************************************************************/
+/*************************** MQTT setup ***************************/
 
 // Creates an ESP8266 WiFiClient class to connect to the MQTT server.
 WiFiClient client;
@@ -27,7 +27,7 @@ WiFiClient client;
 // Setups the MQTT client class by passing in the WiFi client and MQTT server and login details.
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
-/*************************** MQTT Feeds setup ***************************************************************************************************************************************************************/
+/*************************** MQTT Feeds setup *************************/
 
 // Subscribes to feed to see the state of the door.
 Adafruit_MQTT_Subscribe doorState = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/Door");
@@ -40,7 +40,7 @@ Adafruit_MQTT_Subscribe imeiStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME
 
 Adafruit_MQTT_Publish sendStatus = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/Status");
 
-/*************************** Variables **********************************************************************************************************************************************************************/
+/*************************** Variables ***************************/
 
 String DOOR;
 String IMEI;
@@ -56,7 +56,7 @@ bool sentImei = false;
 Servo myservo;
 WiFiManager wifiManager;
 
-/*************************** Initial Setup ******************************************************************************************************************************************************************/
+/*************************** Initial Setup ***************************/
 
 void setup() {
   Serial.begin(9600);
@@ -92,7 +92,7 @@ void setup() {
   mqtt.subscribe(&imeiStatus);
 }
 
-/*************************** Main loop **********************************************************************************************************************************************************************/
+/*************************** Main loop ***************************/
 
 void loop() {
   checkRstButton();
