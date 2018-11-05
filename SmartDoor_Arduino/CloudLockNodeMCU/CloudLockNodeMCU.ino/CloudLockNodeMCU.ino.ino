@@ -133,6 +133,7 @@ void loop() {
   {
       accessDenied();
   }
+  statusChecking();
   getMsgFromAndroid();
 }
 
@@ -194,10 +195,6 @@ bool detectedIMEI()
       {
           sentImei = true;
       }
-      else
-      {
-          sendStatus.publish(String("S0").c_str());
-      }
   }
   delay(10);
 }
@@ -227,6 +224,7 @@ void accessDenied()
     delay(3000);
     statusChecking();
     sentImei = false;
+    sendStatus.publish(String("S0").c_str());
 }
 
 //Displays the dection mode.
@@ -241,7 +239,6 @@ void statusAdding()
 //Displays the dection mode.
 void statusChecking() 
 {
-    sendStatus.publish(String("S0").c_str());
     digitalWrite(ledR, HIGH);
     digitalWrite(ledG, HIGH);
     digitalWrite(ledB, LOW);
@@ -270,7 +267,6 @@ void MQTT_connect()
     // Stop if already connected.
     if (mqtt.connected()) 
     {
-        mqttConnectLed();
         return;
     }
     Serial.print("Connecting to MQTT... ");
@@ -283,6 +279,7 @@ void MQTT_connect()
         delay(5000);
     }
     Serial.println("MQTT Connected!");
+    mqttConnectLed();
 }
 
 //Displays to the user that the device has connected to the MQTT server.
@@ -290,6 +287,8 @@ void mqttConnectLed()
 {
     digitalWrite(ledR, LOW);
     digitalWrite(ledB, LOW);
+    digitalWrite(ledG, HIGH);
+    delay(2000);
 }
 
 //Displays to the user that the device has connected to the wifi network.
@@ -297,4 +296,6 @@ void wifiConnectLed ()
 {
     digitalWrite(ledB, LOW);
     digitalWrite(ledG, LOW);
+    digitalWrite(ledR, HIGH);
+    delay(2000);
 }
