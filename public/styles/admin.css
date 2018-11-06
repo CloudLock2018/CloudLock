@@ -31,6 +31,10 @@ body {
   float: left;
 }
 
+a {
+    color: white;
+}
+
 .contenedor {
   outline: none;
   background-color: white;
@@ -196,6 +200,11 @@ body {
   color: gray;
   font-style: italic;
   float: left;
+}
+
+#descargar {
+  padding: 9px;
+  font-size: 25px;
 }
 
 #agregar {
