@@ -20,6 +20,7 @@ body {
 }
 
 body:before {
+  content: "";
   display: block;
   position: fixed;
   left: 0;
@@ -32,7 +33,9 @@ body:before {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-attachment: fixed;
   background-color: rgba(200, 100, 0, .5);
+  background-blend-mode: multiply;
 }
 
 #centrado {
