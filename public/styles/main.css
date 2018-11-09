@@ -8,6 +8,9 @@
 
 body {
   background: url(../images/Fondo.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;

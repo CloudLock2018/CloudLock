@@ -46,6 +46,8 @@ $.ajax({
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
             existente = false;
+            $('#descargar').prop('disabled', true);
+            $('#descargar').css("background", "#cccccc");
             $('#agregar').prop('disabled', true);
             $('#agregar').css("background", "#cccccc");
             $('#default').prop('disabled', true);
@@ -139,6 +141,8 @@ function agre() {
                 }, 500);
                 rotacion2R();
                 agreg = true;
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
                 $('#agregar').prop('disabled', true);
                 $('#agregar').css("background", "#cccccc");
                 $('#default').prop('disabled', true);
@@ -269,6 +273,8 @@ function borrar() {
         $('#agregar').show();
         agreg = false;
         setTimeout(function () {
+            $('#descargar').prop('disabled', false);
+            $('#descargar').css("background", "#FF851B");
             $('#agregar').prop('disabled', false);
             $('#agregar').css("background", "#FF851B");
             $('#editar').prop('disabled', false);
@@ -301,6 +307,8 @@ function eliminar() {
         aviso();
         on = 2;
         setTimeout(function () {
+            $('#descargar').prop('disabled', false);
+            $('#descargar').css("background", "#FF851B");
             $('#agregar').prop('disabled', false);
             $('#agregar').css("background", "#FF851B");
             $('#editar').prop('disabled', false);
@@ -316,6 +324,8 @@ function eliminar() {
 function editar() {
     $('#editar').click(function () {
         if (existente === true) {
+            $('#descargar').prop('disabled', true);
+            $('#descargar').css("background", "#cccccc");
             $('#agregar').prop('disabled', true);
             $('#agregar').css("background", "#cccccc");
             $('#editar').prop('disabled', true);
@@ -336,6 +346,8 @@ function editar() {
                 data: data,
                 success: function (data) {
                     if (data.msg === 'Error') {
+                        $('#descargar').prop('disabled', false);
+                        $('#descargar').css("background", "#FF851B");
                         $('#agregar').prop('disabled', false);
                         $('#agregar').css("background", "#FF851B");
                         $('#editar').prop('disabled', false);
@@ -369,6 +381,8 @@ function editar() {
                             timeout: 120000,
                             success: function (data) {
                                 if (data.msg === 'IMEI Actualizada') {
+                                    $('#descargar').prop('disabled', false);
+                                    $('#descargar').css("background", "#FF851B");
                                     $('#agregar').prop('disabled', false);
                                     $('#agregar').css("background", "#FF851B");
                                     $('#editar').prop('disabled', false);
@@ -387,6 +401,8 @@ function editar() {
                                         document.location.reload(true);
                                     }, 2000);
                                 } else if (data.msg === 'Error') {
+                                    $('#descargar').prop('disabled', false);
+                                    $('#descargar').css("background", "#FF851B");
                                     $('#agregar').prop('disabled', false);
                                     $('#agregar').css("background", "#FF851B");
                                     $('#editar').prop('disabled', false);
@@ -407,6 +423,8 @@ function editar() {
                                 }
                             },
                             error: function (err) {
+                                $('#descargar').prop('disabled', false);
+                                $('#descargar').css("background", "#FF851B");
                                 $('#agregar').prop('disabled', false);
                                 $('#agregar').css("background", "#FF851B");
                                 $('#editar').prop('disabled', false);
@@ -530,6 +548,8 @@ function editarSub() {
 
 function reactive() {
     setTimeout(function () {
+        $('#descargar').prop('disabled', false);
+        $('#descargar').css("background", "#FF851B");
         $('#agregar').prop('disabled', false);
         $('#agregar').css("background", "#FF851B");
         $('#editar').prop('disabled', false);
@@ -621,6 +641,7 @@ function orden2() {
 
 window.onload = function () {
     setTimeout(function () {
+        $('#descargar').prop('disabled', false);
         $('#agregar').prop('disabled', false);
         $('#editar').prop('disabled', false);
         $('#default').prop('disabled', false);
@@ -676,6 +697,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
         if ((functionEnviar !== undefined) && (functionEnviar !== '')) {
             if (on === 2) {
                 rotacion4R();
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
                 $('#agregar').prop('disabled', true);
                 $('#agregar').css("background", "#cccccc");
                 $('#editar').prop('disabled', true);
@@ -700,6 +723,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').text("El subusuario no existe");
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
@@ -717,6 +742,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
                             $('.member').val("");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
@@ -740,6 +767,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                                         $('.INFO').text("El usuario no existe");
                                         $('.INFO').css("color", "red");
                                         $('.INFO').css("font-weight", "Bold");
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
                                         $('#agregar').prop('disabled', false);
                                         $('#agregar').css("background", "#FF851B");
                                         $('#editar').prop('disabled', false);
@@ -754,6 +783,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                                         $('.member').text("");
                                         $('#agregar').show();
                                         $('.contenedor3').remove();
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
                                         $('#agregar').prop('disabled', false);
                                         $('#agregar').css("background", "#FF851B");
                                         $('#editar').prop('disabled', false);
@@ -773,6 +804,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                 })
             } else if (on2 === 2) {
                 rotacion5R();
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
                 $('#agregar').prop('disabled', true);
                 $('#agregar').css("background", "#cccccc");
                 $('#editar').prop('disabled', true);
@@ -796,6 +829,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').css("color", "#49ff00");
                             $('.INFO').css("font-weight", "Bold");
                             $('.contenedorAdmin .IMEI').text("IMEI: Desactivado");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
@@ -810,6 +845,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
                             setTimeout(function () {
+                                $('#descargar').prop('disabled', false);
+                                $('#descargar').css("background", "#FF851B");
                                 $('#agregar').prop('disabled', false);
                                 $('#agregar').css("background", "#FF851B");
                                 $('#editar').prop('disabled', false);
@@ -827,6 +864,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').text("El usuario no existe");
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
@@ -847,6 +886,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
         } else {
             if (on === 2) {
                 rotacion4R();
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
                 $('#agregar').prop('disabled', true);
                 $('#agregar').css("background", "#cccccc");
                 $('#editar').prop('disabled', true);
@@ -871,6 +912,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').text("El subusuario no existe");
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
@@ -888,6 +931,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
                             $('.member').val("");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
@@ -911,6 +956,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                                         $('.INFO').text("El usuario no existe");
                                         $('.INFO').css("color", "red");
                                         $('.INFO').css("font-weight", "Bold");
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
                                         $('#agregar').prop('disabled', false);
                                         $('#agregar').css("background", "#FF851B");
                                         $('#editar').prop('disabled', false);
@@ -925,6 +972,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                                         $('.member').text("");
                                         $('#agregar').show();
                                         $('.contenedor3').remove();
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
                                         $('#agregar').prop('disabled', false);
                                         $('#agregar').css("background", "#FF851B");
                                         $('#editar').prop('disabled', false);
@@ -944,6 +993,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                 })
             } else if (on2 === 2) {
                 rotacion5R();
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
                 $('#agregar').prop('disabled', true);
                 $('#agregar').css("background", "#cccccc");
                 $('#editar').prop('disabled', true);
@@ -967,6 +1018,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').css("color", "#49ff00");
                             $('.INFO').css("font-weight", "Bold");
                             $('.contenedorAdmin .IMEI').text("IMEI: Desactivado");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
@@ -981,6 +1034,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
                             setTimeout(function () {
+                                $('#descargar').prop('disabled', false);
+                                $('#descargar').css("background", "#FF851B");
                                 $('#agregar').prop('disabled', false);
                                 $('#agregar').css("background", "#FF851B");
                                 $('#editar').prop('disabled', false);
@@ -998,6 +1053,8 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
                             $('.INFO').text("El usuario no existe");
                             $('.INFO').css("color", "red");
                             $('.INFO').css("font-weight", "Bold");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
                             $('#agregar').prop('disabled', false);
                             $('#agregar').css("background", "#FF851B");
                             $('#editar').prop('disabled', false);
