@@ -20,8 +20,8 @@ body {
 }
 
 body:before {
+  content: "";
   display: block;
-  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
