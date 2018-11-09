@@ -16,10 +16,10 @@ body {
   background-attachment: fixed;
   background-blend-mode: multiply;
   font-family: 'Source Sans Pro', sans-serif;
+  background-color: rgba(200, 100, 0, .5);
 }
 
 body:before {
-  content: "";
   display: block;
   position: fixed;
   left: 0;
