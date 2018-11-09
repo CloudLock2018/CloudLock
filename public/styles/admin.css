@@ -132,6 +132,7 @@ a {
 }
 
 .contenedor .button, .contenedor2 .buttons, .contenedor2 .error {
+  position: relative;
   outline: none;
   float: right;
   background: #FF851B;
@@ -199,6 +200,7 @@ a {
 }
 
 .button, .cambiar {
+  position: relative;
   font-size: 19px;
   transform: rotateY(180deg);
   transform: rotateY(180deg);
