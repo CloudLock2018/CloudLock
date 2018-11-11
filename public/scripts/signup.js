@@ -4,6 +4,11 @@ $("#form").submit(function (e) {
 	e.preventDefault();
 });
 
+function AvoidSpace(event) {
+    var k = event ? event.which : window.event.keyCode;
+    if (k == 32) return false;
+}
+
 var nomTB = $('#nombre');
 var emailTB = $('#mail');
 var passTB = $('#contra');

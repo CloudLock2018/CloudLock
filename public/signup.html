@@ -28,13 +28,13 @@
                         <center>Crea tu cuenta</center>
                     </h2>
                     <form action="#" id="form">
-                        <input title="Completa este campo" type="text" name="NU" id="nombre" placeholder="Nombre de Usuario"
+                        <input title="Completa este campo" type="text" name="NU" id="nombre" onkeypress="return AvoidSpace(event)" placeholder="Nombre de Usuario"
                             required>
-                        <input title="Completa este campo" type="text" name="NU" id="mail" placeholder="Correo Electrónico"
+                        <input title="Completa este campo" type="text" name="NU" id="mail" onkeyup="this.value = this.value.toLowerCase();" onkeypress="return AvoidSpace(event)" placeholder="Correo Electrónico"
                             required>
-                        <input title="Completa este campo" type="password" name="contra" id="contra" placeholder="Contraseña"
+                        <input title="Completa este campo" type="password" name="contra" id="contra" onkeypress="return AvoidSpace(event)" placeholder="Contraseña"
                             required>
-                        <input title="Completa este campo" type="password" name="contra" id="repcontra" placeholder="Confirmar Contraseña"
+                        <input title="Completa este campo" type="password" name="contra" id="repcontra" onkeypress="return AvoidSpace(event)" placeholder="Confirmar Contraseña"
                             required>
                         <label class="container">
                             <input title="Mostrar Contraseña" type="checkbox" name="Mostrar Contraseña" onclick="myFunction()">
