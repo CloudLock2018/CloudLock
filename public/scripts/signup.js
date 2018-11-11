@@ -4,11 +4,6 @@ $("#form").submit(function (e) {
 	e.preventDefault();
 });
 
-function AvoidSpace(event) {
-    var k = event ? event.key : window.event.keyCode;
-    if (k == ' ') return false;
-}
-
 var nomTB = $('#nombre');
 var emailTB = $('#mail');
 var passTB = $('#contra');
@@ -23,7 +18,21 @@ $('#form').submit(function () {
 	error.className = "error";
 	error.innerHTML = "";
 	var sEmail = emailTB.val();
-	if (passTB.val() != pass2TB.val()) {
+	if (nomTB.val().indexOf(' ') >= 0){
+		$('#error').show();
+		error.innerHTML = "No se pueden utilizar espacios en el Nombre de Usuario";
+		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
+	}
+	else if (emailTB.val().indexOf(' ') >= 0){
+		$('#error').show();
+		error.innerHTML = "No se pueden utilizar espacios en el correo electrónico";
+		error.className = "error active";
+		$('#entrar').removeClass("pressed");
+		$('#entrar').attr('value', 'Registrate');
+	}
+	else if (passTB.val() != pass2TB.val()) {
 		$('#error').show();
 		error.innerHTML = "Las contraseñas no coinciden";
 		error.className = "error active";
