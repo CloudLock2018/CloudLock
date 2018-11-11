@@ -5,8 +5,8 @@ $("#form").submit(function (e) {
 });
 
 function AvoidSpace(event) {
-    var k = event ? event.which : window.event.keyCode;
-    if (k == 32) return false;
+    var k = event ? event.key : window.event.keyCode;
+    if (k == ' ') return false;
 }
 
 var nomTB = $('#nombre');
