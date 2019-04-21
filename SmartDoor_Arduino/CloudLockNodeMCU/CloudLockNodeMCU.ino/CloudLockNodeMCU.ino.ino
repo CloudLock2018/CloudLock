@@ -68,7 +68,7 @@ void setup() {
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
   pinMode(A0, INPUT);
-  String s = WiFi.macAddress();
+  String s = "10.10.10.10";
   Serial.println(s);  
   //Tries to connect to last wifi, if not sucessfull creates the access point.
   wifiManager.setBreakAfterConfig(true);
