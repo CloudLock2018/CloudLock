@@ -55,6 +55,7 @@ uint8_t ndefBuf[128];
 bool sentImei = false;
 Servo myservo;
 WiFiManager wifiManager;
+String macAdress = WiFi.macAddress();
 
 /*************************** Initial Setup ******************************************************************************************************************************************************************/
 
@@ -68,6 +69,8 @@ void setup() {
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
   pinMode(A0, INPUT);
+
+  Serial.println(macAdress);  
 
   //Tries to connect to last wifi, if not sucessfull creates the access point.
   wifiManager.setBreakAfterConfig(true);
@@ -108,8 +111,9 @@ void loop() {
           Serial.print(F("Last Door State value: "));
           DOOR = (char *)doorState.lastread;
           Serial.println(DOOR);
-          if (DOOR == "D1") 
+          if (DOOR == "D1/" + macAdress) 
           {
+              Serial.println("Open");
               accessGranted();
           }
       }
@@ -119,11 +123,11 @@ void loop() {
           Serial.print(F("Last Imei Checking Status value: "));
           NewStatus = (char *)imeiStatus.lastread;
           Serial.println(NewStatus);
-          if (NewStatus == "S1") 
+          if (NewStatus == "S1/" + macAdress) 
           {
               statusAdding();
           }
-          else 
+          if (NewStatus == "S0/" + macAdress)
           {
               statusChecking();
           }
@@ -131,7 +135,7 @@ void loop() {
   }
   if (sentImei == true) 
   {
-    if (NewStatus == "S0")
+    if (NewStatus == "S0/" + macAdress)
     {
         accessDenied();
     }
@@ -192,7 +196,7 @@ bool detectedIMEI()
   Serial.print(F("\nSending Detected Imei value: "));
   Serial.print(IMEI);
   Serial.print("...");
-  if (! Imei.publish(String(IMEI).c_str()))
+  if (! Imei.publish(String(IMEI + "/" + macAdress).c_str()))
   {
       Serial.println(F("Failed"));
   }
@@ -228,7 +232,7 @@ void accessDenied()
     delay(3000);
     statusChecking();
     sentImei = false;
-    sendStatus.publish(String("S0").c_str());
+    sendStatus.publish(String("S0/" + macAdress).c_str());
 }
 
 //Displays the dection mode.
