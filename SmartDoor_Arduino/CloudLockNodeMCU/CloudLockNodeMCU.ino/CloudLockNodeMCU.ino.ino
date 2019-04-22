@@ -68,8 +68,12 @@ void setup() {
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
   pinMode(A0, INPUT);
+<<<<<<< HEAD
   String s = "10.10.10.10";
   Serial.println(s);  
+=======
+  
+>>>>>>> parent of 9e27255... mac stuff
   //Tries to connect to last wifi, if not sucessfull creates the access point.
   wifiManager.setBreakAfterConfig(true);
   if (!wifiManager.autoConnect("CloudLock", "cloudlock")) {
