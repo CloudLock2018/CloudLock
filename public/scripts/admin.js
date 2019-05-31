@@ -301,6 +301,7 @@ function eliminarAdmin() {
         }
     });
 }
+
 //Deletes subuser selected from the database
 function eliminar() {
     $(document).on("click", ".eliminar", function () {
@@ -320,6 +321,7 @@ function eliminar() {
         elegido = $(this).attr('id');
     });
 }
+
 //Edits user's IMEI
 function editar() {
     $('#editar').click(function () {
@@ -640,6 +642,7 @@ function orden2() {
 }
 
 window.onload = function () {
+    aviso3();
     setTimeout(function () {
         $('#descargar').prop('disabled', false);
         $('#agregar').prop('disabled', false);
@@ -656,7 +659,13 @@ function aviso2() {
     janelaPopUp.abre("asdf", 'p blue', '¡Atención!', '¿Está seguro que quiere borrar su IMEI?');
 }
 
+function aviso3() {
+    janelaPopUp2.abre("asdf", 'p blue', '¡Atención!', 'Ingrese su código de activación');
+}
+
 var janelaPopUp = new Object();
+var janelaPopUp2 = new Object();
+
 janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, functionEnviar, textoCancelar, textoEnviar) {
     var cancelar = (textoCancelar !== undefined) ? textoCancelar : 'Cancelar';
     var enviar = (textoEnviar !== undefined) ? textoEnviar : 'Aceptar';
@@ -672,7 +681,7 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
         }
     });
     var popFundo = '<div id="popFundo_' + id + '" class="popUpFundo ' + classesFundo + '"></div>'
-    var janela = '<div id="' + id + '" class="popUp ' + classes + '"><h1>' + titulo + "</h1><div><span>" + corpo + "</span></div><button class='puCancelar " + classBot + "' id='" + id + "_cancelar' data-parent=" + id + ">" + cancelar + "</button><button class='puEnviar " + classBot + "' data-parent=" + id + " id='" + id + "_enviar'>" + enviar + "</button></div>";
+    var janela = '<div id="' + id + '" class="popUp ' + classes + '"><h1>' + titulo + "</h1><div><span>" + corpo + "</span></div><button class='puCancelar " + classBot + "' id='" + id + "_cancelar' data-parent=" + id + ">" + cancelar + "</button><button class='puEnviar" + classBot + "' data-parent=" + id + " id='" + id + "_enviar'>" + enviar + "</button></div>";
     $("window, body").css('overflow', 'hidden');
 
     $("body").append(popFundo);
@@ -1076,6 +1085,360 @@ janelaPopUp.abre = function (id, classes, titulo, corpo, functionCancelar, funct
     });
 }
 
+janelaPopUp2.abre = function (id, classes, titulo, corpo, functionEnviar, textoEnviar) {
+    var enviar = (textoEnviar !== undefined) ? textoEnviar : 'Aceptar';
+    classes += ' ';
+    var classArray = classes.split(' ');
+    classes = '';
+    classesFundo = '';
+    var classBot = '';
+    $.each(classArray, function (index, value) {
+        switch (value) {
+            case 'blue': classesFundo += this + ' ';
+            default: classes += this + ' '; break;
+        }
+    });
+    var popFundo = '<div id="popFundo_' + id + '" class="popUp2Fundo ' + classesFundo + '"></div>'
+    var janela = '<div id="' + id + '" class="popUp2 ' + classes + '"><h1>' + titulo + "</h1><div><span>" + corpo + "</span><input type='text' title='Completa este campo' placeholder='Código' required></div><button class='puEnviar" + classBot + "' data-parent=" + id + " id='" + id + "_enviar'>" + enviar + "</button></div>";
+    $("window, body").css('overflow', 'hidden');
+
+    $("body").append(popFundo);
+    $("body").append(janela);
+    $("body").append(popFundo);
+    //alert(janela);
+    $("#popFundo_" + id).fadeIn("fast");
+    $("#" + id).addClass("popUp2Entrada");
+
+    $("#" + id + '_enviar').on("click", function () {
+        on2 = 2;
+        if ((functionEnviar !== undefined) && (functionEnviar !== '')) {
+            if (on === 2) {
+                rotacion4R();
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                subusuario = $('#' + elegido + '.sub').text();
+                var data = {
+                    usuario: document.getElementById("name").textContent,
+                    sub: subusuario
+                }
+                $.ajax({
+                    url: '/delete',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Error') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El subusuario no existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("Subusuario eliminado");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('.member').val("");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                            var reload = {
+                                usuario: document.getElementById("name").textContent
+                            }
+                            $.ajax({
+                                url: '/reload',
+                                type: "POST",
+                                dataType: "json",
+                                data: reload,
+                                success: function (data) {
+                                    if (data.msg === 'Error') {
+                                        $('.INFO').show();
+                                        $('.INFO').text("El usuario no existe");
+                                        $('.INFO').css("color", "red");
+                                        $('.INFO').css("font-weight", "Bold");
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        setTimeout(function () {
+                                            $('.INFO').text("");
+                                        }, 10000);
+                                    } else if (data.msg === 'Hecho') {
+                                        $('.contenedor2').css("display", "none");
+                                        $('.member').text("");
+                                        $('#agregar').show();
+                                        $('.contenedor3').remove();
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        if (data.existe === true) {
+                                            document.querySelector(".subusuarios").innerHTML += data.contenido;
+                                            $('.contenedor3').show();
+                                            guardasub = data.cantidad;
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+            } else if (on2 === 2) {
+                rotacion5R();
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                var data = {
+                    usuario: document.getElementById("name").textContent
+                };
+                $.ajax({
+                    url: '/deleteAdmin',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("Se ha borrado su IMEI");
+                            $('.INFO').css("color", "#49ff00");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('.contenedorAdmin .IMEI').text("IMEI: Desactivado");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                        } else if (data.msg === 'Ya borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El IMEI ya fue borrado anteriormente");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            setTimeout(function () {
+                                $('#descargar').prop('disabled', false);
+                                $('#descargar').css("background", "#FF851B");
+                                $('#agregar').prop('disabled', false);
+                                $('#agregar').css("background", "#FF851B");
+                                $('#editar').prop('disabled', false);
+                                $('#editar').css("background", "#FF851B");
+                                $('#default').prop('disabled', false);
+                                $('#default').css("background", "#FF851B");
+                            }, 2000);
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Error') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El usuario no existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        }
+                    }
+                })
+            } else {
+                on = 0;
+                on2 = 0;
+            }
+            janelaPopUp2.fecha(id);
+        } else {
+            if (on === 2) {
+                rotacion4R();
+                $('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");
+                subusuario = $('#' + elegido + '.sub').text();
+                var data = {
+                    usuario: document.getElementById("name").textContent,
+                    sub: subusuario
+                }
+                $.ajax({
+                    url: '/delete',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if (data.msg === 'Error') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("El subusuario no existe");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                        } else if (data.msg === 'Borrado') {
+                            on = 0;
+                            on2 = 0;
+                            $('.INFO').show();
+                            $('.INFO').text("Subusuario eliminado");
+                            $('.INFO').css("color", "red");
+                            $('.INFO').css("font-weight", "Bold");
+                            $('.member').val("");
+                            $('#descargar').prop('disabled', false);
+                            $('#descargar').css("background", "#FF851B");
+                            $('#agregar').prop('disabled', false);
+                            $('#agregar').css("background", "#FF851B");
+                            $('#editar').prop('disabled', false);
+                            $('#editar').css("background", "#FF851B");
+                            $('#default').prop('disabled', false);
+                            $('#default').css("background", "#FF851B");
+                            setTimeout(function () {
+                                $('.INFO').text("");
+                            }, 10000);
+                            var reload = {
+                                usuario: document.getElementById("name").textContent
+                            }
+                            $.ajax({
+                                url: '/reload',
+                                type: "POST",
+                                dataType: "json",
+                                data: reload,
+                                success: function (data) {
+                                    if (data.msg === 'Error') {
+                                        $('.INFO').show();
+                                        $('.INFO').text("El usuario no existe");
+                                        $('.INFO').css("color", "red");
+                                        $('.INFO').css("font-weight", "Bold");
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        setTimeout(function () {
+                                            $('.INFO').text("");
+                                        }, 10000);
+                                    } else if (data.msg === 'Hecho') {
+                                        $('.contenedor2').css("display", "none");
+                                        $('.member').text("");
+                                        $('#agregar').show();
+                                        $('.contenedor3').remove();
+                                        $('#descargar').prop('disabled', false);
+                                        $('#descargar').css("background", "#FF851B");
+                                        $('#agregar').prop('disabled', false);
+                                        $('#agregar').css("background", "#FF851B");
+                                        $('#editar').prop('disabled', false);
+                                        $('#editar').css("background", "#FF851B");
+                                        $('#default').prop('disabled', false);
+                                        $('#default').css("background", "#FF851B");
+                                        if (data.existe === true) {
+                                            document.querySelector(".subusuarios").innerHTML += data.contenido;
+                                            $('.contenedor3').show();
+                                            guardasub = data.cantidad;
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+            } else if (on2 === 2) {
+                rotacion5R();
+                /*$('#descargar').prop('disabled', true);
+                $('#descargar').css("background", "#cccccc");
+                $('#agregar').prop('disabled', true);
+                $('#agregar').css("background", "#cccccc");
+                $('#editar').prop('disabled', true);
+                $('#editar').css("background", "#cccccc");
+                $('#default').prop('disabled', true);
+                $('#default').css("background", "#cccccc");*/
+                var data = {
+                    usuario: document.getElementById("name").textContent
+                };
+                $.ajax({
+                    url: '/deleteAdmin',
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        
+                    }
+                })
+            } else {
+                on = 0;
+                on2 = 0;
+            }
+        }
+        janelaPopUp2.fecha(id);
+    });
+}
+
 janelaPopUp.fecha = function (id) {
     if (id !== undefined) {
         $("#" + id).removeClass("popUpEntrada").addClass("popUpSaida");
@@ -1090,12 +1453,39 @@ janelaPopUp.fecha = function (id) {
 
 
     }
-    else {
+    else
+    {
         $(".popUp").removeClass("popUpEntrada").addClass("popUpSaida");
 
         $(".popUpFundo").fadeOut(1000, function () {
             $(".popUpFundo").remove();
             $(".popUp").remove();
+            $("window, body").css('overflow', 'auto');
+        });
+    }
+}
+
+janelaPopUp2.fecha = function (id) {
+    if (id !== undefined) {
+        $("#" + id).removeClass("popUp2Entrada").addClass("popUp2Saida");
+
+        $("#popFundo_" + id).fadeOut(1000, function () {
+            $("#popFundo_" + id).remove();
+            $("#" + $(this).attr("id") + ", #" + id).remove();
+            if (!($(".popUp2")[0])) {
+                $("window, body").css('overflow', 'auto');
+            }
+        });
+
+
+    }
+    else
+    {
+        $(".popUp2").removeClass("popUp2Entrada").addClass("popUp2Saida");
+
+        $(".popUp2Fundo").fadeOut(1000, function () {
+            $(".popUp2Fundo").remove();
+            $(".popUp2").remove();
             $("window, body").css('overflow', 'auto');
         });
     }

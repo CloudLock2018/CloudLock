@@ -305,6 +305,19 @@ a {
   }
 }
 
+@-webkit-keyframes popUp2Entrada {
+  0% {
+    opacity: 0;
+    margin-top: -20%;
+  }
+  75% {
+    margin-top: 5%;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes popUpEntrada {
   0% {
     opacity: 0;
@@ -318,7 +331,34 @@ a {
   }
 }
 
+@keyframes popUp2Entrada {
+  0% {
+    opacity: 0;
+    margin-top: -20%;
+  }
+  75% {
+    margin-top: 5%;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @-webkit-keyframes popUpSaida {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+    margin-top: -20%;
+  }
+  100% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+}
+
+@-webkit-keyframes popUp2Saida {
   0% {
     opacity: 1;
   }
@@ -346,11 +386,25 @@ a {
   }
 }
 
+@keyframes popUp2Saida {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+    margin-top: -20%;
+  }
+  100% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+}
+
 body, html, root, document {
   display: block;
 }
 
-.popUpFundo {
+.popUpFundo, .popUp2Fundo {
   display: none;
   position: fixed;
   top: 0;
@@ -364,13 +418,13 @@ body, html, root, document {
   z-index: 50;
 }
 
-.popUp {
+.popUp, .popUp2 {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   display: none;
   position: fixed;
-  top: 40%;
+  top: 50%;
   left: 50%;
   padding: 0;
   font-size: 14px;
@@ -381,16 +435,16 @@ body, html, root, document {
   overflow: hidden;
 }
 
-.popUp button:focus {
+.popUp button:focus, .popUp2 button:focus {
   outline-style: none;
 }
 
-.popUp>h1 {
+.popUp>h1, .popUp2>h1 {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   margin: 0;
-  padding: 5px;
+  padding: 15px 5px;
   min-height: 40px;
   font-size: 1.2em;
   font-weight: bold;
@@ -414,7 +468,7 @@ body, html, root, document {
   border-color: #659cff;
 }
 
-.popUp>div {
+.popUp>div, .popUp2>div {
   display: block;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -435,15 +489,25 @@ body, html, root, document {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 0px 0px 35px;
   vertical-align: middle;
 }
 
-.popUp>button {
+.popUp2>div>span {
+  display: table-cell;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   margin: 0;
+  padding: 0px 0px 80px;
+  vertical-align: middle;
+}
+
+.popUp>button, .popUp2>button {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: -10px auto;
   padding: 10px;
   width: 50%;
   border: 1px none #ccc;
@@ -457,11 +521,16 @@ body, html, root, document {
 }
 
 .popUp .puCancelar {
-  float: right;
+  float: left;
 }
 
 .popUp .puEnviar {
+  float: right;
+}
+
+.popUp2 .puEnviar {
   float: left;
+  width: 100%;
 }
 
 .p {
@@ -584,13 +653,13 @@ body, html, root, document {
   display: none;
 }
 
-.popUpEntrada {
+.popUpEntrada, .popUp2Entrada {
   display: block !important;
   animation: popUpEntrada 0.5s;
   -webkit-animation: popUpEntrada 0.5s;
 }
 
-.popUpSaida {
+.popUpSaida, .popUp2Saida {
   display: block !important;
   animation: popUpSaida 0.5s;
   -webkit-animation: popUpSaida 0.5s;
@@ -610,7 +679,7 @@ body, html, root, document {
   background-color: #72c1de;
 }
 
-.popUpFundo.blue {
+.popUpFundo.blue, .popUp2Fundo.blue {
   background-color: #134152;
 }
 
@@ -626,7 +695,7 @@ body, html, root, document {
   background-color: #4fbe55;
 }
 
-.popUpFundo.green {
+.popUpFundo.green, .popUp2Fundo.green {
   background-color: #173f19;
 }
 
@@ -642,7 +711,7 @@ body, html, root, document {
   background-color: #d86959;
 }
 
-.popUpFundo.red {
+.popUpFundo.red, .popUp2Fundo.red {
   background-color: #4a1811;
 }
 
@@ -658,7 +727,7 @@ body, html, root, document {
   background-color: #f9ac42;
 }
 
-.popUpFundo.orange {
+.popUpFundo.orange, .popUp2Fundo.orange {
   background-color: #8c5b02;
 }
 
@@ -674,7 +743,7 @@ body, html, root, document {
   background-color: #b159d8;
 }
 
-.popUpFundo.purple {
+.popUpFundo.purple, .popUp2Fundo.purple {
   background-color: #3f114a;
 }
 
@@ -696,7 +765,7 @@ body, html, root, document {
   background-color: #e3e3e3;
 }
 
-.popUpFundo.white {
+.popUpFundo.whitem, .popUp2Fundo.white {
   background-color: #555;
 }
 
@@ -732,6 +801,28 @@ That part is just for the form
   padding: 5px;
   color: #fff;
   border-style: none;
+}
+
+.popUp2>div>[type="text"] {
+  outline: none;
+  display: block;
+  width: 80%;
+  padding: 8px 15px;
+  margin: -70px auto 31px;
+  background: #ffffff;
+  border-color: #e0e0e0;
+  border-width: thin;
+  border-radius: 10px;
+  border-bottom: 4px solid #ff851b;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  transition: all .5s ease;
+}
+
+.popUp2>div>[type="text"]:focus {
+  border-bottom: 4px solid #0075d9;
 }
 
 @media screen and (max-width: 875px) {
