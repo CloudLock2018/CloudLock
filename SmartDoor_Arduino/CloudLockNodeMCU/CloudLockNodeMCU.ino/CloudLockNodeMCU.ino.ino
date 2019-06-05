@@ -180,7 +180,7 @@ String readMsg( NdefRecord record )
   {
       payloadAsString += (char)payload[c];
   } 
-  if (payloadAsString.startsWith("es")) 
+  if (payloadAsString.startsWith("es") || payloadAsString.startsWith("en")) 
   {
       return payloadAsString.substring(3);
   }
