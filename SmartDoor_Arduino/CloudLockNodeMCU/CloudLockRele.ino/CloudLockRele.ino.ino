@@ -52,11 +52,10 @@ int ledR = 4;
 int ledB = 0;
 int ledG = 2;
 const int opnBtn = 9;
-const int rstBtn = 10;
+int rstBtn = 10;
 int buzzer = 15;
 uint8_t ndefBuf[128];
 bool sentImei = false;
-Servo myservo;
 WiFiManager wifiManager;
 
 /*************************** Initial Setup ***************************/
@@ -102,7 +101,7 @@ void setup() {
 
 void loop() {
   checkRstButton();
-  //checkOpenButton();
+  checkOpenButton();
   MQTT_connect();
   
   Adafruit_MQTT_Subscribe *subscription;
@@ -279,15 +278,15 @@ void statusChecking()
 }
 
 //Checks if the user is pressing the reset button.
-/*  void checkOpenButton()
+  void checkOpenButton()
 { 
-   if (digitalRead(opnBtn) == HIGH); 
+   if (digitalRead(opnBtn) == LOW); 
    {
       Serial.println("Open button pressed");
       accessGranted();
    }
 }
-*/
+
 //Checks if the user is pressing the reset button.
 void checkRstButton()
 {
