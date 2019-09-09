@@ -219,15 +219,15 @@ void accessGranted()
     digitalWrite(rele, LOW);
     Serial.println("Your IMEI is registered, the door is now opened");
     digitalWrite(buzzer, HIGH);
-    delay(2000);
+    delay(1000);
     digitalWrite(buzzer, LOW);
-    delay(2000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(2000);
+    delay(1000);
     digitalWrite(buzzer, LOW);
-    delay(2000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(2000);
+    delay(1000);
     digitalWrite(buzzer, LOW);
     digitalWrite(rele, HIGH);
     Serial.println("The door is now closed");
@@ -255,17 +255,17 @@ void statusAdding()
     digitalWrite(ledB, LOW);
     digitalWrite(ledG, LOW);
     digitalWrite(buzzer, HIGH);
-    delay(3000);
+    delay(500);
     digitalWrite(buzzer, LOW);
-    delay(1000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(3000);
+    delay(500);
     digitalWrite(buzzer, LOW);
-    delay(1000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(3000);
+    delay(500);
     digitalWrite(buzzer, LOW);
-    delay(1000);
+    delay(500);
     Serial.println("The next IMEI will be added to the server");
 }
 
