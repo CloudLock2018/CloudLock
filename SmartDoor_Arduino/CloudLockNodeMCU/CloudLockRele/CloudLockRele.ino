@@ -53,7 +53,7 @@ int ledB = 0;
 int ledG = 2;
 const int opnBtn = 15;
 int opnBtnState = 0;
-const int rstBtn = 9;
+//const int rstBtn = 9;
 int buzzer = 10;
 uint8_t ndefBuf[128];
 bool sentImei = false;
@@ -72,7 +72,7 @@ void setup() {
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
   pinMode(buzzer, OUTPUT);
-  //pinMode(rstBtn, INPUT);
+  //pinMode(rstBtn, INPUT_PULLUP);
   
   //Tries to connect to last wifi, if not sucessfull creates the access point.
   wifiManager.setBreakAfterConfig(true);
@@ -102,7 +102,7 @@ void setup() {
 
 void loop() {
   MQTT_connect();
-  checkRstButton();
+  //checkRstButton();
   checkOpenButton();
   
   Adafruit_MQTT_Subscribe *subscription;
@@ -289,20 +289,29 @@ void checkOpenButton(){
 }
 
 //Checks if the user is pressing the reset button.
-void checkRstButton()
+/*void checkRstButton()
 {
-   if (digitalRead(rstBtn) == HIGH)
+   if (digitalRead(rstBtn) == LOW) 
    {
-       Serial.println("Reset button pressed");
-       WiFi.disconnect();
-       if (!wifiManager.startConfigPortal("CloudLock", "cloudlock")) 
-       {
-            delay(3000);
-            ESP.reset();
-            delay(5000);
-       }
+      
+    digitalWrite(ledR, LOW);
+    digitalWrite(ledB, LOW);
+    digitalWrite(ledG, LOW);
+      delay(500);
+      Serial.println("Disconecting");
+      WiFi.disconnect();
+      if (!wifiManager.startConfigPortal("Cloudlock","cloudlock")) {
+        Serial.println("Not connected to WiFi but continuing anyway.");
+      } else {
+        //if you get here you have connected to the WiFi
+        Serial.println("connected");
+        wifiConnectLed();
+      }
+      ESP.reset();
+      delay(5000);
    }
 }
+*/
 
 //Connects and reconnects as necessary to the MQTT server.
 void MQTT_connect() 
