@@ -51,9 +51,9 @@ int rele = 16;
 int ledR = 4;
 int ledB = 0;
 int ledG = 2;
-const int opnBtn = 9;
-int rstBtn = 10;
-int buzzer = 15;
+int opnBtn = 15;
+//int rstBtn = 9;
+int buzzer = 10;
 uint8_t ndefBuf[128];
 bool sentImei = false;
 WiFiManager wifiManager;
@@ -70,8 +70,8 @@ void setup() {
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
   pinMode(buzzer, OUTPUT);
-  pinMode(rstBtn, INPUT_PULLUP);
-  pinMode(opnBtn, INPUT_PULLUP);
+  //pinMode(rstBtn, INPUT);
+  pinMode(opnBtn, INPUT);
   
   //Tries to connect to last wifi, if not sucessfull creates the access point.
   wifiManager.setBreakAfterConfig(true);
@@ -100,8 +100,8 @@ void setup() {
 /*************************** Main loop ***************************/
 
 void loop() {
-  checkRstButton();
-  checkOpenButton();
+  //checkRstButton();
+  //checkOpenButton();
   MQTT_connect();
   
   Adafruit_MQTT_Subscribe *subscription;
@@ -218,15 +218,15 @@ void accessGranted()
     digitalWrite(rele, LOW);
     Serial.println("Your IMEI is registered, the door is now opened");
     digitalWrite(buzzer, HIGH);
-    delay(2000);
+    delay(1000);
     digitalWrite(buzzer, LOW);
-    delay(2000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(2000);
+    delay(1000);
     digitalWrite(buzzer, LOW);
-    delay(2000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(2000);
+    delay(1000);
     digitalWrite(buzzer, LOW);
     digitalWrite(rele, HIGH);
     Serial.println("The door is now closed");
@@ -254,17 +254,17 @@ void statusAdding()
     digitalWrite(ledB, LOW);
     digitalWrite(ledG, LOW);
     digitalWrite(buzzer, HIGH);
-    delay(3000);
+    delay(500);
     digitalWrite(buzzer, LOW);
-    delay(1000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(3000);
+    delay(500);
     digitalWrite(buzzer, LOW);
-    delay(1000);
+    delay(500);
     digitalWrite(buzzer, HIGH);
-    delay(3000);
+    delay(500);
     digitalWrite(buzzer, LOW);
-    delay(1000);
+    delay(500);
     Serial.println("The next IMEI will be added to the server");
 }
 
@@ -278,19 +278,19 @@ void statusChecking()
 }
 
 //Checks if the user is pressing the reset button.
-  void checkOpenButton()
-{ 
+/*
+void checkOpenButton(){ 
    if (digitalRead(opnBtn) == LOW); 
    {
       Serial.println("Open button pressed");
       accessGranted();
    }
 }
-
+*/
 //Checks if the user is pressing the reset button.
-void checkRstButton()
+/*void checkRstButton()
 {
-   if (digitalRead(rstBtn) == LOW)
+   if (digitalRead(rstBtn) == HIGH)
    {
        Serial.println("Reset button pressed");
        WiFi.disconnect();
@@ -302,7 +302,7 @@ void checkRstButton()
        }
    }
 }
-
+*/
 //Connects and reconnects as necessary to the MQTT server.
 void MQTT_connect() 
 {
@@ -315,7 +315,7 @@ void MQTT_connect()
     Serial.print("Connecting to MQTT... ");
     while ((ret = mqtt.connect()) != 0) 
     {
-        //heckRstButton();
+        //checkRstButton();
         Serial.println(mqtt.connectErrorString(ret));
         Serial.println("Retrying MQTT connection in 5 seconds...");
         mqtt.disconnect();
