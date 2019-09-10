@@ -51,9 +51,9 @@ int rele = 16;
 int ledR = 4;
 int ledB = 0;
 int ledG = 2;
-const int opnBtn = 9;
-const int rstBtn = 10;
-int buzzer = 15;
+int opnBtn = 15;
+//int rstBtn = 9;
+int buzzer = 10;
 uint8_t ndefBuf[128];
 bool sentImei = false;
 Servo myservo;
@@ -71,8 +71,8 @@ void setup() {
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
   pinMode(buzzer, OUTPUT);
-  pinMode(rstBtn, INPUT_PULLUP);
-  pinMode(opnBtn, INPUT_PULLUP);
+  //pinMode(rstBtn, INPUT);
+  pinMode(opnBtn, INPUT);
   
   //Tries to connect to last wifi, if not sucessfull creates the access point.
   wifiManager.setBreakAfterConfig(true);
@@ -101,8 +101,8 @@ void setup() {
 /*************************** Main loop ***************************/
 
 void loop() {
-  checkRstButton();
-  //checkOpenButton();
+  //checkRstButton();
+  checkOpenButton();
   MQTT_connect();
   
   Adafruit_MQTT_Subscribe *subscription;
@@ -279,7 +279,7 @@ void statusChecking()
 }
 
 //Checks if the user is pressing the reset button.
-/*  void checkOpenButton()
+void checkOpenButton()
 { 
    if (digitalRead(opnBtn) == HIGH); 
    {
@@ -287,11 +287,11 @@ void statusChecking()
       accessGranted();
    }
 }
-*/
+
 //Checks if the user is pressing the reset button.
-void checkRstButton()
+/*void checkRstButton()
 {
-   if (digitalRead(rstBtn) == LOW)
+   if (digitalRead(rstBtn) == HIGH)
    {
        Serial.println("Reset button pressed");
        WiFi.disconnect();
@@ -303,7 +303,7 @@ void checkRstButton()
        }
    }
 }
-
+*/
 //Connects and reconnects as necessary to the MQTT server.
 void MQTT_connect() 
 {
@@ -316,7 +316,7 @@ void MQTT_connect()
     Serial.print("Connecting to MQTT... ");
     while ((ret = mqtt.connect()) != 0) 
     {
-        //heckRstButton();
+        //checkRstButton();
         Serial.println(mqtt.connectErrorString(ret));
         Serial.println("Retrying MQTT connection in 5 seconds...");
         mqtt.disconnect();
