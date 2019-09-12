@@ -156,7 +156,7 @@ void loop() {
 void getMsgFromAndroid() 
 {
     Serial.println("Waiting for message from Peer");
-    int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), (uint16_t) 4000);
+    int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), (uint16_t) 1000);
     Serial.println(msgSize);
     if (msgSize > 0) 
     {
