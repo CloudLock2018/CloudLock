@@ -54,7 +54,7 @@ int ledG = 2;
 const int opnBtn = 15;
 int opnBtnState = 0;
 //const int rstBtn = 9;
-int buzzer = 10;
+//int buzzer = 15;
 uint8_t ndefBuf[128];
 bool sentImei = false;
 WiFiManager wifiManager;
@@ -71,7 +71,7 @@ void setup() {
   pinMode(ledR, OUTPUT);
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
-  pinMode(buzzer, OUTPUT);
+  //pinMode(buzzer, OUTPUT);
   //pinMode(rstBtn, INPUT_PULLUP);
   
   //Tries to connect to last wifi, if not sucessfull creates the access point.
@@ -218,17 +218,18 @@ void accessGranted()
     digitalWrite(ledG, LOW);
     digitalWrite(rele, LOW);
     Serial.println("Your IMEI is registered, the door is now opened");
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
-    digitalWrite(buzzer, LOW);
+    delay(5000);
+//    digitalWrite(buzzer, HIGH);
+//    delay(1000);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(1000);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(1000);
+//    digitalWrite(buzzer, LOW);
     digitalWrite(rele, HIGH);
     Serial.println("The door is now closed");
     statusChecking();
@@ -254,18 +255,18 @@ void statusAdding()
     digitalWrite(ledR, LOW);
     digitalWrite(ledB, LOW);
     digitalWrite(ledG, LOW);
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(500);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(500);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(500);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
     Serial.println("The next IMEI will be added to the server");
 }
 
