@@ -54,7 +54,7 @@ int ledG = 2;
 const int opnBtn = 15;
 int opnBtnState = 0;
 //const int rstBtn = 9;
-int buzzer = 10;
+//const int buzzer = 15;
 uint8_t ndefBuf[128];
 bool sentImei = false;
 WiFiManager wifiManager;
@@ -71,7 +71,7 @@ void setup() {
   pinMode(ledR, OUTPUT);
   pinMode(ledB, OUTPUT);
   pinMode(ledG, OUTPUT);
-  pinMode(buzzer, OUTPUT);
+  //pinMode(buzzer, OUTPUT);
   //pinMode(rstBtn, INPUT_PULLUP);
   
   //Tries to connect to last wifi, if not sucessfull creates the access point.
@@ -88,7 +88,8 @@ void setup() {
   }
   //Displays to the user that the device is connected to wifi.
   wifiConnectLed();
-  digitalWrite(rele, HIGH);
+  digitalWrite(rele, LOW);
+  //digitalWrite(buzzer, LOW);
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
@@ -103,7 +104,7 @@ void setup() {
 void loop() {
   MQTT_connect();
   //checkRstButton();
-  checkOpenButton();
+  //checkOpenButton();
   
   Adafruit_MQTT_Subscribe *subscription;
   //Checks value of subscribed feeds.
@@ -216,20 +217,21 @@ void accessGranted()
     digitalWrite(ledR, HIGH);
     digitalWrite(ledB, HIGH);
     digitalWrite(ledG, LOW);
-    digitalWrite(rele, LOW);
-    Serial.println("Your IMEI is registered, the door is now opened");
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(1000);
-    digitalWrite(buzzer, LOW);
     digitalWrite(rele, HIGH);
+    Serial.println("Your IMEI is registered, the door is now opened");
+    delay(5000);
+//    digitalWrite(buzzer, HIGH);
+//    delay(1000);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(1000);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(1000);
+//    digitalWrite(buzzer, LOW);
+    digitalWrite(rele, LOW);
     Serial.println("The door is now closed");
     statusChecking();
     sentImei = false;
@@ -254,18 +256,18 @@ void statusAdding()
     digitalWrite(ledR, LOW);
     digitalWrite(ledB, LOW);
     digitalWrite(ledG, LOW);
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(500);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(500);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
+//    digitalWrite(buzzer, HIGH);
+//    delay(500);
+//    digitalWrite(buzzer, LOW);
+//    delay(500);
     Serial.println("The next IMEI will be added to the server");
 }
 
@@ -281,8 +283,7 @@ void statusChecking()
 //Checks if the user is pressing the reset button.
 void checkOpenButton(){ 
    opnBtnState = digitalRead(opnBtn); 
-   if (opnBtnState == HIGH) 
-   {
+   if (opnBtnState == HIGH) {
       Serial.println("Open button pressed");
       accessGranted();
    }
@@ -294,9 +295,9 @@ void checkOpenButton(){
    if (digitalRead(rstBtn) == LOW) 
    {
       
-    digitalWrite(ledR, LOW);
-    digitalWrite(ledB, LOW);
-    digitalWrite(ledG, LOW);
+      digitalWrite(ledR, LOW);
+      digitalWrite(ledB, LOW);
+      digitalWrite(ledG, LOW);
       delay(500);
       Serial.println("Disconecting");
       WiFi.disconnect();
@@ -345,8 +346,7 @@ void mqttConnectLed()
 }
 
 //Displays to the user that the device has connected to the wifi network.
-void wifiConnectLed () 
-{
+void wifiConnectLed () {
     digitalWrite(ledB, LOW);
     digitalWrite(ledG, LOW);
     digitalWrite(ledR, HIGH);
