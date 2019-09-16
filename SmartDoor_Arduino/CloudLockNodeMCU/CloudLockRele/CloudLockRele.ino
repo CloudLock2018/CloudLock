@@ -54,7 +54,7 @@ int ledG = 2;
 const int opnBtn = 15;
 int opnBtnState = 0;
 //const int rstBtn = 9;
-//const int buzzer = 15;
+//int buzzer = 15;
 uint8_t ndefBuf[128];
 bool sentImei = false;
 WiFiManager wifiManager;
@@ -157,7 +157,7 @@ void loop() {
 void getMsgFromAndroid() 
 {
     Serial.println("Waiting for message from Peer");
-    int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), (uint16_t) 4000);
+    int msgSize = nfc.read(ndefBuf, sizeof(ndefBuf), (uint16_t) 1000);
     Serial.println(msgSize);
     if (msgSize > 0) 
     {
@@ -217,7 +217,7 @@ void accessGranted()
     digitalWrite(ledR, HIGH);
     digitalWrite(ledB, HIGH);
     digitalWrite(ledG, LOW);
-    digitalWrite(rele, HIGH);
+    digitalWrite(rele, LOW);
     Serial.println("Your IMEI is registered, the door is now opened");
     delay(5000);
 //    digitalWrite(buzzer, HIGH);
@@ -231,7 +231,7 @@ void accessGranted()
 //    digitalWrite(buzzer, HIGH);
 //    delay(1000);
 //    digitalWrite(buzzer, LOW);
-    digitalWrite(rele, LOW);
+    digitalWrite(rele, HIGH);
     Serial.println("The door is now closed");
     statusChecking();
     sentImei = false;
