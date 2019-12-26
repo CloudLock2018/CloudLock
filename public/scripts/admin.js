@@ -5,7 +5,6 @@ var elegido;
 var existente = true;
 var agreg = false;
 var guardasub = 0;
-var guardarPuerta = 0;
 var subusuario;
 var on = 0;
 var on2 = 0;
@@ -28,50 +27,10 @@ function leerCookie(nombre) {
     var valor = micookie.substring(igual + 1);
     return valor;
 }
-//document.getElementById("name").innerHTML = leerCookie("username");
+document.getElementById("name").innerHTML = leerCookie("username");
 
-
-var dataUsuario = {
-    usuario: leerCookie("username")
-}
-
-//Checks if there is any door associated to the account. If not, it will ask for a generic code
-$.ajax({
-    url: '/doors',
-    type: "POST",
-    dataType: "json",
-    data: dataUsuario,
-    success: function (data){
-        if (data.msg === 'No existe'){
-            $('.contenedorAdmin').css('display', 'block');
-            $('.INFO').show();
-            $('.INFO').text("No existe una puerta vinculada a su cuenta, por favor ingrese el código genérico que se encuentra en la caja");
-            $('.INFO').css("color", "red");
-            $('.INFO').css("font-weight", "Bold");
-            //Mostrar Pantalla de agregar puerta
-        }
-        else if (data.msg === 'Existe'){
-            $('.contenedorAdmin').css('display', 'block');
-            $('.INFO').show();
-            $('.INFO').text("Se encontró la/s puerta/s vinculada/s a su cuenta");
-            $('.INFO').css("color", "#49ff00");
-            $('.INFO').css("font-weight", "Bold");
-            setTimeout(function () {
-                $('.INFO').text("");
-            }, 10000);
-            document.querySelector("#limit").innerHTML += data.contenido;
-            guardarPuerta = data.cantidadPuerta;
-            if (existeSubusuario === true){
-                $('.contenedor3').show();
-                guardasub = data.cantidadSubusuario;
-            }
-        }
-    }
-})
-
-//---------------------------------------Nov/2018------------------------------------------------------------------------------//
 //Gets user's IMEI
-/*var data = {
+var data = {
     usuario: document.getElementById("name").textContent
 }
 $.ajax({
@@ -587,9 +546,7 @@ function editarSub() {
             }
         })
     })
-}*/
-
-//---------------------------------------Nov/2018------------------------------------------------------------------------------//
+}
 
 function reactive() {
     setTimeout(function () {
