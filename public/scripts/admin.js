@@ -48,7 +48,7 @@ $.ajax({
             $('.INFO').text("No existe una puerta vinculada a su cuenta, por favor ingrese el código genérico que se encuentra en la caja");
             $('.INFO').css("color", "red");
             $('.INFO').css("font-weight", "Bold");
-            //Mostrar Pantalla de agregar puerta
+            aviso3();
         }
         else if (data.msg === 'Existe'){
             $('.contenedorAdmin').css('display', 'block');
@@ -685,7 +685,6 @@ function orden2() {
 }
 
 window.onload = function () {
-    aviso3();
     setTimeout(function () {
         $('#descargar').prop('disabled', false);
         $('#agregar').prop('disabled', false);
