@@ -128,6 +128,137 @@ app.post('/password', function (req, res) {
 		})
 });
 
+var subusuarioA;
+
+//Receive info from client (Admin - Save new subuser)
+app.post('/subuser', function (req, res) {
+	usuarioA = req.body.usuario;
+	subusuarioA = req.body.subusuario;
+	var usuario = db.collection("Users").doc(usuarioA).collection("Subusers").doc(subusuarioA);
+	usuario.get()
+		//Check if the doc already exists and send an error if happens
+		.then(doc => {
+			if (doc.exists) {
+				reply = {
+					msg: 'Error'
+				};
+				res.end(JSON.stringify(reply));
+			} else {
+				usuario.set({
+					Nombre_de_Subusuario: subusuarioA,
+					IMEI: null
+				})
+					.then(function (docRef) {
+						reply = {
+							msg: 'Gracias'
+						};
+						res.end(JSON.stringify(reply));
+					})
+					//Send error if it happens one
+					.catch(function (error) {
+						console.error("Error adding document: ", error);
+					})
+			}
+		})
+})
+
+
+//Receive info from client (Admin - Reload subusers)
+app.post('/reload', function (req, res) {
+	usuarioA = req.body.usuario;
+	var usuario = db.collection("Users").doc(usuarioA);
+	usuario.get()
+		.then(doc => {
+			if (doc.exists) {
+				usuario.collection("Subusers").get().then(function (querySnapshot) {
+					querySnapshot.forEach(function (doc) {
+						if (subusuarios === null) {
+							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar Subusuario' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar IMEI' value='✎' id='" + cant + "'></div>";
+							cant += 1;
+						} else {
+							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar Subusuario' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar IMEI' value='✎' id='" + cant + "'></div>";
+							cant += 1;
+						}
+					});
+					if (subusuarios === null) {
+						hay = false;
+					}
+					reply = {
+						msg: 'Hecho',
+						contenido: subusuarios,
+						cantidad: cant,
+						existe: hay
+					};
+					res.end(JSON.stringify(reply));
+					cant = 1;
+					subusuarios = null;
+					hay = true;
+				});
+			} else {
+				reply = {
+					msg: 'Error'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
+var usuarioDA;
+
+//Receive info from client (Admin - Delete user's IMEI)
+app.post('/deleteAdmin', function (req, res) {
+	usuarioDA = req.body.usuario;
+	var usuario = db.collection("Users").doc(usuarioDA);
+	usuario.get()
+		.then(doc => {
+			if (doc.exists) {
+				if (doc.data().IMEI === "Desactivado") {
+					reply = {
+						msg: 'Ya borrado'
+					};
+					res.end(JSON.stringify(reply));
+				} else {
+					usuario.update({
+						IMEI: "Desactivado"
+					});
+					reply = {
+						msg: 'Borrado'
+					};
+					res.end(JSON.stringify(reply));
+				}
+			} else {
+				reply = {
+					msg: 'Error'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
+var eliminarsubA;
+
+//Receive info from client (Admin - Delete certain subuser)
+app.post('/delete', function (req, res) {
+	usuarioA = req.body.usuario;
+	eliminarsubA = req.body.sub;
+	var usuario = db.collection("Users").doc(usuarioA).collection("Subusers").doc(eliminarsubA);
+	usuario.get()
+		.then(doc => {
+			if (doc.exists) {
+				usuario.delete();
+				reply = {
+					msg: 'Borrado'
+				};
+				res.end(JSON.stringify(reply));
+			} else {
+				reply = {
+					msg: 'Error'
+				};
+				res.end(JSON.stringify(reply));
+			}
+		})
+})
+
 //----------------------------------------EMAIL-------------------------------------------------//
 var nodemailer = require("nodemailer");
 
@@ -272,8 +403,6 @@ var mqtt = require('mqtt');
 var Door = 'CloudlockTeam/f/Door';
 var IMEI = 'CloudlockTeam/f/IMEI';
 var Status = 'CloudlockTeam/f/Status';
-var VerificationCode = 'CloudlockTeam/f/VerificationCode';
-var Mac = 'CloudlockTeam/f/MAC';
 
 var client = mqtt.connect('mqtt://io.adafruit.com', {
 	port: 1883,
@@ -288,10 +417,6 @@ client.on('connect', function () {
 	client.subscribe(IMEI)
 	//Verificar o subir IMEI
 	client.subscribe(Status)
-	//Enviar código genérico al NodeMCU
-	client.subscribe(VerificationCode)
-	//Recibir MAC del NodeMCU
-	client.subscribe(Mac)
 });
 
 client.on('error', (error) => {
@@ -299,344 +424,11 @@ client.on('error', (error) => {
 	console.log(error);
 })
 
-
-client.on('message', function (topic, message) {
-	//Agrega las puertas nuevas y les asigna un codigo generico (luego se lo envia al NodeMCU para que lo guarde). Las ya exitentes no hace nada
-	if (topic === Mac) {
-		if (message.toString() === '0') {
-
-		} else {
-			var MAC = message.toString();
-			var MACdb = db.collection("Doors");
-			var MACExiste = false;
-			MACdb.get().then(function (querySnapshot) {
-				querySnapshot.forEach(function (doc) {
-					if (doc.data().MAC === MAC){
-						console.log("La direccion MAC ya existe en la base de datos");
-						MACExiste = true;
-					}				
-				})
-				if (MACExiste === false){
-					var Cod = CodigoGenerico(15);
-					console.log(Cod);
-					MACdb.doc(MAC).set({
-						MAC: MAC,
-						GenericCode: Cod,
-						Status: 'S0'
-					})
-					//Send error if it happens one
-					.catch(function (error) {
-						console.error("Error adding document: ", error);
-					})
-					client.publish(VerificationCode, Cod+"/"+MAC)
-				}
-			})
-		}
-	}
-
-	//De esta manera, la puerta sabe si debe verficar o agregar un IMEI
-	if (topic === Status) {
-		var StatusSeparado = message.toString().split("/");
-		console.log(StatusSeparado[0], StatusSeparado[1]);
-		MACdb.get().then(function (querySnapshot) {
-			querySnapshot.forEach(function (doc) {
-				if (doc.data().MAC === StatusSeparado[1]){
-					if (StatusSeparado[0] === 'S0') {
-						doc.update({
-							Status: 'S0'
-						})
-					} else {
-						doc.update({
-							Status: 'S1'
-						})
-					}
-				}
-			})
-		})
-	}
-
-	if (topic === IMEI) {
-		var verificar = true;
-		var IMEISeparado = message.toString().split("/");
-		console.log(IMEISeparado[0], IMEISeparado[1]);
-		if (IMEISeparado[0] === '0' || IMEISeparado[0] === 'Desactivado') {
-
-		} else {
-			var MACIngeresada = IMEISeparado[1];
-			var IMEIingresado = IMEISeparado[0];
-			var CodigoGenerico = null;
-			var MACdb = db.collection("Doors");
-			MACdb.get().then(function (querySnapshot) {
-				querySnapshot.forEach(function (doc) {
-					if (doc.data().MAC === MACIngeresada){
-						CodigoGenerico = doc.data().GenericCode;
-						if (doc.data().Status === 'S0'){
-							verificar = true;
-						}
-						else if (doc.data().Status === 'S1'){
-							verficar = false
-						}
-					}
-				})
-				if (verificar === true){
-					var DoorCodes = db.collection("DoorCodes");
-					DoorCodes.get().then(function (querySnapshot){
-						querySnapshot.forEach(function(doc){
-							if (doc.id === CodigoGenerico){
-								doc.collection("Users").get().then(function (querySnapshot) {
-									querySnapshot.forEach(function (doc) {
-										if (doc.data().IMEI === IMEIingresado){
-											client.publish(Door, 'D1/'+MACIngeresada)
-											console.log("abierto");
-										}
-										else{
-											doc.collection("Subusers").get().then(function (querySnapshot) {
-												querySnapshot.forEach(function (doc) {
-													if (doc.data().IMEI === IMEIingresado) {
-														client.publish(Door, 'D1/'+MACIngeresada)
-														console.log("abierto");
-													}
-												})
-											})
-										}
-									})
-								})
-							}
-						})
-					})
-				}
-			})
-		}
-	}
-})
-
-
-//Creador de código genérico
-function CodigoGenerico(cantCaracteres){
-	var result = '';
-	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	for (var i = 0; i < cantCaracteres; i++) {
-	    result += characters.charAt(Math.floor(Math.random() * characters.length));
-	}
-	var MACdb = db.collection("Doors");
-	var CodExiste = false;
-	MACdb.get().then(function (querySnapshot) {
-		querySnapshot.forEach(function (doc) {
-			if (doc.data().GenericCode === result){
-				CodExiste = true;
-			}
-		})
-	})
-	if (CodExiste === true){
-		CodigoGenerico(15);
-	}
-	else{
-		return result;	
-	}
-}
-
-
-
-//Shows the user's doors
-app.post('/doors', function (req, res) {
-	var usuarioA = req.body.usuario;
-	var DoorCodes = db.collection("DoorCodes");
-	var cantPuertas = 1;
-	var cantSubusuarios = 1;
-	var ConjuntoPuertas = null;
-	var hayPuerta = false
-	var haySubusuarios = false;
-	DoorCodes.get().then(function (querySnapshot) {
-		querySnapshot.forEach(function (doc) {
-			var Puerta = doc.id;
-			doc.collection("Users").get().then(function (querySnapshot) {
-				querySnapshot.forEach(function (doc) {
-					//Checks if exists the user in the door
-					if (doc.data().User === usuarioA){
-						hayPuerta = true;
-						if (ConjuntoPuertas === null){
-							ConjuntoPuertas = "<div class='contenedorAdmin' id='" + cantPuertas + "'><span class='user' id='" + cantPuertas + "'>" + Puerta + "</span><input class='eliminarPuerta' type='button' title='Borrar Puerta' value='✖' id='" + Puerta + "'>";
-							cantPuertas++;
-							ConjuntoPuertas += "<div class='contenedorAdmin'><span class='user' id='name'>" + usuarioA + "</span><span id='admin'>&nbsp; (Administrador)</span><span class='IMEI'>"+ doc.data().IMEI +"</span><button class='button' id='editar' title='Editar IMEI' disabled>✎</button>";	
-						}
-						else{
-							ConjuntoPuertas += "<div class='contenedorAdmin' id='" + cantPuertas + "'><span class='user' id='" + cantPuertas + "'>" + Puerta + "</span><input class='eliminarPuerta' type='button' title='Borrar Puerta' value='✖' id='" + Puerta + "'>";
-							cantPuertas++;
-							ConjuntoPuertas += "<div class='contenedorAdmin'><span class='user' id='name'>" + usuarioA + "</span><span id='admin'>&nbsp; (Administrador)</span><span class='IMEI'>"+ doc.data().IMEI +"</span><button class='button' id='editar' title='Editar IMEI' disabled>✎</button>";
-						}
-						//Checks if exists subusers in the user
-						doc.collection("Subusers").get().then(function (querySnapshot) {
-							querySnapshot.forEach(function (doc) {
-								haySubusuarios = true;
-								ConjuntoPuertas += "<div id='" + cantSubusuarios + "' class='contenedor3'><span class='sub"+ Puerta +"' id='" + cantSubusuarios + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cantSubusuarios + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar"+ Puerta +"' type='button' title='Borrar Subusuario' value='✖' id='" + cantSubusuarios + "'><input class='cambiar"+ Puerta +"' type='button' title='Editar IMEI' value='✎' id='" + cantSubusuarios + "'></div>";
-								cantSubusuarios++;
-							})
-						})
-					}
-				})
-			})
-		})
-		if (hayPuerta === true){
-			reply = {
-				msg: 'Existe',
-				contenido: ConjuntoPuertas,
-				cantidadPuerta: cantPuertas,
-				cantidadSubusuario: cantSubusuarios,
-				existeSubusuario: haySubusuarios
-			}
-			res.end(JSON.stringify(reply));
-		}
-		else {
-			reply = {
-				msg: 'No existe'
-			}
-			res.end(JSON.stringify(reply));
-		}
-		var cantPuertas = 1;
-		var cantSubusuarios = 1;
-		var ConjuntoPuertas = null;
-		var hayPuerta = false
-		var haySubusuarios = false;
-	})
-});
-
-
-//---------------------------------------Nov/2018------------------------------------------------------------------------------//
-/*var usuarioA;
+var usuarioA;
 var subusuarios = null;
 var cant = 1;
 var hay = true;
 var verificar = true;
-var subusuarioA;
-
-//Receive info from client (Admin - Save new subuser)
-app.post('/subuser', function (req, res) {
-	usuarioA = req.body.usuario;
-	subusuarioA = req.body.subusuario;
-	var usuario = db.collection("Users").doc(usuarioA).collection("Subusers").doc(subusuarioA);
-	usuario.get()
-		//Check if the doc already exists and send an error if happens
-		.then(doc => {
-			if (doc.exists) {
-				reply = {
-					msg: 'Error'
-				};
-				res.end(JSON.stringify(reply));
-			} else {
-				usuario.set({
-					Nombre_de_Subusuario: subusuarioA,
-					IMEI: null
-				})
-					.then(function (docRef) {
-						reply = {
-							msg: 'Gracias'
-						};
-						res.end(JSON.stringify(reply));
-					})
-					//Send error if it happens one
-					.catch(function (error) {
-						console.error("Error adding document: ", error);
-					})
-			}
-		})
-})
-
-
-//Receive info from client (Admin - Reload subusers)
-app.post('/reload', function (req, res) {
-	usuarioA = req.body.usuario;
-	var usuario = db.collection("Users").doc(usuarioA);
-	usuario.get()
-		.then(doc => {
-			if (doc.exists) {
-				usuario.collection("Subusers").get().then(function (querySnapshot) {
-					querySnapshot.forEach(function (doc) {
-						if (subusuarios === null) {
-							subusuarios = "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar Subusuario' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar IMEI' value='✎' id='" + cant + "'></div>";
-							cant += 1;
-						} else {
-							subusuarios += "<div id='" + cant + "' class='contenedor3'><span class='sub' id='" + cant + "'>" + doc.data().Nombre_de_Subusuario + "</span><span class='IMEI' id='" + cant + "'>IMEI: " + doc.data().IMEI + "</span><input class='eliminar' type='button' title='Borrar Subusuario' value='✖' id='" + cant + "'><input class='cambiar' type='button' title='Editar IMEI' value='✎' id='" + cant + "'></div>";
-							cant += 1;
-						}
-					});
-					if (subusuarios === null) {
-						hay = false;
-					}
-					reply = {
-						msg: 'Hecho',
-						contenido: subusuarios,
-						cantidad: cant,
-						existe: hay
-					};
-					res.end(JSON.stringify(reply));
-					cant = 1;
-					subusuarios = null;
-					hay = true;
-				});
-			} else {
-				reply = {
-					msg: 'Error'
-				};
-				res.end(JSON.stringify(reply));
-			}
-		})
-})
-
-var usuarioDA;
-
-//Receive info from client (Admin - Delete user's IMEI)
-app.post('/deleteAdmin', function (req, res) {
-	usuarioDA = req.body.usuario;
-	var usuario = db.collection("Users").doc(usuarioDA);
-	usuario.get()
-		.then(doc => {
-			if (doc.exists) {
-				if (doc.data().IMEI === "Desactivado") {
-					reply = {
-						msg: 'Ya borrado'
-					};
-					res.end(JSON.stringify(reply));
-				} else {
-					usuario.update({
-						IMEI: "Desactivado"
-					});
-					reply = {
-						msg: 'Borrado'
-					};
-					res.end(JSON.stringify(reply));
-				}
-			} else {
-				reply = {
-					msg: 'Error'
-				};
-				res.end(JSON.stringify(reply));
-			}
-		})
-})
-
-var eliminarsubA;
-
-//Receive info from client (Admin - Delete certain subuser)
-app.post('/delete', function (req, res) {
-	usuarioA = req.body.usuario;
-	eliminarsubA = req.body.sub;
-	var usuario = db.collection("Users").doc(usuarioA).collection("Subusers").doc(eliminarsubA);
-	usuario.get()
-		.then(doc => {
-			if (doc.exists) {
-				usuario.delete();
-				reply = {
-					msg: 'Borrado'
-				};
-				res.end(JSON.stringify(reply));
-			} else {
-				reply = {
-					msg: 'Error'
-				};
-				res.end(JSON.stringify(reply));
-			}
-		})
-})
 
 //Receive info from client (Admin - IMEI & subuser already saved)
 app.post('/imei', function (req, res) {
@@ -862,5 +654,4 @@ client.on('message', function (topic, message) {
 
 		}
 	}
-});*/
-//---------------------------------------Nov/2018------------------------------------------------------------------------------//
+});
